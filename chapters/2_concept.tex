@@ -2,14 +2,28 @@
 
 \Section{A fejezet célja}
 
-Ez a fejezet még nem a saját eredményekkel foglalkozik, hanem bemutatja, mi a problémakör, milyen módszerekkel, milyeneredményeket sikerült elérni eddig másoknak.
+A szimulációs környezet inspirációt vesz már elkészített játékokból, mint például a Pixel Dungeon és Darkest Dungeon
+nevű játékokból ismerhető szoba és folyosó kapcsolat. Ahol minden szobát egy folyosó köt össze egy másik tetszőleges szobával.
+A Darkest Dungeon-hoz képest a játékmenet rugalmasabb, mivel a szobák bármikor elhagyhatóak és megközelíthetőek, ha engedi azt a pálya jelenlegi belső felépítése.
+Azaz, ha nincs útban valami, ami megakadályozza.
 
+Illetve inspirációt vesz még továbbá a For The King nevezetű játékból, ahol a fegyverek adott karakter statiszkákból "scalelődnek", azaz a birtokolt statiszkák függvényében
+számolódnak ki az adott értékek figyelembe véve a célpont általt birtokolt statisztikákat is.
+
+A fent említett három játék mind körökre osztott, ahogyan a szimulációs környezetünk is az lesz.
+
+A szimulációs környezetünk viszont egyedi lesz abból a szempontból, hogy az ágensek csoportokra vannak osztva és közös céllal rendelkezve próbálják legyőzni egymást és a játékost.
+Illetve hogy nem csak a játékosnak létezik 'win condition'-je, hanem az ágenseknek is, mindkét frakciónak különböző.
+
+\iffalse
 A hivatkozások jelentős része ehhez a fejezethez szokott kötődni.
 (Egy hivatkozás például így néz ki \cite{coombs1987markup}.)
 Itt lehet bemutatni a hasonló alkalmazásokat.
+\fi
 
 \Section{Tartalom és felépítés}
 
+\iffalse
 A fejezet tartalma témától függően változhat. Az alábbiakat attól függően különböző arányban tartalmazhatják.
 \begin{itemize}
 \item Irodalomkutatás. Amennyiben a dolgozat egy módszer kidolgozására, kifejlesztésére irányul, akkor itt lehet részletesen végignézni (módszertani vagy időrendi bontásban), hogy az eddigiekben milyen eredmények születtek a témakörben.
@@ -23,8 +37,141 @@ Szerepelhetnek képek és észrevételek a viszonyításként bemutatott alkalma
 Ehhez tartozhatnak forgatókönyvek (\textit{scenario}-k).
 A szemléletesség kedvéért lehet hozzájuk képernyőkép vázlatokat is készíteni, vagy a használati eseteket más módon szemléltetni.
 \end{itemize}
+\fi
 
-\Section{Amit csak említés szintjén érdemes szerepeltetni}
+\Section{Menü}
 
-Az olvasóról annyit feltételezhetünk, hogy programozásban valamilyen szinten járatos, és a matematikai alapfogalmakkal sem ebben a dolgozatban kell megismertetni.
-A speciális eszközök, programozási nyelvek, matematikai módszerekk és jelölések persze jó, hogy ha említésre kerülnek, de nem kell nagyon belemenni a közismertnek tekinthető dolgokba.
+A játék indításakor vagy megállításakor felugró ablak.
+
+Start/Continue:
+A játék indításakor a menüben a start-ot látjuk, ha a játékot állítjuk meg, akkor a menüben a continue-t látjuk.
+Ezen menüpont kiválasztásával kezdhetjük a játékmenetünket vagy folytathatjuk azt.
+
+Save:
+Ez a menüpont nem jelenik meg a játék indításakor csak akkor, hogyha játékmenetet állítunk meg.
+Ezen menüpont kiválasztásával menthetjük a jelenlegi játékmenetünket.
+
+Load:
+Ezen menüpont mindig jelen van a menüben, elérhető a játék indításakor és megállításakor is.
+Ezen menüpont kiválasztásával tölthetjük be az általunk lementett mentéseket.
+
+Options:
+Ezen menüpont mindig jelen van a menüben, elérhető a játék indításakor és megállításakor is.
+Ezen menüpont kiválasztásával egy új ablakra irányít át minket.
+Itt lehetőségünk van hangbeállítások személyre szabására, mint például a zene és a játékbeli hangok. (Több csúszka segítségével)
+Lehetőségünk van fényerő beállításokra is, mint például a Gamma állítására. (Egy csúszka segítségével)
+Nyelvi beállítások a menüre vonatkozóan. (Legördülő fülből kiválasztva)
+Vér ki/bekacsolása játék közben. (Egy ki/bepipálható rublika)
+Végezetül egy visszagomb ami visszairányít minket a menübe.
+
+Log out:
+Kiléptet minket a jelenlegi fiókunkból, visszairányítva a bejelentkezési ablakhoz.
+A log-out a menüben mindig szerepel.
+
+Main menu:
+Ez a gomb akkor szerepel a menüben hogyha egy játékmenet megállításával kerülünk a menübe.
+Ez befejezi a jelenlegi játékmenetünket és visszaírányít minket a főmenübe.
+
+Ahol a Fekete háttér, az a megállított játék képe lenne elhomályosítva.
+Ha még nem kezdtünk bele egy játékmenetbe, akkor pedig általunk megadott játékmenet képernyőmentése lenne a háttérben elhomályosítva.
+
+\Section{Szimulációs környezet specifikálása}
+
+\subsection{Map}
+
+A map szobák és folyosók összesége, ahol a szobák alakjánál törekszünk a négyzet alakú szobák elkerülésére. A folyosók általában rövidek és egy szóbából akár több is nyílik egy adott szobára.
+A szobákban és a folyosókban bejárható terület egy mátrixhoz hasonló, ahol a celláit blokkoknak nevezzük.
+Minden blokkhoz tartoznak adatok.
+
+Ezek az adatok:
+
+\begin{itemize}
+    \item X koordináta (egészérték)
+    \item Y koordináta (egészérték)
+    \item Entity (intiger típusú érték,  az adott blokkon lévő entity ID-ját tartalmazza)
+    \item Tárgy (integer típusú tömb, az adott blokkon lévő tárgyak ID-ját tartalmazza)
+    \item Effekt (integer típusú tömb, az adott blokkon lévő effektek ID-ját tartalmazza)
+    \item Fény (integer típusú tömb, az adott cella megvilágítási értékeit vizsgálja)
+\end{itemize}
+
+Fontosabb kizáró feltételek:
+
+\begin{itemize}
+    \item Ajtó csak szoba és a folyosó, vagy szoba és a szoba között létezzen.
+    \item Folyosóból ne nyíljon ajtó folyosóra.
+    \item Két különböző folyósó ne érjen össze.
+    \item Minden szobából nyíljon ajtó, úgy hogy lehetséges legyen elhagyni.
+    \item A map bármelyik részéből elérhető legyen a map bármelyik tetszőleges helye.
+\end{itemize}
+
+\subsection{Szobák és folyosók}
+
+Minden szomszédos szobát és folyósót egy ajtó választ el egymástól.
+Celláin korlátozottan helyezkedhetnek el térbeli objektumok(Lásd: oszlop), amely a cellát nem bejárható cellává alakít és korlátozza a látást.
+
+\Section{Karakterünk}
+
+\subsection{Szint}
+
+...
+
+\subsection{Statisztika}
+
+...
+
+\subsection{Akciók}
+
+...
+
+\Section{Ágensek}
+
+Az ágensek háromfajta csoportra oszlanak típus szerint:
+
+\subsection{Tolvaj}
+
+...
+
+\subsection{Harcos}
+
+...
+
+\subsection{Mágus}
+
+...
+
+\subsection{Kommunikáció közöttük}
+
+...
+
+\subsection{Megfigyelési akcióik}
+
+...
+
+\subsection{Elérendő céljaik}
+
+...
+
+\Section{Combat}
+
+...
+
+\Section{Tárgyak}
+
+...
+
+\Section{Idő}
+
+...
+
+\Section{Kamera}
+
+...
+
+\Section{Irányítás}
+
+...
+
+\Section{Interface felület}
+
+...
+

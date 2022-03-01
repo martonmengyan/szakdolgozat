@@ -9,37 +9,29 @@ Alkalmazott Matematikai Intézeti Tanszék\hspace*{4cm}\hfil \textbf{Szám:}
 \large\textsc{\bfseries Szakdolgozat Feladat}
 \end{center}
 \vskip 0.5cm
-Mengyán Márton (BPWTW0) programtervező informatikus jelölt részére.\newline
+Szakdolgozó Neve (N3P7UN) programtervező informatikus jelölt részére.\newline
 
 \noindent\textbf{A szakdolgozat tárgyköre:} kulcsszavak, hasonlók\newline
 
-\noindent\textbf{A szakdolgozat címe:} Multiágens rendszerek koordinációs problémáinak vizsgálata\newline
+\noindent\textbf{A szakdolgozat címe:} A dolgozat címe\newline
 
 \noindent\textbf{A feladat részletezése:}
 
 \medskip
 
-\noindent A multiágens rendszerek célja, hogy egy adott problémát egyidejűleg több
-ágens irányításával tudjanak megoldani.
+\emph{Ide kell a feladatkiírásban szereplő szöveget betenni.}
 
-\noindent A dolgozat azt vizsgálja, hogy ilyen esetekben az ágensek között milyen jellegű kommunikáció lehet,
-illetve hogy az adott ágensnek hogyan kell viselkednie a környezetből,
-és más ágensektől érkező információk függvényében.
+\medskip
 
-\noindent Ehhez specifikálásra, megtervezésre és implementálásra kerül egy szimulációs környezet, amely
-valós időben követhetővé teszi az ágensek állapotát.
-
-\noindent Az ágensek viselkedéséhez tartozó paraméterek optimalizálásra kerülnek annak
-érdekében, hogy az adott célt minél hatékonyabban (például gyorsabban
-vagy kevesebb művelet elvégzésével) el tudják érni.
+\emph{(Kisebb tagolás lehet benne, hogy jól nézzen ki.)}
 
 \vfill
 
-\noindent\textbf{Témavezető:} Piller Imre (beosztása) \newline
+\noindent\textbf{Témavezető:} Témavezető neve (beosztása) \newline
 
 % \noindent\textbf{Konzulens(ek):} (akkor kötelezõ, ha a témavezetõ nem valamelyik matematikai tanszékrõl való; de persze lehet egyébként is)\newline
 
-\noindent\textbf{A feladat kiadásának ideje:} 2021 Szeptember 27. \newline
+\noindent\textbf{A feladat kiadásának ideje:}\newline
 
 %\noindent\textbf{A feladat beadásának határideje:}
 
@@ -57,8 +49,7 @@ vagy kevesebb művelet elvégzésével) el tudják érni.
 \end{center}
 \vspace*{2cm}  
 
-Alulírott \textbf{Mengyán Márton}; Neptun-kód: \texttt{BPWTW0} a Miskolci Egyetem Gépészmérnöki és Informatikai Karának végzős Programtervező informatikus szakos hallgatója ezennel büntetőjogi és fegyelmi felelősségem tudatában nyilatkozom és aláírásommal igazolom, hogy
-\textit{Multiágens rendszerek koordinációs problémáinak vizsgálata}
+Alulírott \textbf{Szakdolgozó Neve}; Neptun-kód: \texttt{N3P7UN} a Miskolci Egyetem Gépészmérnöki és Informatikai Karának végzős Programtervező informatikus szakos hallgatója ezennel büntetőjogi és fegyelmi felelősségem tudatában nyilatkozom és aláírásommal igazolom, hogy \textit{Szakdolgozat Címe}
 című szakdolgozatom saját, önálló munkám; az abban hivatkozott szakirodalom
 felhasználása a forráskezelés szabályai szerint történt.\\
 
