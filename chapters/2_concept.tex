@@ -43,19 +43,20 @@ A szemléletesség kedvéért lehet hozzájuk képernyőkép vázlatokat is kés
 
 A játék indításakor vagy megállításakor felugró ablak.
 
-Start/Continue:
+\begin{itemize}
+\item Start/Continue:
 A játék indításakor a menüben a start-ot látjuk, ha a játékot állítjuk meg, akkor a menüben a continue-t látjuk.
 Ezen menüpont kiválasztásával kezdhetjük a játékmenetünket vagy folytathatjuk azt.
 
-Save:
+\item Save:
 Ez a menüpont nem jelenik meg a játék indításakor csak akkor, hogyha játékmenetet állítunk meg.
 Ezen menüpont kiválasztásával menthetjük a jelenlegi játékmenetünket.
 
-Load:
+\item Load:
 Ezen menüpont mindig jelen van a menüben, elérhető a játék indításakor és megállításakor is.
 Ezen menüpont kiválasztásával tölthetjük be az általunk lementett mentéseket.
 
-Options:
+\item Options:
 Ezen menüpont mindig jelen van a menüben, elérhető a játék indításakor és megállításakor is.
 Ezen menüpont kiválasztásával egy új ablakra irányít át minket.
 Itt lehetőségünk van hangbeállítások személyre szabására, mint például a zene és a játékbeli hangok. (Több csúszka segítségével)
@@ -64,13 +65,14 @@ Nyelvi beállítások a menüre vonatkozóan. (Legördülő fülből kiválasztv
 Vér ki/bekacsolása játék közben. (Egy ki/bepipálható rublika)
 Végezetül egy visszagomb ami visszairányít minket a menübe.
 
-Log out:
+\item Log out:
 Kiléptet minket a jelenlegi fiókunkból, visszairányítva a bejelentkezési ablakhoz.
 A log-out a menüben mindig szerepel.
 
-Main menu:
+\item Main menu:
 Ez a gomb akkor szerepel a menüben hogyha egy játékmenet megállításával kerülünk a menübe.
 Ez befejezi a jelenlegi játékmenetünket és visszaírányít minket a főmenübe.
+\end{itemize}
 
 Ahol a Fekete háttér, az a megállított játék képe lenne elhomályosítva.
 Ha még nem kezdtünk bele egy játékmenetbe, akkor pedig általunk megadott játékmenet képernyőmentése lenne a háttérben elhomályosítva.
@@ -113,15 +115,15 @@ Celláin korlátozottan helyezkedhetnek el térbeli objektumok(Lásd: oszlop), a
 
 \subsection{Szint}
 
-...
+Karakterünk rendelkezik egy szinttel, ami a legelején az 1es szintről indul.
+Entity legyőzése ad karakterünknek tapasztalatpontot, amelyből ha megszerzünk egy adott mennyiséget, a karaktünk szintet lép.
+Minden következő szinthez 10\%-kal több tapasztalatpont szükséges, mint az előző szinthez.
+Szintlépéskor lehetőségünk van a Karakter oldalon a szintlépéskor kapott 3 pontunkat elosztani a fő 4 statisztikára.(Lásd: Statisztika)
 
 \subsection{Statisztika}
 
-...
-
-\subsection{Akciók}
-
-...
+Entityk és karakterünk 4 alap statisztikával rendelkezik.
+Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
 
 \Section{Ágensek}
 
@@ -132,10 +134,6 @@ Az ágensek háromfajta csoportra oszlanak típus szerint:
 ...
 
 \subsection{Harcos}
-
-...
-
-\subsection{Mágus}
 
 ...
 
@@ -153,25 +151,84 @@ Az ágensek háromfajta csoportra oszlanak típus szerint:
 
 \Section{Combat}
 
-...
+A Játékban nincs igazi combat fázis, combat esetén a játék nem szakítódik meg, hanem minden folytatódik ahogy folytatódna.
+Ez azt jelenti, hogy hiába vagyunk egy karakterrel harcban, minden más karakter elvégzi a saját cselekvését, minden cselekvésünk után.
+
 
 \Section{Tárgyak}
 
-...
+A játékban elhelyezett tárgyak, a cellákon létezhetnek vagy map generálás után,
+vagy pedig utólag is kerülhet oda általunk, vagy más Entity által. (Lásd: Entity a halálakor eldob egy tárgyat)
+A cellákon létező tárgyak nem korlátozzák a karakterek mozgását.
+Felvételük csak az adott cellára lépve külön akcióval tehető meg.
 
 \Section{Idő}
 
-...
+Az idő a játékon belül minden általunk végrehajtott akció által telik.
+Ha elvégzünk egy akciót, akkor az irányítás átkerül egy másik Entityre,
+ami végig megy minden Entity, és ha végig ment a sor, akkor újra mi következünk.
 
 \Section{Kamera}
 
-...
+A kamera normál esetben a karakterünk felett helyezkedik el, és ezáltal tekinthetünk le a map.
+A kamera használható korlátozottan szabad módban is, ahol a kamera elrugaszkodik a karakterünktől, és körbe nézhetünk.
+
+\Section{Láthatóság}
+
+Az általunk nem felfedezett map részek, semmilyen módon nem láthatóak általunk, ha már egyszer bejártuk az adott területet, 
+de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adott cellák frissülését(Lásd: Új Entity megjelenése) már nem fogjuk látni.
 
 \Section{Irányítás}
 
-...
+\begin{itemize}
+    \item Kamera szabad mód be- és kikapcsolása: SPACE
+    \item Kamera szabadmódbna mozgatása: WASD
+    \item A játéktérben karakterünk mozgásra utasítása: LEFT CLICK (általunk már felfedezett cellára)
+    \item A Menü megnyitása: ESCAPE
+    \item Az Inventory megnyitása: I
+    \item Map megnyitása: M
+    \item Karakter oldal megnyitása: K
+\end{itemize}
 
 \Section{Interface felület}
 
-...
+\subsection{Menü}
+
+\begin{itemize}
+    \item prekondíció: 
+    \item általános működés: 
+    \item alternatív esetek:
+    \item Postkondíció:
+    \item kivételes esetek: 
+\end{itemize}
+
+\subsection{Inventory}
+
+\begin{itemize}
+    \item prekondíció: 
+    \item általános működés: 
+    \item alternatív esetek:
+    \item Postkondíció:
+    \item kivételes esetek: 
+\end{itemize}
+
+\subsection{Map}
+
+\begin{itemize}
+    \item prekondíció: 
+    \item általános működés: 
+    \item alternatív esetek:
+    \item Postkondíció:
+    \item kivételes esetek: 
+\end{itemize}
+
+\subsection{Karakter}
+
+\begin{itemize}
+    \item prekondíció: 
+    \item általános működés: 
+    \item alternatív esetek:
+    \item Postkondíció:
+    \item kivételes esetek: 
+\end{itemize}
 
