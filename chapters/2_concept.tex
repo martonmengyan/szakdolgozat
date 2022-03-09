@@ -125,15 +125,39 @@ Szintlépéskor lehetőségünk van a Karakter oldalon a szintlépéskor kapott 
 Entityk és karakterünk 4 alap statisztikával rendelkezik.
 Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
 
+Kezdő statisztika:
+\begin{itemize}
+    \item Erő: 10
+    \item Kitérés: 10
+    \item Kitartás: 10
+    \item Pontosság: 10
+\end{itemize}
+
 \Section{Ágensek}
 
 Az ágensek háromfajta csoportra oszlanak típus szerint:
 
 \subsection{Tolvaj}
 
-...
+Kezdő statisztika:
+\begin{itemize}
+    \item Erő: 8
+    \item Kitérés: 12
+    \item Kitartás: 8
+    \item Pontosság: 12
+\end{itemize}
 
 \subsection{Harcos}
+
+Kezdő statisztika:
+\begin{itemize}
+    \item Erő: 12
+    \item Kitérés: 8
+    \item Kitartás: 12
+    \item Pontosság: 8
+\end{itemize}
+
+\subsection{Sebzés számlálás}
 
 ...
 
@@ -195,40 +219,69 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 \subsection{Menü}
 
 \begin{itemize}
-    \item prekondíció: 
-    \item általános működés: 
-    \item alternatív esetek:
-    \item Postkondíció:
-    \item kivételes esetek: 
+    \item prekondíció: A szimulációs ablakban vagyunk.
+    \item általános működés: Rávisszük az egeret, majd bal kattintással megnyitjuk.
+    \item alternatív esetek: Rossz menü ablak nyílik meg.
+    \item Postkondíció: Megnyílt a menü ablak.
+    \item kivételes esetek: Nem nyílt meg az ablak.
 \end{itemize}
 
 \subsection{Inventory}
 
 \begin{itemize}
-    \item prekondíció: 
-    \item általános működés: 
-    \item alternatív esetek:
-    \item Postkondíció:
-    \item kivételes esetek: 
+    \item prekondíció: A szimulációs ablakban vagyunk.
+    \item általános működés: Rávisszük az egeret, majd bal kattintással megnyitjuk.
+    \item alternatív esetek: Rossz ablak nyílik meg.
+    \item Postkondíció: Megnyílt az inventory ablak.
+    \item kivételes esetek: Nem nyílt meg az ablak.
 \end{itemize}
 
 \subsection{Map}
 
 \begin{itemize}
-    \item prekondíció: 
-    \item általános működés: 
-    \item alternatív esetek:
-    \item Postkondíció:
-    \item kivételes esetek: 
+    \item prekondíció: A szimulációs ablakban vagyunk.
+    \item általános működés: Rávisszük az egeret, majd bal kattintással megnyitjuk.
+    \item alternatív esetek: Rossz ablak nyílik meg.
+    \item Postkondíció: Megnyílt a Map ablak.
+    \item kivételes esetek: Nem nyílt meg az ablak.
 \end{itemize}
 
 \subsection{Karakter}
 
 \begin{itemize}
-    \item prekondíció: 
-    \item általános működés: 
-    \item alternatív esetek:
-    \item Postkondíció:
-    \item kivételes esetek: 
+    \item prekondíció: A szimulációs ablakban vagyunk.
+    \item általános működés: Rávisszük az egeret, majd bal kattintással megnyitjuk.
+    \item alternatív esetek: Rossz ablak nyílik meg.
+    \item Postkondíció: Megnyílt a Karakter ablak.
+    \item kivételes esetek: Nem nyílt meg az ablak.
 \end{itemize}
 
+\subsection{Dobás}
+
+\begin{itemize}
+    \item prekondíció: A szimulációs ablakban vagyunk.
+    \item általános működés: Rávisszük az egeret, majd bal kattintás után kiválasztjuk a dobandó Tárgyat, és a cél cellát.
+    \item alternatív esetek: Rossz tárgyat dob el.
+    \item Postkondíció: Eldobtuk az adott tárgyat a célbavett cellára.
+    \item kivételes esetek: Nem dobta el a Tárgyat.
+\end{itemize}
+
+\subsection{Felvétel}
+
+\begin{itemize}
+    \item prekondíció: A szimulációs ablakban vagyunk és a karakterünk celláján létezik valamilyen tárgy.
+    \item általános működés: Rávisszük az egeret, majd bal kattintással felvesszük a Tárgyat, ha kiválaszottuk melyik Tárgyat vesszük fel a bal és jobbra mutató nyilak segítségével.
+    \item alternatív esetek: Rossz Tárgyat vesz fel.
+    \item Postkondíció: Felvettük a kiválasztott Tárgyat.
+    \item kivételes esetek: Nem vette fel a Tárgyat.
+\end{itemize}
+
+\subsection{Körbetekintés}
+
+\begin{itemize}
+    \item prekondíció: A szimulációs ablakban vagyunk.
+    \item általános működés: Rávisszük az egeret, majd bal kattintással elindítjuk a folyamatot.
+    \item alternatív esetek: Nem kapunk rálátást a körbeforgott területre.
+    \item Postkondíció: Rálátást nyertünk a környezetünkre.
+    \item kivételes esetek: Nem fordult körbe a karakter.
+\end{itemize}
