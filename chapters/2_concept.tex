@@ -135,8 +135,6 @@ Kezdő statisztika:
 
 \Section{Ágensek}
 
-Az ágensek háromfajta csoportra oszlanak típus szerint:
-
 \subsection{Tolvaj}
 
 Kezdő statisztika:
@@ -185,6 +183,104 @@ A játékban elhelyezett tárgyak, a cellákon létezhetnek vagy map generálás
 vagy pedig utólag is kerülhet oda általunk, vagy más Entity által. (Lásd: Entity a halálakor eldob egy tárgyat)
 A cellákon létező tárgyak nem korlátozzák a karakterek mozgását.
 Felvételük csak az adott cellára lépve külön akcióval tehető meg.
+
+\subsection{Kulcs}
+
+Vagy Entityktől, vagy celláról szerezhetőek meg.
+Szerepük a ládák kinyitása a játékos által.
+
+\subsection{Entity Helm no.1}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
+Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: 2
+    \item Kitérés: -2
+    \item Kitartás: 2
+    \item Pontosság: -2
+\end{itemize}
+
+\subsection{Entity Helm no.2}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
+Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: -2
+    \item Kitérés: 2
+    \item Kitartás: -2
+    \item Pontosság: 2
+\end{itemize}
+
+\subsection{Entity Armor no.1}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
+Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: 2
+    \item Kitérés: -2
+    \item Kitartás: 2
+    \item Pontosság: -2
+\end{itemize}
+
+\subsection{Entity Armor no.2}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
+Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: -2
+    \item Kitérés: 2
+    \item Kitartás: -2
+    \item Pontosság: 2
+\end{itemize}
+
+\subsection{Entity Weapon no.1}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
+Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: 3
+    \item Kitérés: -1
+    \item Kitartás: 0
+    \item Pontosság: 1
+\end{itemize}
+
+\subsection{Entity Weapon no.2}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
+Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: 1
+    \item Kitérés: 1
+    \item Kitartás: 0
+    \item Pontosság: 3
+\end{itemize}
+
+\Section{Mapon található mozgást kizáró objektumok}
+
+\subsection{Láda}
+
+A ládák map generáláskor kerülnek bizonyos cellákra.
+Entityk dobják a kulcsukat, vagy a mapra generálódik le valamelyik cellára.
+Ládát tartalmazó cellára nem lehetséges a mozgás.
+Interakcióval kinyitható, ha az Inventory tartalmazza a kulcsát. (Lásd: Interface)
+
+\subsection{Oszlop}
+
+Az oszlopok map generáláskor kerülnek bizonyos cellákra.
+Oszlopoknak semmilyen különleges funkciója nincs azonkívül, hogy map komplexitását kívánja növelni azzal,
+hogy mozgást és látást korlátozó szerepet lát el.
+
+\subsection{Zárt ajtó}
+
+Az ajtók map generáláskor kerülnek csak olyan cellákra, ahol egy szobából egy folyosón lehetséges elhagyni a szobát.
+Mindig zárt alakban kerül az adott cellákra, kinyitásához nem szükséges semmilyen különleges tárgy. Ha bármely karakter egy ajtót tartalmazó cellára lép, az ajtó kinyílik amíg Entityt tartalmaz az adott cella.
+Ahogyan az Oszlopok, a zárt ajtók is map komplexitását kívánja növelni azzal,hogy látást korlátozó szerepet lát el.
 
 \Section{Idő}
 
@@ -284,4 +380,14 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
     \item alternatív esetek: Nem kapunk rálátást a körbeforgott területre.
     \item Postkondíció: Rálátást nyertünk a környezetünkre.
     \item kivételes esetek: Nem fordult körbe a karakter.
+\end{itemize}
+
+\subsection{Láda nyitás}
+
+\begin{itemize}
+    \item prekondíció: Ládát tartalmazó cellához vízszintesen vagy függőlegesen közvetlen szomszédos cellán tartózkodunk.
+    \item általános működés: Rávisszük az egeret a felbukkanó ikonra, majd bal kattintással elindítjuk a folyamatot.
+    \item alternatív esetek: Nem tartalmaz semmit a láda.
+    \item Postkondíció: Kinyílt a láda, az adott tárgyat megkaptuk.
+    \item kivételes esetek: Nem nyílt ki a láda.
 \end{itemize}
