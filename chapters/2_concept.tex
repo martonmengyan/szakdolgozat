@@ -160,10 +160,6 @@ Kezdő statisztika:
 
 \subsection{Kommunikáció közöttük}
 
-...
-
-\subsection{Megfigyelési akcióik}
-
 Az Entityk, ahogyan mi is, maguk elé 3 szélességben és 4 hosszúságnyi téglalapot látnak, illetve a karakter állásától 90fokra mindkét oldalra homályosan látnak 2 cellányit előre.
 Megfigyelik, hogy:
 \begin{itemize}
@@ -172,6 +168,19 @@ Megfigyelik, hogy:
     \item Vannak-e hátrahagyott elpusztult Entityk
     \item Nyitva vannak-e a ládák
     \item Megszerezték-e a győzelemhez szükséges Tárgyat
+    \item Látják-e őt az ellenséges Entityk vagy a játékos
+\end{itemize}
+
+\subsection{Megfigyelési akcióik}
+
+Hogyan reagálnak az általuk nyert információkra?
+\begin{itemize}
+    \item Ha nyitva vannak-e az ajtók és nem tudják mely Entity által, akkor körbenézhetnek, hogy megtalálják a tettest.
+    \item Ha tudják merre mennek az Entityk és a játékos, aszerint tervezik útvonalokat, vagy támadnak
+    \item Ha vannak hátrahagyott elpusztult Entityk, amelyek nem rég nem voltak ott, akkor körbenézhetnek, hogy megtalálják a tettest.
+    \item Ha nyitva vannak a ládák, amelyek nem rég nem voltak nyitva, akkor körbenézhetnek, hogy megtalálják a tettest.
+    \item Ha Megszerezték a győzelemhez szükséges Tárgyat, akkor támogatják csapattársaikat, ha más szerezte meg, megpróbálják megakadályozni.
+    \item Ha nem látják ellenséges Entityk vagy játékos, de ők látják, megpróbálnak mögé ossoni és hátból támadni váratlanul.
 \end{itemize}
 
 \subsection{Elérendő céljaik}
