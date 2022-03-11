@@ -93,7 +93,6 @@ Ezek az adatok:
     \item Entity (intiger típusú érték,  az adott blokkon lévő entity ID-ját tartalmazza)
     \item Tárgy (integer típusú tömb, az adott blokkon lévő tárgyak ID-ját tartalmazza)
     \item Effekt (integer típusú tömb, az adott blokkon lévő effektek ID-ját tartalmazza)
-    \item Fény (integer típusú tömb, az adott cella megvilágítási értékeit vizsgálja)
 \end{itemize}
 
 Fontosabb kizáró feltételek:
@@ -165,7 +164,15 @@ Kezdő statisztika:
 
 \subsection{Megfigyelési akcióik}
 
-...
+Az Entityk, ahogyan mi is, maguk elé 3 szélességben és 4 hosszúságnyi téglalapot látnak, illetve a karakter állásától 90fokra mindkét oldalra homályosan látnak 2 cellányit előre.
+Megfigyelik, hogy:
+\begin{itemize}
+    \item Nyitva vannak-e az ajtók
+    \item Merre mennek az Entityk és a játékos
+    \item Vannak-e hátrahagyott elpusztult Entityk
+    \item Nyitva vannak-e a ládák
+    \item Megszerezték-e a győzelemhez szükséges Tárgyat
+\end{itemize}
 
 \subsection{Elérendő céljaik}
 
@@ -183,11 +190,7 @@ A játékban elhelyezett tárgyak, a cellákon létezhetnek vagy map generálás
 vagy pedig utólag is kerülhet oda általunk, vagy más Entity által. (Lásd: Entity a halálakor eldob egy tárgyat)
 A cellákon létező tárgyak nem korlátozzák a karakterek mozgását.
 Felvételük csak az adott cellára lépve külön akcióval tehető meg.
-
-\subsection{Kulcs}
-
-Vagy Entityktől, vagy celláról szerezhetőek meg.
-Szerepük a ládák kinyitása a játékos által.
+Felszerelések értékei randomizáltak, a map generálaskor döntődnek el egy adott nyílt intervallumon belül.
 
 \subsection{Entity Helm no.1}
 
@@ -195,10 +198,10 @@ Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egy
 Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: 2
-    \item Kitérés: -2
-    \item Kitartás: 2
-    \item Pontosság: -2
+    \item Erő: ]2,4[
+    \item Kitérés: ]-2,-4[
+    \item Kitartás: ]2,4[
+    \item Pontosság: ]-2,-4[
 \end{itemize}
 
 \subsection{Entity Helm no.2}
@@ -207,10 +210,10 @@ Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egy
 Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: -2
-    \item Kitérés: 2
-    \item Kitartás: -2
-    \item Pontosság: 2
+    \item Erő: ]-2,-4[
+    \item Kitérés: ]2,4[
+    \item Kitartás: ]-2,-4[
+    \item Pontosság: ]2,4[
 \end{itemize}
 
 \subsection{Entity Armor no.1}
@@ -219,10 +222,10 @@ Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egy
 Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: 2
-    \item Kitérés: -2
-    \item Kitartás: 2
-    \item Pontosság: -2
+    \item Erő: ]2,4[
+    \item Kitérés: ]-2,-4[
+    \item Kitartás: ]2,4[
+    \item Pontosság: ]-2,-4[
 \end{itemize}
 
 \subsection{Entity Armor no.2}
@@ -231,10 +234,10 @@ Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egy
 Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: -2
-    \item Kitérés: 2
-    \item Kitartás: -2
-    \item Pontosság: 2
+    \item Erő: ]-2,-4[
+    \item Kitérés: ]2,4[
+    \item Kitartás: ]-2,-4[
+    \item Pontosság: ]2,4[
 \end{itemize}
 
 \subsection{Entity Weapon no.1}
@@ -243,10 +246,10 @@ Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egy
 Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: 3
-    \item Kitérés: -1
-    \item Kitartás: 0
-    \item Pontosság: 1
+    \item Erő: ]1,5[
+    \item Kitérés: ]-1,-3[
+    \item Kitartás: ]0,-1[
+    \item Pontosság: ]-1,2[
 \end{itemize}
 
 \subsection{Entity Weapon no.2}
@@ -255,11 +258,20 @@ Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egy
 Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: 1
-    \item Kitérés: 1
+    \item Erő: ]-1,2[
+    \item Kitérés: ]1,3[
     \item Kitartás: 0
-    \item Pontosság: 3
+    \item Pontosság: ]1,5[
 \end{itemize}
+
+\subsection{Kulcs}
+
+Vagy Entityktől, vagy celláról szerezhetőek meg.
+Szerepük a ládák kinyitása a játékos által.
+
+\subsection{Cél Tárgy}
+
+Map teljesítéséhez szükséges tárgy.
 
 \Section{Mapon található mozgást kizáró objektumok}
 
@@ -378,7 +390,7 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
     \item prekondíció: A szimulációs ablakban vagyunk.
     \item általános működés: Rávisszük az egeret, majd bal kattintással elindítjuk a folyamatot.
     \item alternatív esetek: Nem kapunk rálátást a körbeforgott területre.
-    \item Postkondíció: Rálátást nyertünk a környezetünkre.
+    \item Postkondíció: Rálátást nyertünk a környezetünkre és elhasználtuk a körünket.
     \item kivételes esetek: Nem fordult körbe a karakter.
 \end{itemize}
 
