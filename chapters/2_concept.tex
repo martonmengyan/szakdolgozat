@@ -163,6 +163,7 @@ Kezdő statisztika:
 Az Entityk, ahogyan mi is, maguk elé 3 szélességben és 4 hosszúságnyi téglalapot látnak, illetve a karakter állásától 90fokra mindkét oldalra homályosan látnak 2 cellányit előre.
 Megfigyelik, hogy:
 \begin{itemize}
+    \item Eldöntik, hogy elégségesen ismerik-e környezetüket
     \item Nyitva vannak-e az ajtók
     \item Merre mennek az Entityk és a játékos
     \item Vannak-e hátrahagyott elpusztult Entityk
@@ -175,6 +176,7 @@ Megfigyelik, hogy:
 
 Hogyan reagálnak az általuk nyert információkra?
 \begin{itemize}
+    \item Ha úgy itéli meg, hogy környezetét nem ismeri eléggé, Körbetekintés segítségével felfedezi környezetét.
     \item Ha nyitva vannak-e az ajtók és nem tudják mely Entity által, akkor körbenézhetnek, hogy megtalálják a tettest.
     \item Ha tudják merre mennek az Entityk és a játékos, aszerint tervezik útvonalokat, vagy támadnak
     \item Ha vannak hátrahagyott elpusztult Entityk, amelyek nem rég nem voltak ott, akkor körbenézhetnek, hogy megtalálják a tettest.
@@ -399,7 +401,7 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
     \item prekondíció: A szimulációs ablakban vagyunk.
     \item általános működés: Rávisszük az egeret, majd bal kattintással elindítjuk a folyamatot.
     \item alternatív esetek: Nem kapunk rálátást a körbeforgott területre.
-    \item Postkondíció: Rálátást nyertünk a környezetünkre és elhasználtuk a körünket.
+    \item Postkondíció: Rálátást nyertünk a környezetünkre, mintha minden irányban látnánk és elhasználtuk a körünket.
     \item kivételes esetek: Nem fordult körbe a karakter.
 \end{itemize}
 
@@ -412,3 +414,24 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
     \item Postkondíció: Kinyílt a láda, az adott tárgyat megkaptuk.
     \item kivételes esetek: Nem nyílt ki a láda.
 \end{itemize}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.8]{images/gameUML.png}
+	\caption{Base Game}
+	\label{fig:basegame}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=1]{images/playerturnUML.png}
+	\caption{Player Turn}
+	\label{fig:playerturn}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=1]{images/entityturnUML.png}
+	\caption{Entity Turn}
+	\label{fig:entityturn}
+\end{figure}
