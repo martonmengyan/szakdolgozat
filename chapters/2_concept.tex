@@ -41,28 +41,27 @@ A szemléletesség kedvéért lehet hozzájuk képernyőkép vázlatokat is kés
 
 \Section{Menü}
 
-A játék indításakor vagy megállításakor felugró ablak.
+A szimuláció indításakor vagy megállításakor felugró ablak.
 
 \begin{itemize}
 \item Start/Continue:
-A játék indításakor a menüben a start-ot látjuk, ha a játékot állítjuk meg, akkor a menüben a continue-t látjuk.
-Ezen menüpont kiválasztásával kezdhetjük a játékmenetünket vagy folytathatjuk azt.
+A szimuláció indításakor a menüben a start-ot látjuk, ha a szimulációt állítjuk meg, akkor a menüben a continue-t látjuk.
+Ezen menüpont kiválasztásával kezdhetjük a szimulációt vagy folytathatjuk azt.
 
 \item Save:
-Ez a menüpont nem jelenik meg a játék indításakor csak akkor, hogyha játékmenetet állítunk meg.
-Ezen menüpont kiválasztásával menthetjük a jelenlegi játékmenetünket.
+Ez a menüpont nem jelenik meg a szimuláció indításakor csak akkor, hogyha szimulációt állítunk meg.
+Ezen menüpont kiválasztásával menthetjük a jelenlegi szimulációnkat.
 
 \item Load:
-Ezen menüpont mindig jelen van a menüben, elérhető a játék indításakor és megállításakor is.
+Ezen menüpont mindig jelen van a menüben, elérhető a szimuláció indításakor és megállításakor is.
 Ezen menüpont kiválasztásával tölthetjük be az általunk lementett mentéseket.
 
 \item Options:
-Ezen menüpont mindig jelen van a menüben, elérhető a játék indításakor és megállításakor is.
+Ezen menüpont mindig jelen van a menüben, elérhető a szimuláció indításakor és megállításakor is.
 Ezen menüpont kiválasztásával egy új ablakra irányít át minket.
-Itt lehetőségünk van hangbeállítások személyre szabására, mint például a zene és a játékbeli hangok. (Több csúszka segítségével)
+Itt lehetőségünk van hangbeállítások személyre szabására, mint például a zene és a szimulációbeli hangok. (Több csúszka segítségével)
 Lehetőségünk van fényerő beállításokra is, mint például a Gamma állítására. (Egy csúszka segítségével)
 Nyelvi beállítások a menüre vonatkozóan. (Legördülő fülből kiválasztva)
-Vér ki/bekacsolása játék közben. (Egy ki/bepipálható rublika)
 Végezetül egy visszagomb ami visszairányít minket a menübe.
 
 \item Log out:
@@ -70,14 +69,17 @@ Kiléptet minket a jelenlegi fiókunkból, visszairányítva a bejelentkezési a
 A log-out a menüben mindig szerepel.
 
 \item Main menu:
-Ez a gomb akkor szerepel a menüben hogyha egy játékmenet megállításával kerülünk a menübe.
-Ez befejezi a jelenlegi játékmenetünket és visszaírányít minket a főmenübe.
+Ez a gomb akkor szerepel a menüben hogyha egy szimuláció megállításával kerülünk a menübe.
+Ez befejezi a jelenlegi szimulációnkat és visszaírányít minket a főmenübe.
 \end{itemize}
 
-Ahol a Fekete háttér, az a megállított játék képe lenne elhomályosítva.
-Ha még nem kezdtünk bele egy játékmenetbe, akkor pedig általunk megadott játékmenet képernyőmentése lenne a háttérben elhomályosítva.
-
 \Section{Szimulációs környezet specifikálása}
+
+\subsection{Szobák és folyosók}
+
+A szobákat több szomszédos cellák alkotják, ezeket a szobákat folyosók kötik össze, amelyeket pontosan kettő cellával szomszédos cellák alkotnak.
+Minden szomszédos szobát és folyósót egy ajtó választ el egymástól.
+Celláin korlátozottan helyezkedhetnek el térbeli objektumok(Lásd: oszlop), amely a cellát nem bejárható cellává alakít és korlátozza a látást.
 
 \subsection{Map}
 
@@ -104,11 +106,6 @@ Fontosabb kizáró feltételek:
     \item Minden szobából nyíljon ajtó, úgy hogy lehetséges legyen elhagyni.
     \item A map bármelyik részéből elérhető legyen a map bármelyik tetszőleges helye.
 \end{itemize}
-
-\subsection{Szobák és folyosók}
-
-Minden szomszédos szobát és folyósót egy ajtó választ el egymástól.
-Celláin korlátozottan helyezkedhetnek el térbeli objektumok(Lásd: oszlop), amely a cellát nem bejárható cellává alakít és korlátozza a látást.
 
 \Section{Karakterünk}
 
@@ -189,19 +186,78 @@ Hogyan reagálnak az általuk nyert információkra?
 
 ...
 
+\Section{Effektek}
+
+Effektek típusai:
+\begin{itemize}
+    \item Pozitív,
+    \item Negatív.
+\end{itemize}
+Effektek cellákon vagy karaktereken elhasználva 3 körig léteznek.
+
+\subsection{Pozitív Effektek}
+
+\begin{itemize}
+    \item Vigor: maximum HP 5\% visszatöltés.
+    \item Steel: Sebzés számoláskor 30\%-kal kevesebb sebzés elszenvedés.
+\end{itemize}
+
+\subsection{Negatív Effektek}
+
+\begin{itemize}
+    \item Poison: maximum HP 5\% elvesztése.
+    \item Weakness: Sebzés számoláskor a Kitérés statisztika 30\%-kájának ignorlása.
+\end{itemize}
+
 \Section{Combat}
 
-A Játékban nincs igazi combat fázis, combat esetén a játék nem szakítódik meg, hanem minden folytatódik ahogy folytatódna.
-Ez azt jelenti, hogy hiába vagyunk egy karakterrel harcban, minden más karakter elvégzi a saját cselekvését, minden cselekvésünk után.
+A szimulációban Entity és Entity vagy Entity és karakter közötti HP elvétel lehetséges,
+\begin{itemize}
+    \item szomszédos cellából támadás által(Lásd: támadás),
+    \item azonos X vagy Y koordinátájú cellából statisztikák által meghatározott távolságnyira dobás által(Lásd: dobás),
+    \item cellák effekt tulajdonságának manipulálciója(Lásd:Effektet változtató tárgyak eldobása), effektek által,
+    \item csapdák által, amelyek a játék kezdetekor generálódtak.
+\end{itemize}
 
 
 \Section{Tárgyak}
 
-A játékban elhelyezett tárgyak, a cellákon létezhetnek vagy map generálás után,
-vagy pedig utólag is kerülhet oda általunk, vagy más Entity által. (Lásd: Entity a halálakor eldob egy tárgyat)
-A cellákon létező tárgyak nem korlátozzák a karakterek mozgását.
-Felvételük csak az adott cellára lépve külön akcióval tehető meg.
-Felszerelések értékei randomizáltak, a map generálaskor döntődnek el egy adott nyílt intervallumon belül.
+A tárgyakhoz a következő adatok tartoznak:
+\begin{itemize}
+    \item ItemID
+    \item ItemName
+    \item ItemType
+    \item Quantity
+    \item MaxQuantity
+\end{itemize}
+
+\subsection{ItemID}
+
+A tárgyak generálásakor minden tárgy kap egy egyedi ID-t, ez az ID határozza meg, hogy statisztikái milyennek lettek legenerálva az adott nyílt intervallumon belül.
+A karakterre felszerelhető tárgyak értékei randomizáltak, a map generálaskor döntődnek el egy adott nyílt intervallumon belül.
+
+\subsection{ItemName}
+
+A tárgyak tartalmaznak tárgynevet, azonos nevű tárgyak tulajdonságainak értékei azonos nyílt intervallumon belül generáltak.
+
+\subsection{ItemType}
+
+A tárgyak típusai a szimulátorban a következők lehetnek:
+\begin{itemize}
+    \item Inventoryból használható tárgyak(körért),
+    \item Karakterre felszerelhető tárgyak(körért),
+    \item Adott célra használható tárgyak(Lásd: Kulcs, CélTárgy).
+\end{itemize}
+
+\subsection{Quantity}
+
+A tárgyak Quantity adatja azt az integer számot tartalmazza, amennyi létezik az inventoryban.
+
+\subsection{MaxQuantity}
+
+A tárgyak MaxQuantity értéke azt határozza meg, mennyire stackelhet fel egy adott Item az inventoryban, ha túllépi a MaxQuantity számát, akkor új stack-et kezd.
+
+\Section{Tárgy nevek}
 
 \subsection{Entity Helm no.1}
 
@@ -284,55 +340,6 @@ Szerepük a ládák kinyitása a játékos által.
 
 Map teljesítéséhez szükséges tárgy.
 
-\Section{Mapon található mozgást kizáró objektumok}
-
-\subsection{Láda}
-
-A ládák map generáláskor kerülnek bizonyos cellákra.
-Entityk dobják a kulcsukat, vagy a mapra generálódik le valamelyik cellára.
-Ládát tartalmazó cellára nem lehetséges a mozgás.
-Interakcióval kinyitható, ha az Inventory tartalmazza a kulcsát. (Lásd: Interface)
-
-\subsection{Oszlop}
-
-Az oszlopok map generáláskor kerülnek bizonyos cellákra.
-Oszlopoknak semmilyen különleges funkciója nincs azonkívül, hogy map komplexitását kívánja növelni azzal,
-hogy mozgást és látást korlátozó szerepet lát el.
-
-\subsection{Zárt ajtó}
-
-Az ajtók map generáláskor kerülnek csak olyan cellákra, ahol egy szobából egy folyosón lehetséges elhagyni a szobát.
-Mindig zárt alakban kerül az adott cellákra, kinyitásához nem szükséges semmilyen különleges tárgy. Ha bármely karakter egy ajtót tartalmazó cellára lép, az ajtó kinyílik amíg Entityt tartalmaz az adott cella.
-Ahogyan az Oszlopok, a zárt ajtók is map komplexitását kívánja növelni azzal,hogy látást korlátozó szerepet lát el.
-
-\Section{Idő}
-
-Az idő a játékon belül minden általunk végrehajtott akció által telik.
-Ha elvégzünk egy akciót, akkor az irányítás átkerül egy másik Entityre,
-ami végig megy minden Entity, és ha végig ment a sor, akkor újra mi következünk.
-
-\Section{Kamera}
-
-A kamera normál esetben a karakterünk felett helyezkedik el, és ezáltal tekinthetünk le a map.
-A kamera használható korlátozottan szabad módban is, ahol a kamera elrugaszkodik a karakterünktől, és körbe nézhetünk.
-
-\Section{Láthatóság}
-
-Az általunk nem felfedezett map részek, semmilyen módon nem láthatóak általunk, ha már egyszer bejártuk az adott területet, 
-de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adott cellák frissülését(Lásd: Új Entity megjelenése) már nem fogjuk látni.
-
-\Section{Irányítás}
-
-\begin{itemize}
-    \item Kamera szabad mód be- és kikapcsolása: SPACE
-    \item Kamera szabadmódbna mozgatása: WASD
-    \item A játéktérben karakterünk mozgásra utasítása: LEFT CLICK (általunk már felfedezett cellára)
-    \item A Menü megnyitása: ESCAPE
-    \item Az Inventory megnyitása: I
-    \item Map megnyitása: M
-    \item Karakter oldal megnyitása: K
-\end{itemize}
-
 \Section{Interface felület}
 
 \subsection{Menü}
@@ -379,9 +386,9 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 
 \begin{itemize}
     \item prekondíció: A szimulációs ablakban vagyunk.
-    \item általános működés: Rávisszük az egeret, majd bal kattintás után kiválasztjuk a dobandó Tárgyat, és a cél cellát.
+    \item általános működés: Rávisszük az egeret, majd bal kattintás után kiválasztjuk a dobandó Tárgyat, és a cél cellát(maximum választható hosszúság a statisztikák alapján számolódik ki).
     \item alternatív esetek: Rossz tárgyat dob el.
-    \item Postkondíció: Eldobtuk az adott tárgyat a célbavett cellára.
+    \item Postkondíció: Eldobtuk az adott tárgyat a célbavett cellára, ha a cella tartalmaz Entity, akkor kiszámolódik az új HP mennyiség. Végül átadtuk a kört.
     \item kivételes esetek: Nem dobta el a Tárgyat.
 \end{itemize}
 
@@ -415,10 +422,69 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
     \item kivételes esetek: Nem nyílt ki a láda.
 \end{itemize}
 
+\subsection{Támadás}
+
+\begin{itemize}
+    \item prekondíció: A szimulációban a karakterünk cellájához szomszédos cella tartalmaz Entity.
+    \item általános működés: Rávisszük az egeret a felbukkanó ikonra, majd bal kattintással elindítjuk a folyamatot.
+    \item alternatív esetek: Nem támad a karakterünk.
+    \item Postkondíció: A támadás végbe ment, és kiszámításra került a célpont új HP mennyisége.
+    \item kivételes esetek: Nem számolodott ki az új HP mennyiség.
+\end{itemize}
+
+\Section{Mapon található mozgást kizáró objektumok}
+
+\subsection{Láda}
+
+A ládák map generáláskor kerülnek bizonyos cellákra.
+Entityk dobják a kulcsukat, vagy a mapra generálódik le valamelyik cellára.
+Ládát tartalmazó cellára nem lehetséges a mozgás.
+Interakcióval kinyitható, ha az Inventory tartalmazza a kulcsát. (Lásd: Interface)
+
+\subsection{Oszlop}
+
+Az oszlopok map generáláskor kerülnek bizonyos cellákra.
+Oszlopoknak semmilyen különleges funkciója nincs azonkívül, hogy map komplexitását kívánja növelni azzal,
+hogy mozgást és látást korlátozó szerepet lát el.
+
+\subsection{Zárt ajtó}
+
+Az ajtók map generáláskor kerülnek csak olyan cellákra, ahol egy szobából egy folyosón lehetséges elhagyni a szobát.
+Mindig zárt alakban kerül az adott cellákra, kinyitásához nem szükséges semmilyen különleges tárgy. Ha bármely karakter egy ajtót tartalmazó cellára lép, az ajtó kinyílik amíg Entityt tartalmaz az adott cella.
+Ahogyan az Oszlopok, a zárt ajtók is map komplexitását kívánja növelni azzal,hogy látást korlátozó szerepet lát el.
+
+\Section{Idő}
+
+Az idő a szimuláción belül minden általunk végrehajtott akció által telik.
+Ha elvégzünk egy akciót, akkor az irányítás átkerül egy másik Entityre,
+ami végig megy minden Entity, és ha végig ment a sor, akkor újra mi következünk.
+
+\Section{Kamera}
+
+A kamera normál esetben a karakterünk felett helyezkedik el, és ezáltal tekinthetünk le a map.
+A kamera használható korlátozottan szabad módban is, ahol a kamera elrugaszkodik a karakterünktől, és körbe nézhetünk.
+
+\Section{Láthatóság}
+
+Az általunk nem felfedezett map részek, semmilyen módon nem láthatóak általunk, ha már egyszer bejártuk az adott területet, 
+de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adott cellák frissülését(Lásd: Új Entity megjelenése) már nem fogjuk látni.
+
+\Section{Irányítás}
+
+\begin{itemize}
+    \item Kamera szabad mód be- és kikapcsolása: SPACE
+    \item Kamera szabadmódbna mozgatása: WASD
+    \item A szimulációs térben karakterünk mozgásra utasítása: LEFT CLICK (általunk már felfedezett cellára)
+    \item A Menü megnyitása: ESCAPE
+    \item Az Inventory megnyitása: I
+    \item Map megnyitása: M
+    \item Karakter oldal megnyitása: K
+\end{itemize}
+
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[scale=0.8]{images/gameUML.png}
-	\caption{Base Game}
+	\caption{Base Simulation}
 	\label{fig:basegame}
 \end{figure}
 
@@ -435,3 +501,11 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 	\caption{Entity Turn}
 	\label{fig:entityturn}
 \end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.4]{images/simulationER.png}
+	\caption{Simulation}
+	\label{fig:simulation}
+\end{figure}
+
