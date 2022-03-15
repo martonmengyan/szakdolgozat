@@ -44,33 +44,28 @@ A szemléletesség kedvéért lehet hozzájuk képernyőkép vázlatokat is kés
 A szimuláció indításakor vagy megállításakor felugró ablak.
 
 \begin{itemize}
-\item Start/Continue:
-A szimuláció indításakor a menüben a start-ot látjuk, ha a szimulációt állítjuk meg, akkor a menüben a continue-t látjuk.
-Ezen menüpont kiválasztásával kezdhetjük a szimulációt vagy folytathatjuk azt.
-
-\item Save:
-Ez a menüpont nem jelenik meg a szimuláció indításakor csak akkor, hogyha szimulációt állítunk meg.
-Ezen menüpont kiválasztásával menthetjük a jelenlegi szimulációnkat.
-
-\item Load:
-Ezen menüpont mindig jelen van a menüben, elérhető a szimuláció indításakor és megállításakor is.
-Ezen menüpont kiválasztásával tölthetjük be az általunk lementett mentéseket.
-
-\item Options:
-Ezen menüpont mindig jelen van a menüben, elérhető a szimuláció indításakor és megállításakor is.
-Ezen menüpont kiválasztásával egy új ablakra irányít át minket.
-Itt lehetőségünk van hangbeállítások személyre szabására, mint például a zene és a szimulációbeli hangok. (Több csúszka segítségével)
-Lehetőségünk van fényerő beállításokra is, mint például a Gamma állítására. (Egy csúszka segítségével)
-Nyelvi beállítások a menüre vonatkozóan. (Legördülő fülből kiválasztva)
-Végezetül egy visszagomb ami visszairányít minket a menübe.
-
-\item Log out:
-Kiléptet minket a jelenlegi fiókunkból, visszairányítva a bejelentkezési ablakhoz.
-A log-out a menüben mindig szerepel.
-
-\item Main menu:
-Ez a gomb akkor szerepel a menüben hogyha egy szimuláció megállításával kerülünk a menübe.
-Ez befejezi a jelenlegi szimulációnkat és visszaírányít minket a főmenübe.
+    \item Start/Continue:
+    A szimuláció indításakor a menüben a start-ot látjuk, ha a szimulációt állítjuk meg, akkor a menüben a continue-t látjuk.
+    Ezen menüpont kiválasztásával kezdhetjük a szimulációt vagy folytathatjuk azt.
+    \item Save:
+    Ez a menüpont nem jelenik meg a szimuláció indításakor csak akkor, hogyha szimulációt állítunk meg.
+    Ezen menüpont kiválasztásával menthetjük a jelenlegi szimulációnkat.
+    \item Load:
+    Ezen menüpont mindig jelen van a menüben, elérhető a szimuláció indításakor és megállításakor is.
+    Ezen menüpont kiválasztásával tölthetjük be az általunk lementett mentéseket.
+    \item Options:
+    Ezen menüpont mindig jelen van a menüben, elérhető a szimuláció indításakor és megállításakor is.
+    Ezen menüpont kiválasztásával egy új ablakra irányít át minket.
+    Itt lehetőségünk van hangbeállítások személyre szabására, mint például a zene és a szimulációbeli hangok. (Több csúszka segítségével)
+    Lehetőségünk van fényerő beállításokra is, mint például a Gamma állítására. (Egy csúszka segítségével)
+    Nyelvi beállítások a menüre vonatkozóan. (Legördülő fülből kiválasztva)
+    Végezetül egy visszagomb ami visszairányít minket a menübe.
+    \item Log out:
+    Kiléptet minket a jelenlegi fiókunkból, visszairányítva a bejelentkezési ablakhoz.
+    A log-out a menüben mindig szerepel.
+    \item Main menu:
+    Ez a gomb akkor szerepel a menüben hogyha egy szimuláció megállításával kerülünk a menübe.
+    Ez befejezi a jelenlegi szimulációnkat és visszaírányít minket a főmenübe.
 \end{itemize}
 
 \Section{Szimulációs környezet specifikálása}
@@ -87,7 +82,7 @@ A map szobák és folyosók összesége, ahol a szobák alakjánál törekszünk
 A szobákban és a folyosókban bejárható terület egy mátrixhoz hasonló, ahol a celláit blokkoknak nevezzük.
 Minden blokkhoz tartoznak adatok.
 
-Ezek az adatok:
+\noindent Ezek az adatok:
 
 \begin{itemize}
     \item X koordináta (egészérték)
@@ -97,7 +92,7 @@ Ezek az adatok:
     \item Effekt (integer típusú tömb, az adott blokkon lévő effektek ID-ját tartalmazza)
 \end{itemize}
 
-Fontosabb kizáró feltételek:
+\noindent Fontosabb kizáró feltételek:
 
 \begin{itemize}
     \item Ajtó csak szoba és a folyosó, vagy szoba és a szoba között létezzen.
@@ -121,7 +116,7 @@ Szintlépéskor lehetőségünk van a Karakter oldalon a szintlépéskor kapott 
 Entityk és karakterünk 4 alap statisztikával rendelkezik.
 Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
 
-Kezdő statisztika:
+\noindent Kezdő statisztika:
 \begin{itemize}
     \item Erő: 10
     \item Kitérés: 10
@@ -133,7 +128,7 @@ Kezdő statisztika:
 
 \subsection{Tolvaj}
 
-Kezdő statisztika:
+\noindent Kezdő statisztika:
 \begin{itemize}
     \item Erő: 8
     \item Kitérés: 12
@@ -143,7 +138,7 @@ Kezdő statisztika:
 
 \subsection{Harcos}
 
-Kezdő statisztika:
+\noindent Kezdő statisztika:
 \begin{itemize}
     \item Erő: 12
     \item Kitérés: 8
@@ -258,6 +253,46 @@ A tárgyak Quantity adatja azt az integer számot tartalmazza, amennyi létezik 
 A tárgyak MaxQuantity értéke azt határozza meg, mennyire stackelhet fel egy adott Item az inventoryban, ha túllépi a MaxQuantity számát, akkor új stack-et kezd.
 
 \Section{Tárgy nevek}
+
+\subsection{Vigor Flask}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 5\%-os eséllyel, de egyszerre csak háromnál kevesebbet hagyhat hátra.
+
+\noindent Elérhető interakciók:
+\begin{itemize}
+    \item Eldobás: Adott karakteren 3 körig érvényesül a Vigor effekt.(Lásd Effektek)
+    \item Használat: Adott cellán 3 körig érvényesül a Vigor effekt.(Lásd Effektek)
+\end{itemize}
+
+\subsection{Steel Flask}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 5\%-os eséllyel, de egyszerre csak háromnál kevesebbet hagyhat hátra.
+
+\noindent Elérhető interakciók:
+\begin{itemize}
+    \item Eldobás: Adott karakteren 3 körig érvényesül a Steel effekt.(Lásd Effektek)
+    \item Használat: Adott cellán 3 körig érvényesül a Steel effekt.(Lásd Effektek)
+\end{itemize}
+
+\subsection{Poison Flask}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 5\%-os eséllyel, de egyszerre csak háromnál kevesebbet hagyhat hátra.
+
+\noindent Elérhető interakciók:
+\begin{itemize}
+    \item Eldobás: Adott karakteren 3 körig érvényesül a Poison effekt.(Lásd Effektek)
+    \item Használat: Adott cellán 3 körig érvényesül a Poison effekt.(Lásd Effektek)
+\end{itemize}
+
+\subsection{Weakness Flask}
+
+Entity elpusztulásakor az adott cellán hagyja hátra 5\%-os eséllyel, de egyszerre csak háromnál kevesebbet hagyhat hátra.
+
+\noindent Elérhető interakciók:
+\begin{itemize}
+    \item Eldobás: Adott karakteren 3 körig érvényesül a Weakness effekt.(Lásd Effektek)
+    \item Használat: Adott cellán 3 körig érvényesül a Weakness effekt.(Lásd Effektek)
+\end{itemize}
 
 \subsection{Entity Helm no.1}
 
@@ -388,7 +423,7 @@ Map teljesítéséhez szükséges tárgy.
     \item prekondíció: A szimulációs ablakban vagyunk.
     \item általános működés: Rávisszük az egeret, majd bal kattintás után kiválasztjuk a dobandó Tárgyat, és a cél cellát(maximum választható hosszúság a statisztikák alapján számolódik ki).
     \item alternatív esetek: Rossz tárgyat dob el.
-    \item Postkondíció: Eldobtuk az adott tárgyat a célbavett cellára, ha a cella tartalmaz Entity, akkor kiszámolódik az új HP mennyiség. Végül átadtuk a kört.
+    \item Postkondíció: Eldobtuk az adott tárgyat a célbavett cellára, ha a cella tartalmaz Entity, akkor kiszámolódik az új HP mennyiség, az Inventoryban ha dobás előtti Quantity 1-nél több, akkor 1 levonódik belőle. Végül átadtuk a kört.
     \item kivételes esetek: Nem dobta el a Tárgyat.
 \end{itemize}
 
@@ -398,7 +433,7 @@ Map teljesítéséhez szükséges tárgy.
     \item prekondíció: A szimulációs ablakban vagyunk és a karakterünk celláján létezik valamilyen tárgy.
     \item általános működés: Rávisszük az egeret, majd bal kattintással felvesszük a Tárgyat, ha kiválaszottuk melyik Tárgyat vesszük fel a bal és jobbra mutató nyilak segítségével.
     \item alternatív esetek: Rossz Tárgyat vesz fel.
-    \item Postkondíció: Felvettük a kiválasztott Tárgyat.
+    \item Postkondíció: Felvettük a kiválasztott Tárgyat. Ha már szerepelt azonos nevű Tárgy az Inventoryban és a maxQuantity nem érte el a maximumát, akkor Quantity-hez hozzáadódik 1, máskülönben új stacket kezd az inventoryban.
     \item kivételes esetek: Nem vette fel a Tárgyat.
 \end{itemize}
 
