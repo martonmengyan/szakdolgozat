@@ -85,11 +85,13 @@ Minden blokkhoz tartoznak adatok.
 \noindent Ezek az adatok:
 
 \begin{itemize}
-    \item X koordináta (egészérték)
-    \item Y koordináta (egészérték)
-    \item Entity (intiger típusú érték,  az adott blokkon lévő entity ID-ját tartalmazza)
-    \item Tárgy (integer típusú tömb, az adott blokkon lévő tárgyak ID-ját tartalmazza)
-    \item Effekt (integer típusú tömb, az adott blokkon lévő effektek ID-ját tartalmazza)
+    \item X koordináta (egészérték),
+    \item Y koordináta (egészérték),
+    \item Entity (intiger típusú érték,  az adott blokkon lévő entity ID-ját tartalmazza),
+    \item Tárgy (integer típusú tömb, az adott blokkon lévő tárgyak ID-ját tartalmazza),
+    \item Effect (többértékű összetett tulajdonság, tartalmazza az EffectIDt és EffectTimeot),
+    \item EffectID (integer típusú tömb, az adott blokkon lévő effektek ID-ját tartalmazza),
+    \item EffectTime (integer típusú tömb, az adott blokkon lévő effektek lejárási idejét tartalmazza).
 \end{itemize}
 
 \noindent Fontosabb kizáró feltételek:
@@ -100,6 +102,7 @@ Minden blokkhoz tartoznak adatok.
     \item Két különböző folyósó ne érjen össze.
     \item Minden szobából nyíljon ajtó, úgy hogy lehetséges legyen elhagyni.
     \item A map bármelyik részéből elérhető legyen a map bármelyik tetszőleges helye.
+    \item Folyosó ne legyen eltorlaszolva nem bejárható térbeli objektummal, mint például: Oszlop.
 \end{itemize}
 
 \Section{Karakterünk}
