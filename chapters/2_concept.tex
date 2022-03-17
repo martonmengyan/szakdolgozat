@@ -127,6 +127,40 @@ Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
     \item Pontosság: 10
 \end{itemize}
 
+\subsection{Statisztikák jelentőssége}
+
+A Statisztikák határozzák meg karakterünk paramétereit, mint például:
+\begin{itemize}
+    \item a dobás cellában mért hosszát az Erő és Pontosság számossága határozza meg,
+    \item a maximum HP számát a Kitartás számossága határozza meg,
+    \item és fontos szerepet játszik a sebzés kiszámolásnál az Erő, Kitérés és a Pontosság számossága.
+\end{itemize}
+
+\noindent Ezeknek mind van egy kezdő paramétere, amelyhez a statisztikák hozzáadódnak.
+
+\begin{itemize}
+    \item A dobás cellában mért hosszának kezdő paramétere 3 cella hosszúságú,
+    \item a maximum HP, másnéven életerő kezdő paramétere 10 egységnyi,
+    \item a kitérés és pontosság kezdő paramétere 0.
+\end{itemize}
+
+\noindent A következőképpen növelik a statisztikák a karakterünk paramétereit: \ref{table:scalingtable}
+
+\noindent A pontos értékek a következő LVL-hez szükséges statisztikák eléréséhez: \ref{table:scalingleveltable}
+
+\subsection{Sebzés számlálás}
+
+A támadásnak két végkimenetele lehet:
+
+\begin{itemize}
+    \item Találat,
+    \item Eltévesztve.
+\end{itemize}
+
+\noindent Találat esetén, kiszámolódik a sebzés mértéke. A STR-ből elért szintekből összeadadó +DMG-t szenvedi ez sebzésként a HP-ból. Lásd: \ref{table:scalingtable}
+
+\noindent Eltévesztés esetén nem történik meg a sebzés. Akkor van eltévesztve, ha érvényesül a támdott EVA \%-os értéke, amiből előtte kivonódik a támadó ACC \%-os értéke.
+
 \Section{Ágensek}
 
 \subsection{Tolvaj}
@@ -148,10 +182,6 @@ Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
     \item Kitartás: 12
     \item Pontosság: 8
 \end{itemize}
-
-\subsection{Sebzés számlálás}
-
-...
 
 \subsection{Kommunikáció közöttük}
 
@@ -216,7 +246,6 @@ A szimulációban Entity és Entity vagy Entity és karakter közötti HP elvét
     \item cellák effekt tulajdonságának manipulálciója(Lásd:Effektet változtató tárgyak eldobása), effektek által,
     \item csapdák által, amelyek a játék kezdetekor generálódtak.
 \end{itemize}
-
 
 \Section{Tárgyak}
 
@@ -494,6 +523,7 @@ Ahogyan az Oszlopok, a zárt ajtók is map komplexitását kívánja növelni az
 \Section{Idő}
 
 Az idő a szimuláción belül minden általunk végrehajtott akció által telik.
+Minden olyan kör után, ahol nem szenvedünk el sebzést a maximum HP-nk 10\%-át visszatöltjük.
 Ha elvégzünk egy akciót, akkor az irányítás átkerül egy másik Entityre,
 ami végig megy minden Entity, és ha végig ment a sor, akkor újra mi következünk.
 
@@ -518,6 +548,70 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
     \item Map megnyitása: M
     \item Karakter oldal megnyitása: K
 \end{itemize}
+
+\Section{Táblázatok}
+
+\begin{table}[!ht]
+    \centering
+    \caption{Paraméter Scaling}
+    \label{table:scalingtable}
+    \begin{tabular}{|l|c|c|c|c|c|}
+    \hline
+    LVL & STR  & END & EVA & ACC & TRW \\
+    \hline
+    1 & +3DMG & +5HP & +3\% & +3\% & +1 \\
+    \hline
+    2 & +3DMG & +5HP & +3\% & +3\% & +1 \\
+    \hline
+    3 & +3DMG & +5HP & +3\% & +3\% & +1 \\
+    \hline
+    4 & +3DMG & +5HP & +3\% & +3\% & +1 \\
+    \hline
+    5 & +3DMG & +5HP & +3\% & +3\% & +1 \\
+    \hline
+    6 & +3DMG & +5HP & +3\% & +3\% & +1 \\
+    \hline
+    7 & +3DMG & +5HP & +3\% & +3\% & +1 \\
+    \hline
+    8 & +5DMG & +8HP & +3\% & +3\% & +1 \\
+    \hline
+    9 & +10DMG & +12HP & +3\% & +3\% & +1 \\
+    \hline
+    10 & +10DMG & +12HP & +3\% & +3\% & +1 \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \caption{Scaling Level Requirements}
+    \label{table:scalingleveltable}
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        LVL & STR  & END & EVA & ACC & TRW(STR,ACC) \\
+        \hline
+        1 & 2 & 2 & 2 & 2 & 4,4 \\
+        \hline
+        2 & 3 & 4 & 4 & 3 & 8,8 \\
+        \hline
+        3 & 4 & 6 & 6 & 4 & 12,12 \\
+        \hline
+        4 & 6 & 9 & 9 & 6 & 16,16 \\
+        \hline
+        5 & 9 & 20 & 20 & 9 & 20,20 \\
+        \hline
+        6 & 13 & 25 & 25 & 13 & 24,24 \\
+        \hline
+        7 & 19 & 30 & 30 & 19 & 32,32 \\
+        \hline
+        8 & 27 & 40 & 40 & 27 & 40,40 \\
+        \hline
+        9 & 40 & 50 & 50 & 40 & 50,50 \\
+        \hline
+        10 & 60 & 60 & 60 & 60 & 60,60 \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \begin{figure}[!ht]
 	\centering
@@ -546,4 +640,3 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 	\caption{Simulation}
 	\label{fig:simulation}
 \end{figure}
-
