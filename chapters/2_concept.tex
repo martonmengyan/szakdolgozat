@@ -2,7 +2,7 @@
 
 \Section{A fejezet célja}
 
-A szimulációs környezet inspirációt vesz már elkészített játékokból, mint például a Pixel Dungeon és Darkest Dungeon
+A szimulációs környezet inspirációt vesz már elkészített szimulációokból, mint például a Pixel Dungeon és Darkest Dungeon
 nevű játékokból ismerhető szoba és folyosó kapcsolat. Ahol minden szobát egy folyosó köt össze egy másik tetszőleges szobával.
 A Darkest Dungeon-hoz képest a játékmenet rugalmasabb, mivel a szobák bármikor elhagyhatóak és megközelíthetőek, ha engedi azt a pálya jelenlegi belső felépítése.
 Azaz, ha nincs útban valami, ami megakadályozza.
@@ -12,8 +12,8 @@ számolódnak ki az adott értékek figyelembe véve a célpont általt birtokol
 
 A fent említett három játék mind körökre osztott, ahogyan a szimulációs környezetünk is az lesz.
 
-A szimulációs környezetünk viszont egyedi lesz abból a szempontból, hogy az ágensek csoportokra vannak osztva és közös céllal rendelkezve próbálják legyőzni egymást és a játékost.
-Illetve hogy nem csak a játékosnak létezik 'win condition'-je, hanem az ágenseknek is, mindkét frakciónak különböző.
+A szimulációs környezetünk viszont egyedi lesz abból a szempontból, hogy az ágensek csoportokra vannak osztva és közös céllal rendelkezve próbálják legyőzni egymást és a ágenst.
+Illetve hogy nem csak a ágensnek létezik 'win condition'-je, hanem az ágenseknek is, mindkét frakciónak különböző.
 
 \iffalse
 A hivatkozások jelentős része ehhez a fejezethez szokott kötődni.
@@ -185,30 +185,60 @@ A támadásnak két végkimenetele lehet:
 
 \subsection{Kommunikáció közöttük}
 
-Az Entityk, ahogyan mi is, maguk elé 3 szélességben és 4 hosszúságnyi téglalapot látnak, illetve a karakter állásától 90fokra mindkét oldalra homályosan látnak 2 cellányit előre.
-Megfigyelik, hogy:
+Ágensek bemenete, információ szerzése:
+\begin{itemize}
+    \item Az előttük lévő 3x4 hosszúságnyi téglalapot észlelnek.
+    \item Jobb és bal oldalukra érzékelik a cellán belüli változásokat(Például: Új Entity).
+\end{itemize}
+
+\noindent Ágensek belső memóriája a következőket tartalmazza:
+\begin{itemize}
+    \item Inventory állapota. (Inventory mendezsment)
+    \item Karakter ablak állapota. (Az eddigi tapasztalaiból eldönti, mely statisztikára érdemes fejlesztenie szintlépéskor)
+    \item Aktuális HP állapota. (a HP számosságából eldönti, hogy képes-e adott feladatokra)
+    \item A felfedezett map körvonala. (céljaihoz legrövidebb útvonal tervezése)
+    \item Cél Tárgy állapota. (győzelméhez szükséges lépések tervezése)
+    \item Észlelt Entityk helyzete. (biztonságos útvonal tervezése szükséges eseten, Entityk útvonalának megtippelésével)
+    \item Mapon történő változások észlelése. (Entityk elkerülése)
+\end{itemize}
+
+\iffalse
 \begin{itemize}
     \item Eldöntik, hogy elégségesen ismerik-e környezetüket
     \item Nyitva vannak-e az ajtók
-    \item Merre mennek az Entityk és a játékos
+    \item Merre mennek az Entityk és a ágens
     \item Vannak-e hátrahagyott elpusztult Entityk
     \item Nyitva vannak-e a ládák
     \item Megszerezték-e a győzelemhez szükséges Tárgyat
-    \item Látják-e őt az ellenséges Entityk vagy a játékos
+    \item Látják-e őt az ellenséges Entityk vagy a ágens
 \end{itemize}
+\fi
 
 \subsection{Megfigyelési akcióik}
 
+\noindent Információk feldolgozása:
+\begin{itemize}
+    \item Inventory mérete és kihasználtsága, ha nem képes az általa kívánt Tárgyat felvenni, hátra hagy valamit a saját Inventoryjából, amit úgy ítél nem szükséges számára.
+    \item Karakter ablakban tárolt statisztikák számosságának figyelembe vételével és az eddigi tapasztalaiból mérlegeli, mely statisztika növelése lesz a céljai eléréséhez a legmegfelelőbb.
+    \item Aktuális HP állapotának figyelembe vétele, HP-t igénylő akciók késleltetése addig amíg elegséges mennyiségű HP-t szerez vissza. Körönkénti maximum 10\% HP visszatöltés.(Lásd: Idő)
+    \item A felfedezett map körvonalának megfigyelése(Lásd: Map), fel nem fedezett részek struktúrájának következtetése a jelenlegi információi alapján. Fel nem fedezett folyosók és a mapon szürke foltok nagyságából eldönti, hogy hol lehet a számára keresendő szoba vagy útvonal.
+    \item Cél Tárgy állapota, helyzetének megjósolása és a hozzávezető útvonal és tervek megtervezése.
+    \item Entityk legutolsó ismert helyzetéből és látott útvonalából megjósolja a lehetséges útvonalát, ezzel elkerülését vagy megtalálását segítve elő.
+    \item Mapon történő változások észlelése és azokból információ nyerés, hátrahagyott itemek és elpusztult Entity maradványok.
+\end{itemize}
+
+\iffalse
 Hogyan reagálnak az általuk nyert információkra?
 \begin{itemize}
     \item Ha úgy itéli meg, hogy környezetét nem ismeri eléggé, Körbetekintés segítségével felfedezi környezetét.
     \item Ha nyitva vannak-e az ajtók és nem tudják mely Entity által, akkor körbenézhetnek, hogy megtalálják a tettest.
-    \item Ha tudják merre mennek az Entityk és a játékos, aszerint tervezik útvonalokat, vagy támadnak
+    \item Ha tudják merre mennek az Entityk és a ágens, aszerint tervezik útvonalokat, vagy támadnak
     \item Ha vannak hátrahagyott elpusztult Entityk, amelyek nem rég nem voltak ott, akkor körbenézhetnek, hogy megtalálják a tettest.
     \item Ha nyitva vannak a ládák, amelyek nem rég nem voltak nyitva, akkor körbenézhetnek, hogy megtalálják a tettest.
     \item Ha Megszerezték a győzelemhez szükséges Tárgyat, akkor támogatják csapattársaikat, ha más szerezte meg, megpróbálják megakadályozni.
-    \item Ha nem látják ellenséges Entityk vagy játékos, de ők látják, megpróbálnak mögé ossoni és hátból támadni váratlanul.
+    \item Ha nem látják ellenséges Entityk vagy ágens, de ők látják, megpróbálnak mögé ossoni és hátból támadni váratlanul.
 \end{itemize}
+\fi
 
 \subsection{Elérendő céljaik}
 
@@ -244,7 +274,7 @@ A szimulációban Entity és Entity vagy Entity és karakter közötti HP elvét
     \item szomszédos cellából támadás által(Lásd: támadás),
     \item azonos X vagy Y koordinátájú cellából statisztikák által meghatározott távolságnyira dobás által(Lásd: dobás),
     \item cellák effekt tulajdonságának manipulálciója(Lásd:Effektet változtató tárgyak eldobása), effektek által,
-    \item csapdák által, amelyek a játék kezdetekor generálódtak.
+    \item csapdák által, amelyek a szimuláció kezdetekor generálódtak.
 \end{itemize}
 
 \Section{Tárgyak}
@@ -329,7 +359,7 @@ Entity elpusztulásakor az adott cellán hagyja hátra 5\%-os eséllyel, de egys
 \subsection{Entity Helm no.1}
 
 Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
     \item Erő: ]2,4[
@@ -341,7 +371,7 @@ Játékos által használható felszerelési tárgy, amely pozitív és negatív
 \subsection{Entity Helm no.2}
 
 Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
     \item Erő: ]-2,-4[
@@ -353,7 +383,7 @@ Játékos által használható felszerelési tárgy, amely pozitív és negatív
 \subsection{Entity Armor no.1}
 
 Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
     \item Erő: ]2,4[
@@ -365,7 +395,7 @@ Játékos által használható felszerelési tárgy, amely pozitív és negatív
 \subsection{Entity Armor no.2}
 
 Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
     \item Erő: ]-2,-4[
@@ -377,7 +407,7 @@ Játékos által használható felszerelési tárgy, amely pozitív és negatív
 \subsection{Entity Weapon no.1}
 
 Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
     \item Erő: ]1,5[
@@ -389,7 +419,7 @@ Játékos által használható felszerelési tárgy, amely pozitív és negatív
 \subsection{Entity Weapon no.2}
 
 Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-Játékos által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a játékos jelenlegi statisztikáiból.
+ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
     \item Erő: ]-1,2[
@@ -401,7 +431,7 @@ Játékos által használható felszerelési tárgy, amely pozitív és negatív
 \subsection{Kulcs}
 
 Vagy Entityktől, vagy celláról szerezhetőek meg.
-Szerepük a ládák kinyitása a játékos által.
+Szerepük a ládák kinyitása a ágens által.
 
 \subsection{Cél Tárgy}
 
