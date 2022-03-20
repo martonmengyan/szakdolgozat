@@ -91,6 +91,15 @@ Celláin korlátozottan helyezkedhetnek el térbeli objektumok(Lásd: oszlop), a
 \subsection{Map}
 
 A map szobák és folyosók összesége, ahol a szobák alakjánál törekszünk a négyzet alakú szobák elkerülésére. A folyosók általában rövidek és egy szóbából akár több is nyílik egy adott szobára.
+Minden maphoz tartoznak adatok.
+
+\noindent Ezek az adatok:
+
+\begin{itemize}
+    \item MapID (egészérték),
+    \item SimulationTime (egészérték, szimuláció kezdete eltelt másodpercek száma).
+\end{itemize}
+
 A szobákban és a folyosókban bejárható terület egy mátrixhoz hasonló, ahol a celláit blokkoknak nevezzük.
 Minden blokkhoz tartoznak adatok.
 
@@ -179,7 +188,22 @@ A támadásnak két végkimenetele lehet:
 
 \Section{Ágensek}
 
-Akcióik és a tárolt tárgyaktól függően változik a grafikai kinézétük.
+\begin{itemize}
+    \item EntityID: (egészérték)
+    
+    Az Entityhez kötödő egyedi ID értékét tartalmazza. Ez határozza meg, hogy mik a céljai.
+    \item EntityType: (string)
+    
+    Általunk defininált típusukat tartalmaz: Tolvaj, Harcos és Karakter.
+    \item EntityType: (általunk defininált típusok)
+    
+    Lehet Blue,Red és null.
+    \item Effect: (többértékű összetett tulajdonság, az EffectID és EffectTime-ot tartalmazza.)
+    
+    Lásd: Effectek.
+\end{itemize}
+
+\subsection{Kinézetet befolyásoló tényezők}
 
 \noindent Akciók és Tárgyak amelyektől változik a megjelenés:
 
@@ -294,9 +318,36 @@ Hogyan reagálnak az általuk nyert információkra?
 \end{itemize}
 \fi
 
-\subsection{Elérendő céljaik}
+\Section{Cél Tárgy}
 
-...
+Map teljesítéséhez szükséges tárgy.
+A mapon egy zárt szobában helyezkedik el, kulcsát egy generáláskor meghatározott Entity hagyja hátra elpusztulásakor.
+A szobában egy a több puzzle közül kerül legenerálásra per map.
+Ha a karakterünk teljesíti a puzzle-t, akkor megnyeri a mapot, és az adott szobában nyílik egy lefele lépcső, amely a következő mapra visz.
+A következő map hasonlóan kerül legenerálásra, mint az előző, csak az entityk statisztikái a karakterünk statisztikáihoz arányosan növekednek meg.
+
+\begin{itemize}
+    \item Cél szoba elérését segítő jelek:
+    A szobákban a falakon elhelyezett nyilak, amelyeket csak adott szögből láthatóak(Lásd: Kamera szög) mutatják meg az utat a Cél Tárgyat tartalmazó szobát.
+    \item Puzzle-t segítő nyomok:
+    Generáláskor random szobákban elhelyez a falakon nyomokat, amelyek a puzzle megoldását segítik elő, ezek nagy részének felderítése nélkül nem képes megoldani a puzzle a karakterünk.
+\end{itemize}
+
+\Section{Puzzle}
+
+Puzzle-oknak léteznek a lehetséges próbálásainak maximális száma, mielőtt a karakter automatikusan veszít.
+
+\noindent Lehetséges Puzzle:
+
+\begin{itemize}
+    \item Három Kar.
+    
+    Minden karnak 3 lehetséges állása van(bal, közép, jobb), ha a karakter eltalálja a minden kar helyes állását, megszerzi a Cél Tárgyat.
+    
+    Különböző megoldások száma: $3^3$
+
+    Vereséget jelentő próbálkozások száma: 4.
+\end{itemize}
 
 \Section{Effektek}
 
@@ -335,11 +386,11 @@ A szimulációban Entity és Entity vagy Entity és karakter közötti HP elvét
 
 A tárgyakhoz a következő adatok tartoznak:
 \begin{itemize}
-    \item ItemID
-    \item ItemName
-    \item ItemType
-    \item Quantity
-    \item MaxQuantity
+    \item ItemID (egészérték)
+    \item ItemName (integer)
+    \item ItemType (általunk meghatárotozott típusuk egyike)
+    \item Quantity (egészérték)
+    \item MaxQuantity (egészérték)
 \end{itemize}
 
 \subsection{ItemID}
@@ -486,37 +537,6 @@ Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egy
 
 Vagy Entityktől, vagy celláról szerezhetőek meg.
 Szerepük a ládák kinyitása az ágens által.
-
-\subsection{Cél Tárgy}
-
-Map teljesítéséhez szükséges tárgy.
-A mapon egy zárt szobában helyezkedik el, kulcsát egy generáláskor meghatározott Entity hagyja hátra elpusztulásakor.
-A szobában egy a több puzzle közül kerül legenerálásra per map.
-Ha a karakterünk teljesíti a puzzle-t, akkor megnyeri a mapot, és az adott szobában nyílik egy lefele lépcső, amely a következő mapra visz.
-A következő map hasonlóan kerül legenerálásra, mint az előző, csak az entityk statisztikái a karakterünk statisztikáihoz arányosan növekednek meg.
-
-\begin{itemize}
-    \item Cél szoba elérését segítő jelek:
-    A szobákban a falakon elhelyezett nyilak, amelyeket csak adott szögből láthatóak(Lásd: Kamera szög) mutatják meg az utat a Cél Tárgyat tartalmazó szobát.
-    \item Puzzle-t segítő nyomok:
-    Generáláskor random szobákban elhelyez a falakon nyomokat, amelyek a puzzle megoldását segítik elő, ezek nagy részének felderítése nélkül nem képes megoldani a puzzle a karakterünk.
-\end{itemize}
-
-\Section{Puzzle}
-
-Puzzle-ok lehetséges próbálásának maximális száma, mielőtt a karakter automatikusan veszít az: X.
-
-\noindent Lehetséges Puzzle:
-
-\begin{itemize}
-    \item Három Kar.
-    
-    Minden karnak 3 lehetséges állása van(bal, közép, jobb), ha a karakter eltalálja a minden kar helyes állását, megszerzi a Cél Tárgyat.
-    
-    Különböző megoldások száma: $3^3$
-
-    Vereséget jelentő próbálkozások száma: 4.
-\end{itemize}
 
 \Section{Interface felület}
 
@@ -752,7 +772,7 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.4]{images/simulationER.png}
+	\includegraphics[scale=0.3]{images/simulationER.png}
 	\caption{Simulation}
 	\label{fig:simulation}
 \end{figure}
