@@ -278,18 +278,6 @@ A támadásnak két végkimenetele lehet:
     \item Falakon hagyott nyomok észlelése. (Célhoz szükséges)
 \end{itemize}
 
-\iffalse
-\begin{itemize}
-    \item Eldöntik, hogy elégségesen ismerik-e környezetüket
-    \item Nyitva vannak-e az ajtók
-    \item Merre mennek az Entityk és a ágens
-    \item Vannak-e hátrahagyott elpusztult Entityk
-    \item Nyitva vannak-e a ládák
-    \item Megszerezték-e a győzelemhez szükséges Tárgyat
-    \item Látják-e őt az ellenséges Entityk vagy a ágens
-\end{itemize}
-\fi
-
 \subsection{Megfigyelési akcióik}
 
 \noindent Információk feldolgozása:
@@ -305,18 +293,46 @@ A támadásnak két végkimenetele lehet:
     \item Falakon hagyott Puzzle nyomok és a CélTárgyhoz vezető nyomok feldolgozása.
 \end{itemize}
 
-\iffalse
-Hogyan reagálnak az általuk nyert információkra?
+\subsection{Ágens fő céljai}
+
 \begin{itemize}
-    \item Ha úgy itéli meg, hogy környezetét nem ismeri eléggé, Körbetekintés segítségével felfedezi környezetét.
-    \item Ha nyitva vannak-e az ajtók és nem tudják mely Entity által, akkor körbenézhetnek, hogy megtalálják a tettest.
-    \item Ha tudják merre mennek az Entityk és a ágens, aszerint tervezik útvonalokat, vagy támadnak
-    \item Ha vannak hátrahagyott elpusztult Entityk, amelyek nem rég nem voltak ott, akkor körbenézhetnek, hogy megtalálják a tettest.
-    \item Ha nyitva vannak a ládák, amelyek nem rég nem voltak nyitva, akkor körbenézhetnek, hogy megtalálják a tettest.
-    \item Ha Megszerezték a győzelemhez szükséges Tárgyat, akkor támogatják csapattársaikat, ha más szerezte meg, megpróbálják megakadályozni.
-    \item Ha nem látják ellenséges Entityk vagy ágens, de ők látják, megpróbálnak mögé ossoni és hátból támadni váratlanul.
+    \item Megtalálni a Cél Tárgyat tartalmazó szoba kulcsát tartalmazó Entity és elvenni.
+    \item Megtalálni a Cél Tárgyat tartalmazó szoba helyét.
+    \item Megtalálni a Puzzle megoldásához elégséges 
 \end{itemize}
-\fi
+
+\subsection{Ágens másodlagos céljai}
+
+\begin{itemize}
+    \item 
+    \item 
+    \item 
+\end{itemize}
+
+\subsection{Ágens függvény}
+
+A következő ábrán látható az ágens cselekvésének meghatározására szolgáló végtelen ciklus, amely a szimuláció kezdetétől működik. ~\ref{fig:agentfunction}
+
+\noindent A csomópontok kifejtése:
+
+\begin{itemize}
+    \item Információ szerzés:
+    Az ágens felderíti a környezetét és információt szerez arról.
+    \item Térbeli objektumok felismerése:
+    Cellákon lévő mozgást korlátozó térbeli objektumok felismerése.
+    \item Entityk felismerése és mérlegelése:
+    Entityk felismerése és elemzése.
+    \item Cellák kategorizálása:
+    Az előző lépésekből nyert információk alapján minden általa felismert cellának ad egy adott értéket, amely olyan jelentést tartalmazhat, hogy mennyire veszélyes az adott cella.
+    \item Célok átgondolása:
+    A másodlagos és rövid célok átgondolása, beépítése az úttervezésbe.
+    \item Tervezés:
+    Célok és belsőállapotok által vezérlelt optimális útvonal kiszámolása.
+    \item Végrehajtás: 
+    Tervezésben kiszámolt akciók végrehajtásának elkezdése.
+    \item Újraszámolás:
+    Akciók végrehajtása közben újra kiszámolja az általa már kiszámolt terveket az újonnan megismert információkkal.
+\end{itemize}
 
 \Section{Cél Tárgy}
 
@@ -775,4 +791,11 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 	\includegraphics[scale=0.3]{images/simulationER.png}
 	\caption{Simulation}
 	\label{fig:simulation}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.6]{images/agentfunction.png}
+	\caption{Agentfunction}
+	\label{fig:agentfunction}
 \end{figure}
