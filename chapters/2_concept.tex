@@ -158,93 +158,23 @@ Minden blokkhoz tartoznak adatok.
     \item Folyosó ne legyen eltorlaszolva nem bejárható térbeli objektummal, mint például: Oszlop.
 \end{itemize}
 
-\Section{Karakterünk}
-
-Karakterünk az a main Entity, amely egyedül vesz részt a szimulációban.
-A többi entity nem képes szint lépésre.
+\Section{Ágensek}
 
 \subsection{Szint}
 
-Karakterünk rendelkezik egy szinttel, ami a legelején az 1es szintről indul.
-Entity legyőzése ad karakterünknek tapasztalatpontot, amelyből ha megszerzünk egy adott mennyiséget, a karaktünk szintet lép.
+Az Ágensek rendelkeznek egy szinttel, ami a legelején az 1es szintről indul.
+Más az ágensek ellenséges ágensekre mért végső találat ad tapasztalatpontot, amelyből ha megszerez egy adott mennyiséget, az ágens szintet lép.
 A legelső szintlépéshez szükséges tapasztalatpont mennyisége 100.
 Minden következő szinthez 10\%-kal több tapasztalatpont szükséges, mint az előző szinthez.
-Szintlépéskor lehetőségünk van a Karakter oldalon a szintlépéskor kapott 3 pontunkat elosztani a fő 4 statisztikára.(Lásd: Statisztika)
+Szintlépéskor az ágens a Karakter oldalon a szintlépéskor kapott 3 pontját képes elosztani a fő 4 statisztikára.(Lásd: Statisztika)
 
 \subsection{Statisztika}
 
-Entityk és karakterünk 4 alap statisztikával rendelkezik.
+Ágensek 4 alap statisztikával rendelkeznek.
 Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
-
-\noindent Kezdő statisztika:
-\begin{itemize}
-    \item Erő: 13
-    \item Kitérés: 13
-    \item Kitartás: 13
-    \item Pontosság: 13
-\end{itemize}
-
-\subsection{Statisztikák jelentőssége}
-
-A Statisztikák határozzák meg karakterünk paramétereit, mint például:
-\begin{itemize}
-    \item a dobás cellában mért hosszát az Erő és Pontosság számossága határozza meg,
-    \item a maximum HP számát a Kitartás számossága határozza meg,
-    \item és fontos szerepet játszik a sebzés kiszámolásnál az Erő, Kitérés és a Pontosság számossága.
-\end{itemize}
-
-\noindent Ezeknek mind van egy kezdő paramétere, amelyhez a statisztikák hozzáadódnak.
-
-\begin{itemize}
-    \item A dobás cellában mért hosszának kezdő paramétere 3 cella hosszúságú,
-    \item a maximum HP, másnéven életerő kezdő paramétere 10 egységnyi,
-    \item a kitérés és pontosság kezdő paramétere 0.
-\end{itemize}
-
-\noindent A következőképpen növelik a statisztikák a karakterünk paramétereit: \ref{table:scalingtable}
-
-\noindent A pontos értékek a következő LVL-hez szükséges statisztikák eléréséhez: \ref{table:scalingleveltable}
-
-\subsection{Sebzés számlálás}
-
-A támadásnak két végkimenetele lehet:
-
-\begin{itemize}
-    \item Találat,
-    \item Eltévesztve.
-\end{itemize}
-
-\noindent Találat esetén, kiszámolódik a sebzés mértéke. A STR-ből elért szintekből összeadadó +DMG-t szenvedi ez sebzésként a HP-ból. Lásd: \ref{table:scalingtable}
-
-\noindent Eltévesztés esetén nem történik meg a sebzés. Akkor van eltévesztve, ha érvényesül a támdott EVA \%-os értéke, amiből előtte kivonódik a támadó ACC \%-os értéke.
-
-\Section{Ágensek}
-
-\begin{itemize}
-    \item EntityID: (egészérték)
-    
-    Az Entityhez kötödő egyedi ID értékét tartalmazza. Ez határozza meg, hogy mik a céljai.
-    \item EntityType: (string)
-    
-    Általunk defininált típusukat tartalmaz: Tolvaj, Harcos és Karakter.
-    \item EntityType: (általunk defininált típusok)
-    
-    Lehet Blue,Red és null.
-    \item Effect: (többértékű összetett tulajdonság, az EffectID és EffectTime-ot tartalmazza.)
-    
-    Lásd: Effectek.
-\end{itemize}
-
-\subsection{Kinézetet befolyásoló tényezők}
-
-\noindent Akciók és Tárgyak amelyektől változik a megjelenés:
-
-\begin{itemize}
-    \item Entity állása. Látszódik, hogy milyen irányba néz.
-    \item Felszerelt Flask. Látszódik, hogyha van nála általa használható Flask.
-    \item Dobás. Dobásnál az entity dobóállásba áll az adott irányba.
-    \item CélTárgyat tartalmazó szoba kulcs tartalmazása.
-\end{itemize}
+Az ágensek kezdő statisztikáját meghatározza az ágens típusa.
+Az ágens típusok kialakítása fontos figyelmet szán a kezdő statisztikákra, amelyek úgy lettek meghatározva, hogy a Harcos kevés eséllyel de nagyobb találatra képes, emellett nem képes kikerülni találatokat. De növelt HP mennyiséggel rendelkezik.
+A tolvaj nagy eséllyel találja el ellenségét, de kisebb találatra képes, támadásokat nagyobb eséllyel képes kikerülni, de HP mennyisége nem sok.
 
 \subsection{Tolvaj}
 
@@ -287,6 +217,69 @@ A támadásnak két végkimenetele lehet:
 \end{itemize}
 
 \noindent Elpusztulásakor 20 tapasztalatpontot hagy hátra maga mögött.
+
+
+\subsection{Statisztikák jelentőssége}
+
+A Statisztikák határozzák meg karakterünk paramétereit, mint például:
+\begin{itemize}
+    \item a dobás cellában mért hosszát az Erő és Pontosság számossága határozza meg,
+    \item a maximum HP számát a Kitartás számossága határozza meg,
+    \item és fontos szerepet játszik a sebzés kiszámolásnál az Erő, Kitérés és a Pontosság számossága.
+\end{itemize}
+
+\noindent Ezeknek mind van egy kezdő paramétere, amelyhez a statisztikák hozzáadódnak.
+
+\begin{itemize}
+    \item A dobás cellában mért hosszának kezdő paramétere 3 cella hosszúságú,
+    \item a maximum HP, másnéven életerő kezdő paramétere 10 egységnyi,
+    \item a kitérés és pontosság kezdő paramétere 0.
+\end{itemize}
+
+\noindent A következőképpen növelik a statisztikák a karakterünk paramétereit: \ref{table:scalingtable}
+
+\noindent A pontos értékek a következő LVL-hez szükséges statisztikák eléréséhez: \ref{table:scalingleveltable}
+
+\subsection{Sebzés számlálás}
+
+A támadásnak két végkimenetele lehet:
+
+\begin{itemize}
+    \item Találat,
+    \item Eltévesztve.
+\end{itemize}
+
+\noindent Találat esetén, kiszámolódik a sebzés mértéke. A STR-ből elért szintekből összeadadó +DMG-t szenvedi ez sebzésként a HP-ból. Lásd: \ref{table:scalingtable}
+
+\noindent Eltévesztés esetén nem történik meg a sebzés. Akkor van eltévesztve, ha érvényesül a támdott EVA \%-os értéke, amiből előtte kivonódik a támadó ACC \%-os értéke.
+
+\Section{Ágens tulajdonságai}
+
+\begin{itemize}
+    \item EntityID: (egészérték)
+    
+    Az Entityhez kötödő egyedi ID értékét tartalmazza. Ez határozza meg, hogy mik a céljai.
+    \item EntityType: (string)
+    
+    Általunk defininált típusukat tartalmaz: Tolvaj, Harcos és Karakter.
+    \item EntityType: (általunk defininált típusok)
+    
+    Lehet Blue,Red.
+    \item Effect: (többértékű összetett tulajdonság, az EffectID és EffectTime-ot tartalmazza.)
+    
+    Lásd: Effectek.
+\end{itemize}
+
+\subsection{Kinézetet befolyásoló tényezők}
+
+\noindent Akciók és Tárgyak amelyektől változik a megjelenés:
+
+\begin{itemize}
+    \item Entity állása. Látszódik, hogy milyen irányba néz.
+    \item Felszerelt Flask. Látszódik, hogyha van nála általa használható Flask.
+    \item Dobás. Dobásnál az entity dobóállásba áll az adott irányba.
+    \item CélTárgyat tartalmazó szoba kulcs tartalmazása.
+\end{itemize}
 
 \subsection{Kommunikáció közöttük}
 
