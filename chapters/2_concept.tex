@@ -21,23 +21,55 @@ A hivatkozások jelentős része ehhez a fejezethez szokott kötődni.
 Itt lehet bemutatni a hasonló alkalmazásokat.
 \fi
 
-\Section{Tartalom és felépítés}
+\Section{Felhasznált technológiák}
 
-\iffalse
-A fejezet tartalma témától függően változhat. Az alábbiakat attól függően különböző arányban tartalmazhatják.
+\noindent Pixel Dungeon:
+
 \begin{itemize}
-\item Irodalomkutatás. Amennyiben a dolgozat egy módszer kidolgozására, kifejlesztésére irányul, akkor itt lehet részletesen végignézni (módszertani vagy időrendi bontásban), hogy az eddigiekben milyen eredmények születtek a témakörben.
-\item Technológia. Mivel jellemzően kutatásról vagy szoftverfejlesztésről van szó, ezért annak a jellemző elemeit, technikai részleteit itt kell bemutatni.
-Ez tehát egy módszeres bevezetés ahhoz, hogy ha valaki nem jártas a témakörben, akkor tudja, hogy a dolgozat milyen aktuálisan elérhető eredményeket, eszközöket használt fel.
-\item Piackutatás. Bizonyos témáknál új termék vagy szolgáltatás kifejlesztése a cél.
-Ekkor érdemes annak alaposan utánanézni, hogy aktuálisan milyen eszközök érhetők el a piacon.
-Ez szoftverek esetében a hasonló alkalmazások bemutatását, táblázatos formában történő összehasonlítását jelentheti.
-Szerepelhetnek képek és észrevételek a viszonyításként bemutatott alkalmazásokhoz.
-\item Követelmény specifikáció. Külön szakaszban érdemes részletesen kitérni az elkészítendő alkalmazással kapcsolatos követelményekre.
-Ehhez tartozhatnak forgatókönyvek (\textit{scenario}-k).
-A szemléletesség kedvéért lehet hozzájuk képernyőkép vázlatokat is készíteni, vagy a használati eseteket más módon szemléltetni.
+    \item Körökre osztott tevékenységkör.
+    \item Ahogyan a referenciaként szolgáló játékképeken látszódik, a játék szobák és folyosók véges kombinációjából épül fel.
+    \item A játéktér teljes része négyzet cellákból épül fel, amelyek összességét.
+    \item A cellák tartalmazhatnak objektumokat és ágenseket, illetve tárgyakat.
+    \item Illetve létezik a szint fogalma, de csak a játékot irányító számára.
+    \item Tárgyak használata.
+    \item Randomizált map kialakítás.
 \end{itemize}
-\fi
+
+\noindent For The King
+
+\begin{itemize}
+    \item Körökre osztott, a jövőbeli köröket láthatjuk dinamikusan a képernyőn a combat phase-ban.
+    \item Statisztikák által behatárolt számolások.
+    \item Tárgyak használata.
+    \item Illetve létezik a szint fogalma, de csak a játékot irányító számára.
+    \item Egyszerre több karakter irányítása.
+    \item Részben tartalmaz szobákat, de azok egyirányúak.
+    \item A játéktér bizonyos részei hexagon cellákból épül fel.
+\end{itemize}
+
+\noindent Darkest Dungeon
+
+\begin{itemize}
+    \item Szobák és folyosók összessége, de több kisebb mapból épül fel.
+    \item Randomizált map kialakítás.
+    \item Tárgyak használata.
+    \item Egyszerre több karakter irányítása.
+    \item Körökre osztott, de nem láthatjuk a képernyőn a sorrendet.
+    \item Illetve létezik a szint fogalma, de csak a játékot irányító számára.
+\end{itemize}
+
+\noindent A szimulációs környezet tartalmazni fogja a:
+
+\begin{itemize}
+    \item Szobák és folyosók által felépített map struktúráját.
+    \item A körök dinamikus kiszámolását és megjelenlítését a szimulációban.
+    \item Négyzet cellákból felépített szimulációstér.
+    \item Tárgyakat és azok használatát.
+    \item Szint fogalmát, de minden ágens hozzáfér.
+    \item Egyszerre több karakter irányítását azonos célok által vezérelve.
+    \item Statisztikák által meghatározott számolásokat.
+    \item Randomizált mapokat.
+\end{itemize}
 
 \Section{Menü}
 
@@ -291,6 +323,16 @@ A támadásnak két végkimenetele lehet:
     \item Entityk legutolsó ismert helyzetéből és látott útvonalából megjósolja a lehetséges útvonalát, ezzel elkerülését vagy megtalálását segítve elő.
     \item Mapon történő változások észlelése és azokból információ nyerés, hátrahagyott itemek és elpusztult Entity maradványok.
     \item Falakon hagyott Puzzle nyomok és a CélTárgyhoz vezető nyomok feldolgozása.
+\end{itemize}
+
+\subsection{Ágens külső tevékenységeinek a köre}
+
+\begin{itemize}
+    \item Lépés. ()
+    \item Dobás. ()
+    \item Felszerelés. ()
+    \item Körbeforgás. ()
+    \item Támadás. ()
 \end{itemize}
 
 \subsection{Ágens fő céljai}
