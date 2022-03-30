@@ -88,16 +88,24 @@ A szimuláció indításakor vagy megállításakor felugró ablak.
     \item Options:
     Ezen menüpont mindig jelen van a menüben, elérhető a szimuláció indításakor és megállításakor is.
     Ezen menüpont kiválasztásával egy új ablakra irányít át minket.
-    Itt lehetőségünk van hangbeállítások személyre szabására, mint például a zene és a szimulációbeli hangok. (Több csúszka segítségével)
     Lehetőségünk van fényerő beállításokra is, mint például a Gamma állítására. (Egy csúszka segítségével)
-    Nyelvi beállítások a menüre vonatkozóan. (Legördülő fülből kiválasztva)
     Végezetül egy visszagomb ami visszairányít minket a menübe.
-    \item Log out:
-    Kiléptet minket a jelenlegi fiókunkból, visszairányítva a bejelentkezési ablakhoz.
-    A log-out a menüben mindig szerepel.
     \item Main menu:
     Ez a gomb akkor szerepel a menüben hogyha egy szimuláció megállításával kerülünk a menübe.
     Ez befejezi a jelenlegi szimulációnkat és visszaírányít minket a főmenübe.
+\end{itemize}
+
+\Section{UI}
+
+A szimuláció figyelésére és irányítására szolgáló UI ablakok:
+
+\begin{itemize}
+    \item \nameref{fig:baseui}
+    \item \nameref{fig:blockui}
+    \item \nameref{fig:effectui}
+    \item \nameref{fig:invui}
+    \item \nameref{fig:mapui}
+    \item \nameref{fig:uiexample}
 \end{itemize}
 
 \Section{Szimulációs környezet specifikálása}
@@ -218,7 +226,6 @@ A tolvaj nagy eséllyel találja el ellenségét, de kisebb találatra képes, t
 
 \noindent Elpusztulásakor 20 tapasztalatpontot hagy hátra maga mögött.
 
-
 \subsection{Statisztikák jelentőssége}
 
 A Statisztikák határozzák meg karakterünk paramétereit, mint például:
@@ -318,11 +325,15 @@ A támadásnak két végkimenetele lehet:
     \item Falakon hagyott Puzzle nyomok és a CélTárgyhoz vezető nyomok feldolgozása.
 \end{itemize}
 
-\subsection{Ágens külső tevékenységeinek a köre}
+\subsection{Ágens tevékenységeinek a köre}
+
+\noindent Ezek bármelyik használata, felhasználja az ágens körét.
 
 \begin{itemize}
     \item Lépés. ()
     \item Dobás. ()
+    \item Láda nyitás. ()
+    \item Felvétel. ()
     \item Felszerelés. ()
     \item Körbeforgás. ()
     \item Támadás. ()
@@ -351,11 +362,28 @@ A következő ábrán látható az ágens cselekvésének meghatározására szo
 
 \begin{itemize}
     \item Információ szerzés:
-    Az ágens felderíti a környezetét és információt szerez arról.
+    Az ágens felderíti a környezetét és információt szerez arról. Általa látott cellákból nyeri ki az információt.
     \item Térbeli objektumok felismerése:
-    Cellákon lévő mozgást korlátozó térbeli objektumok felismerése.
+    Cellákon lévő mozgást korlátozó térbeli objektumok felismerése. Minden cellához, amelyet az Információ szerzés során lát, a következő változókhoz a következő értékeket rendelheti:
+    
+    Boolean típusú változó, amely a cellán lévő térbeli objektum létét jelöli.
+    
+    Integer típusú változó, amely a cellán lévő térbeli objektum a sorszámát tartalmazza.
+
     \item Entityk felismerése és mérlegelése:
-    Entityk felismerése és elemzése.
+    Ágensek felismerése és elemzése.
+    Minden cellához, amelyet az Információ szerzés során lát, a következő változókhoz a következő értékeket rendelheti:
+
+    Boolean típusú változó, amely a cellán lévő ágens létét jelöli.
+
+    Boolean típusú változó, amely a cellán lévő ágens ellenségességét jelöli.
+
+    Integer típusú változó, amely a cellán lévő ágens irányát tartalmazza. (1,2,3,4 értékek értelmezettek)
+
+    Boolean típusú változó, amely meghatározza, hogy a cellán lévő ágensen van-e kinézetet befolyásoló tényező.
+
+    Integer típusú lista, amely akkor tartalmaz elemeket, ha a cellán lévő ágensen van kinézetet befolyásoló tényező, ezeknek a ténmyezőknek a sorszámát tartalmazza.
+
     \item Cellák kategorizálása:
     Az előző lépésekből nyert információk alapján minden általa felismert cellának ad egy adott értéket, amely olyan jelentést tartalmazhat, hogy mennyire veszélyes az adott cella.
     \item Célok átgondolása:
@@ -832,4 +860,46 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 	\includegraphics[scale=0.6]{images/agentfunction.png}
 	\caption{Agentfunction}
 	\label{fig:agentfunction}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.2]{images/uibase.png}
+	\caption{Base UI}
+	\label{fig:baseui}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.2]{images/uiblock.png}
+	\caption{Block UI}
+	\label{fig:blockui}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.2]{images/uieffect.png}
+	\caption{Effect UI}
+	\label{fig:effectui}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.2]{images/uiinv.png}
+	\caption{Inventory UI}
+	\label{fig:invui}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.2]{images/uimap.png}
+	\caption{Map UI}
+	\label{fig:mapui}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.2]{images/uitwowindowisvisible.png}
+	\caption{UI Example}
+	\label{fig:uiexample}
 \end{figure}
