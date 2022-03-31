@@ -101,11 +101,70 @@ A szimuláció figyelésére és irányítására szolgáló UI ablakok:
 
 \begin{itemize}
     \item \nameref{fig:baseui}
+    
+    \begin{itemize}
+        \item A szimuláció kezdete utáni képernyőn megjelenő ablakok láthatóak.
+        \item (1) Agent names ablak, két oszlopból épül fel. Első oszlopa a szimulációban résztvevő ágensek ID-ját tartalmazná, második oszlopa pedig a hozzátartozó nevüket.
+        \item AgentID vagy AgentNames-re kattintva, megnyílik az Agent UI.
+        \item (2) Agent order ablak, ebben az ablakban látszódik az ágensek sorrendjének kiszámolásának az eredménye. A belső négyzetek jelölnek egy-egy ágenst, ezek tartalmazzák az adott ágens ID-ját.
+        \item AgentID-ra kattintva megnyílik az Agent UI.
+        \item (3) Ezen a menű sávon, 5 különböző ablak nyitható meg. Ablakok balról jobbra:
+        \item Agent UI: Rákattintva megnyílik az Agent UI. Ha nincs kijelölve Agent, null értéket adnak vissza az adatok.
+        \item Block UI: Rákattintva megnyílik az Block UI. Ha nincs kijelölve Block, null értéket adnak vissza az adatok.
+        \item Effect UI: Rákattintva megnyílik az Effect UI. Block/Agent UI mellett nyílik meg.
+        \item Map UI: Rákattintva megnyílik az Map UI. Agent/Block/Effect ablak fölött jelenik meg.
+        \item Inventory UI: Rákattintva megnyílik az Inventory UI. Agent/Block/Effect ablak fölött jelenik meg.
+        \item Ablakok nyitásának előfeltételeit lásd itt: \nameref{fig:Ablakok megnyitásaának feltételei}
+    \end{itemize}
+
     \item \nameref{fig:blockui}
+    
+    \begin{itemize}
+        \item Egy adott block adatának a kiolvasásának az eredményeit megjelenítő UI ablak.
+        \item (1) Megnyitható egy konkrét cella rákattintásával. Ekkor az adott cella értékeit olvassa le.
+        \item (2) Megnyitható a menű sávból is a Block UI gombjával, ekkora a megnyíló Block UI null értéket adn vissza a kiírandó adatokra, mivel még nincs kijelölve block.
+    \end{itemize}
+
+    \item \nameref{fig:agentui}
+    
+    \begin{itemize}
+        \item Egy adott ágens adatának a kiolvasásának az eredményeit megjelenítő UI ablak.
+        \item (1) Megnyitható a menű sávból is az Agent UI gombjával, ekkora a megnyíló Agent UI null értéket adn vissza a kiírandó adatokra, mivel még nincs kijelölve ágens.
+        \item (2) Megnyitható az Agent order ablakból is. Az adott ID-val rendelkező ágens adatait fogja megjeleníteni. Lásd: Base UI.
+        \item (3) Megnyitható az Agent names ablakból is. Az adott ID vagy Name-mel rendelkező ágens adatait fogja megjeleníteni.Lásd: Base UI.
+    \end{itemize}
+
     \item \nameref{fig:effectui}
+    
+    \begin{itemize}
+        \item A block UI/Agent UI-ban kiválaszott block/ágens-hez hozzátartozó effect ablak nyitható meg a menű sávból az adott gombbal.
+        \item Az effect ablakon annyi EffectNumber/EffectName/EffectType hármas található meg, amennyi éppen aktív. Maximum 6.
+        \item Nem nyitható meg, ha nincs még kiválasztva block/agent a megnyitott block UI/agent UI ablakon. Ekkor az Effect gomb a menű sávon sötétebb színt kap.
+    \end{itemize}
+
     \item \nameref{fig:invui}
+    
+    \begin{itemize}
+        \item Az Agent UI-ban kiválaszott ágenshez hozzátartozó inventory ablak nyitható meg a menű sávból az adott gombbal.
+        \item Nem nyitható meg, ha nincs még kiválasztva agent UI a megnyitott Agent UI ablakon. Ekkor az Inventory gomb a menű sávon sötétebb színt kap.
+        \item (1) Felszerelt/Unique slotok. Balról jobbra az adott slotok:
+        \item Armor slot: Csak Armor típusú tárgyak kerülhetnek ide. Egyszerre csak 1.
+        \item Helmet slot: Csak Helmet típusú tárgyak kerülhetnek ide. Egyszerre csak 1.
+        \item Fegyver slot: Csak Fegyver típusú tárgyak kerülhetnek ide. Egyszerre csak 1.
+        \item Flask slot: Csak Flask típusú tárgyak kerülhetnek ide. Egyszerre csak 1.
+        \item GoalItem slot: Ha az ágens felveszi a GoalItem-et, automatikuson idekerül, más tárgy nem kerülhet ide.
+        \item (2) Inventory, az ágens által bármilyen tárgy idekerül Felvétel után. Kivétel: GoalItem.
+        \item (3) Ha van kiválasztva adott inventory slot(bal click), akkor a tárgy adatait listázza ki.
+    \end{itemize}
+
     \item \nameref{fig:mapui}
-    \item \nameref{fig:uiexample}
+    
+    \begin{itemize}
+        \item A szimulációs környezetről készült teljes kép látszódik az ablakon kicsinyítve.
+        \item Ha van kiválasztva ágens a Map UI megnyitásakor, akkor az ágens által felfedezett területek látszódnak.
+        \item Megnyitható a menű sávból is az Map UI gombjával.
+    \end{itemize}
+
 \end{itemize}
 
 \Section{Szimulációs környezet specifikálása}
@@ -871,21 +930,28 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.2]{images/uiblock.png}
+	\includegraphics[scale=0.2]{images/uiblockmain.png}
 	\caption{Block UI}
 	\label{fig:blockui}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.2]{images/uieffect.png}
+	\includegraphics[scale=0.2]{images/uiagentmain.png}
+	\caption{Agent UI}
+	\label{fig:agentui}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.2]{images/uiagenteffect.png}
 	\caption{Effect UI}
 	\label{fig:effectui}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.2]{images/uiinv.png}
+	\includegraphics[scale=0.2]{images/uiinventory.png}
 	\caption{Inventory UI}
 	\label{fig:invui}
 \end{figure}
@@ -899,7 +965,7 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.2]{images/uitwowindowisvisible.png}
-	\caption{UI Example}
-	\label{fig:uiexample}
+	\includegraphics[scale=0.2]{images/uiopen.png}
+	\caption{Ablakok megnyitási feltételek}
+	\label{fig:Ablakok megnyitásaának feltételei}
 \end{figure}
