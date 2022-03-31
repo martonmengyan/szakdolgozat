@@ -229,19 +229,22 @@ Minden blokkhoz tartoznak adatok.
 
 \subsection{Szint}
 
-Az Ágensek rendelkeznek egy szinttel, ami a legelején az 1es szintről indul.
-Más az ágensek ellenséges ágensekre mért végső találat ad tapasztalatpontot, amelyből ha megszerez egy adott mennyiséget, az ágens szintet lép.
-A legelső szintlépéshez szükséges tapasztalatpont mennyisége 100.
-Minden következő szinthez 10\%-kal több tapasztalatpont szükséges, mint az előző szinthez.
-Szintlépéskor az ágens a Karakter oldalon a szintlépéskor kapott 3 pontját képes elosztani a fő 4 statisztikára.(Lásd: Statisztika)
+\begin{itemize}
+    \item Az Ágensek rendelkeznek egy szinttel, ami a legelején az 1es szintről indul.
+    \item Más az ágensek ellenséges ágensekre mért végső találat ad tapasztalatpontot, amelyből ha megszerez egy adott mennyiséget, az ágens szintet lép.
+    \item A legelső szintlépéshez szükséges tapasztalatpont mennyisége 100. Minden következő szinthez 10\%-kal több tapasztalatpont szükséges, mint az előző szinthez.
+    \item Szintlépéskor az ágens a Karakter oldalon a szintlépéskor kapott 3 pontját képes elosztani a fő 4 statisztikára.(Lásd: Statisztika)
+\end{itemize}
 
 \subsection{Statisztika}
 
-Ágensek 4 alap statisztikával rendelkeznek.
-Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
-Az ágensek kezdő statisztikáját meghatározza az ágens típusa.
-Az ágens típusok kialakítása fontos figyelmet szán a kezdő statisztikákra, amelyek úgy lettek meghatározva, hogy a Harcos kevés eséllyel de nagyobb találatra képes, emellett nem képes kikerülni találatokat. De növelt HP mennyiséggel rendelkezik.
-A tolvaj nagy eséllyel találja el ellenségét, de kisebb találatra képes, támadásokat nagyobb eséllyel képes kikerülni, de HP mennyisége nem sok.
+\begin{itemize}
+    \item Ágensek 4 alap statisztikával rendelkeznek.
+    \item Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
+    \item Az ágensek kezdő statisztikáját meghatározza az ágens típusa.
+    \item Az ágens típusok kialakítása fontos figyelmet szán a kezdő statisztikákra, amelyek úgy lettek meghatározva, hogy a Harcos kevés eséllyel de nagyobb találatra képes, emellett nem képes kikerülni találatokat. De növelt HP mennyiséggel rendelkezik. Lásd: \nameref{table:scalingtable}
+    \item A tolvaj nagy eséllyel találja el ellenségét, de kisebb találatra képes, támadásokat nagyobb eséllyel képes kikerülni, de HP mennyisége nem sok. Lásd: \nameref{table:scalingtable}
+\end{itemize}
 
 \subsection{Tolvaj}
 
@@ -297,7 +300,7 @@ A Statisztikák határozzák meg karakterünk paramétereit, mint például:
 \noindent Ezeknek mind van egy kezdő paramétere, amelyhez a statisztikák hozzáadódnak.
 
 \begin{itemize}
-    \item A dobás cellában mért hosszának kezdő paramétere 3 cella hosszúságú,
+    \item \label{Dobás} A dobás cellában mért hosszának kezdő paramétere 3 cella hosszúságú,
     \item a maximum HP, másnéven életerő kezdő paramétere 10 egységnyi,
     \item a kitérés és pontosság kezdő paramétere 0.
 \end{itemize}
@@ -353,7 +356,6 @@ A támadásnak két végkimenetele lehet:
 \begin{itemize}
     \item Az előttük lévő 3x4 hosszúságnyi téglalapot észlelnek.
     \item Jobb és bal oldalukra érzékelik a cellán belüli változásokat(Például: Új Entity).
-    \item Kamera szög változtatása, hogy lássa minden falat.
 \end{itemize}
 
 \noindent Ágensek belső memóriája a következőket tartalmazza:
@@ -389,13 +391,66 @@ A támadásnak két végkimenetele lehet:
 \noindent Ezek bármelyik használata, felhasználja az ágens körét.
 
 \begin{itemize}
-    \item Lépés. ()
-    \item Dobás. ()
-    \item Láda nyitás. ()
-    \item Felvétel. ()
-    \item Felszerelés. ()
-    \item Körbeforgás. ()
-    \item Támadás. ()
+    \item Inventory Manadgement.
+    
+    \begin{itemize}
+        \item Az ágensek karbantartják a hozzájuk tartozó Inventory ablakukat, ha szükséges hely felszabadítás vagy van náluk jobb felszerelhető tárgy. Ezek a számolások nem igénylik a körül elhasználását.
+        \item Viszont az inventory menedzseléséhez tartozó akciók, mint például az Eldobás, Felszerelés igényli a körük elhasználást, ezeket az akciókat akkor hajták végre, amikor a legopcionálisabb a számlálásuk alapján.
+    \end{itemize}
+
+    \item Lépés. 
+    
+    \begin{itemize}
+        \item A lépés akkor lehetséges, hogyha az ágens közvetlen közelében, azaz vagy az X vagy az Y koordinátájával szomszédos cellán nem tartózkodik mozgást korlátozó ágens/térbeli objektum.
+        \item Ez az akció az ágens körének felhasználást igényli, ahhoz hogy végrehajtsa azt.
+    \end{itemize}
+
+    \item Dobás. 
+    
+    \begin{itemize}
+        \item A dobás mindig lehetséges az ágens saját körében.
+        \item Ez az akció az ágens körének felhasználást igényli, ahhoz hogy végrehajtsa azt.
+        \item A dobás az adott ágens következő kör elejében megy végbe.
+        \item Az eldobott tárgy az ágens adott Erő statisztikájának a negyedét sebzi az eltalált ellenséges ágensre.
+        \item Ha az eldobott tárgy Flask, nem okoz sebzést az adott blockon lévő ágensre.
+        \item Dobás nagyáságát a lásd itt: \nameref{Dobás} Statisztika általi növekedését pedig itt: \nameref{table:scalingtable}
+    \end{itemize}
+
+    \item Láda nyitás. 
+    
+    \begin{itemize}
+        \item A láda nyitás akkor lehetséges, hogyha az ágens közvetlen közelében, azaz vagy az X vagy az Y koordinátájával szomszédos cellán tartózkodik egy zárt láda és az ágens tartalmazza a hozzátartozó kulcsot.
+        \item Ez az akció az ágens körének felhasználást igényli, ahhoz hogy végrehajtsa azt.
+    \end{itemize}
+
+    \item Felvétel. 
+    
+    \begin{itemize}
+        \item A felvétel akkor lehetséges, ha az ágenset tartalmazó cellán létezik valamilyen tárgy, ekkor a tárgyat a felvétel akcióval eltünti a celláról és az inventoryba kerül.
+        \item Ez az akció kizárja a Támadás, Lépés akciókat.
+    \end{itemize}
+
+    \item Felszerelés. 
+    
+    \begin{itemize}
+        \item A felszerelés mindig lehetséges az ágens saját körében.
+        \item Ez az akció az ágens körének felhasználást igényli, ahhoz hogy végrehajtsa azt.
+    \end{itemize}
+
+    \item Körbeforgás. 
+    
+    \begin{itemize}
+        \item A körbeforgás mindig lehetséges az ágens saját körében.
+        \item Ez az akció használata kizárja a támadás akció használatát az adott körben.
+    \end{itemize}
+
+    \item Támadás. 
+    
+    \begin{itemize}
+        \item A támadás akkor lehetséges, hogyha az ágens közvetlen közelében, azaz vagy az X vagy az Y koordinátájával szomszédos cellán tartózkodik egy ellenséges ágens.
+        \item Ez az akció az ágens körének felhasználást igényli, ahhoz hogy végrehajtsa azt.
+    \end{itemize}
+
 \end{itemize}
 
 \subsection{Ágens fő céljai}
