@@ -73,29 +73,34 @@ Itt lehet bemutatni a hasonló alkalmazásokat.
 
 \Section{Menü}
 
-A szimuláció indításakor vagy megállításakor felugró ablak.
+A szimuláció indítása előtti ablak.
 
 \begin{itemize}
-    \item Start/Continue:
-    A szimuláció indításakor a menüben a start-ot látjuk, ha a szimulációt állítjuk meg, akkor a menüben a continue-t látjuk.
-    Ezen menüpont kiválasztásával kezdhetjük a szimulációt vagy folytathatjuk azt.
-    \item Save:
-    Ez a menüpont nem jelenik meg a szimuláció indításakor csak akkor, hogyha szimulációt állítunk meg.
-    Ezen menüpont kiválasztásával menthetjük a jelenlegi szimulációnkat.
-    \item Load:
-    Ezen menüpont mindig jelen van a menüben, elérhető a szimuláció indításakor és megállításakor is.
-    Ezen menüpont kiválasztásával tölthetjük be az általunk lementett mentéseket.
-    \item Options:
-    Ezen menüpont mindig jelen van a menüben, elérhető a szimuláció indításakor és megállításakor is.
-    Ezen menüpont kiválasztásával egy új ablakra irányít át minket.
-    Lehetőségünk van fényerő beállításokra is, mint például a Gamma állítására. (Egy csúszka segítségével)
-    Végezetül egy visszagomb ami visszairányít minket a menübe.
-    \item Main menu:
-    Ez a gomb akkor szerepel a menüben hogyha egy szimuláció megállításával kerülünk a menübe.
-    Ez befejezi a jelenlegi szimulációnkat és visszaírányít minket a főmenübe.
+    \item Ezen az ablakon 4 különböző paraméter adhatunk meg, amely szerint legenerálásra kerül az adott map.
+    \item (1) szobák száma, a szimulációs környezetet felépítő szobák számát adja meg.
+    \item (2) a szimuláció elkezdésekor a kezdő szobában lévő ágensek számát adja meg.
+    \item (3) a szobákban lévő oszlopok számát adja meg, kivétel kezdő szoba.
+    \item (4) a szobákban lévő ládák számát adja meg, kivétel kezdő szoba.
+    \item Rendelkezik egy Start gombbal, amely megnyomásával elindítja a szimulációt.
+    \item Ha nincs általunk megadott paraméter vagy ha az általunk megadott paraméter a minimum érték alatti, akkor a default értékkel dolgozik.
+\end{itemize}
+
+A szimuláció megállításakor felugró ablak.
+
+\begin{itemize}
+    \item Ezt az ablakot az ESC megnyomásával lehet előhozni.
+    \item Amikor ez az ablak meg van nyitva megáll a szimuláció a háttérben.
+    \item Két különböző lehetőségünk van.
+    \item (1) Tudjuk növelni a kezdő szobában lévő ágensek számát.
+    \item (2) Tudjuk növelni a szimulációban résztvevő ágensek szintjét.
+    \item Két gombbal rendelkezik.
+    \item (1) Folytatás: visszalépünk a szimulációban, folytatódik a szimuláció.
+    \item (2) Szimuláció vége: Visszalépünk a szimuláció indítása előtti ablakba.
 \end{itemize}
 
 \Section{UI}
+
+\label{UI}
 
 A szimuláció figyelésére és irányítására szolgáló UI ablakok:
 
@@ -171,14 +176,54 @@ A szimuláció figyelésére és irányítására szolgáló UI ablakok:
 
 \subsection{Generálás}
 
-Szimuláció kezdetekor generálásra kerülnek a következők:
+Szimuláció kezdetekor generálásra kerülnek a következők: \nameref{fig:Map generálás}
 
 \begin{itemize}
-    \item Szobák és folyosók struktúrája,
-    \item Entityk tárgyaiak,
-    \item Entityk által dobott tárgyak statisztikájának meghatározása az adott nyílt intervallumon,
-    \item Entityk kezdő állása,
-    \item Cél szobához vezető kulcsot dobó entity meghatározása.
+    \item Kezdő szobák elhelyezése:
+    
+    \begin{itemize}
+        \item A két különböző frakció kezdő szobáinak elhelyezése, amelyből kezdenek majd az ágensek és ahova el kell vinniük a cél tárgyat.
+        \item Ezeken a cellákon belül fog végbe menni az ágensek kezdő pontjainak kiosztása.
+    \end{itemize}
+
+    \item Többi szoba generálása:
+    
+    \begin{itemize}
+        \item Az általunk megadott mennyiségű vagy a default érték mennyiségű szoba generálása.
+        \item Szobát alkotó cellák elhelyezése, bejárati pontok elhelyézése.
+    \end{itemize}
+
+    \item Cél szoba kiválasztása:
+    
+    \begin{itemize}
+        \item A generált szobákból viálasztja a két frakció cél tárgyát tartalmazó szobáját.
+        \item Ez olyan szabályok alapján kerül kiválsztásra, hogy az ágensek a saját cél szobájukat kevesebb szoba áthaladásával érjék el.
+    \end{itemize}
+
+    \item Célszobában lévő ládát kinyító kulcs helyzete:
+    
+    \begin{itemize}
+        \item Hasonlóan a cél szoba kiválasztásához, itt a kulcs helyzetet úgy helyezzi el, hogy ahhoz a frakcióhoz legyen közelebb, amelyiknek nem szükséges a győzeleméhez.
+    \end{itemize}
+
+    \item Szobák bejárati pontjainak összekapcsolása:
+    
+    \begin{itemize}
+        \item A Szobák szélein legenerált bejárati pontokat összeköti a szomszédos szobák bejárati pontjaival, ezáltal folyosókat képezve.
+    \end{itemize}
+
+    \item Szobákban térbeli objektumok elhelyezése:
+    
+    \begin{itemize}
+        \item A generálás előtti menüben megadott mennyiségú objektumot, vagy a default értékű objektum számot elhelyezi a szobákban, úgy hogy ne akadályozza meg a map bármely pontjából egy másik tetszőleges pontjának az elérését.
+    \end{itemize}
+
+    \item Szobákban tárgyak elhelyezése:
+    
+    \begin{itemize}
+        \item A cellákra az adott mennyiségű tárgyat elhelyezi és generál nekik az adott nyílt intervallumon egy értéket.
+    \end{itemize}
+
 \end{itemize}
 
 \subsection{Szobák és folyosók}
@@ -198,6 +243,8 @@ Minden maphoz tartoznak adatok.
     \item MapID (egészérték),
     \item SimulationTime (egészérték, szimuláció kezdete eltelt másodpercek száma).
 \end{itemize}
+
+\noindent A mapon bejárható területeken szobák és folyosók összesége, ahol minden szobának és folyosóhoz tartozik adat, ez az adat a szobaID és folyosóID.
 
 A szobákban és a folyosókban bejárható terület egy mátrixhoz hasonló, ahol a celláit blokkoknak nevezzük.
 Minden blokkhoz tartoznak adatok.
@@ -222,8 +269,169 @@ Minden blokkhoz tartoznak adatok.
     \item Két különböző folyósó ne érjen össze.
     \item Minden szobából nyíljon ajtó, úgy hogy lehetséges legyen elhagyni.
     \item A map bármelyik részéből elérhető legyen a map bármelyik tetszőleges helye.
-    \item Folyosó ne legyen eltorlaszolva nem bejárható térbeli objektummal, mint például: Oszlop.
+    \item A piros célszoba helyzete és az kék ágensek kezdő szobája nem lehet közelebb, mint a piros célszoba és a piros ágensek kezdő szobája.
+    \item A kék célszoba helyzete és az piros ágensek kezdő szobája nem lehet közelebb, mint a kék célszoba és a kék ágensek kezdő szobája.
+    \item A piros célszobát kinyító kulcs helyzete és az kék ágensek kezdő szobája nem lehet közelebb, mint a piros Célszobát kinyító kulcs helyzete és a piros ágensek kezdő szobája.
+    \item A kék célszobát kinyító kulcs helyzete és az piros ágensek kezdő szobája nem lehet közelebb, mint a kék Célszobát kinyító kulcs helyzete és a kék ágensek kezdő szobája.
+    \item Nem lehet olyan cellára mozgást kizáró objektumokot generálni, amely lehetetlenné teszi a map egy tetszőleges pontjáról a map egy másik tetszőleges pontjára való eljutását.
 \end{itemize}
+
+\Section{Tárgyak}
+
+A tárgyakhoz a következő adatok tartoznak:
+\begin{itemize}
+    \item ItemID (egészérték)
+    \item ItemName (integer)
+    \item ItemType (általunk meghatárotozott típusuk egyike)
+    \item Quantity (egészérték)
+    \item MaxQuantity (egészérték)
+\end{itemize}
+
+\subsection{ItemID}
+
+A tárgyak generálásakor minden tárgy kap egy egyedi ID-t, ez az ID határozza meg, hogy statisztikái milyennek lettek legenerálva az adott nyílt intervallumon belül.
+A karakterre felszerelhető tárgyak értékei randomizáltak, a map generálaskor döntődnek el egy adott nyílt intervallumon belül.
+
+\subsection{ItemName}
+
+A tárgyak tartalmaznak tárgynevet, azonos nevű tárgyak tulajdonságainak értékei azonos nyílt intervallumon belül generáltak.
+
+\subsection{ItemType}
+
+A tárgyak típusai a szimulátorban a következők lehetnek:
+\begin{itemize}
+    \item Inventoryból használható tárgyak(körért),
+    \item Karakterre felszerelhető tárgyak(körért),
+    \item Adott célra használható tárgyak(Lásd: Kulcs, CélTárgy).
+\end{itemize}
+
+\subsection{Quantity}
+
+A tárgyak Quantity adatja azt az integer számot tartalmazza, amennyi létezik az inventoryban.
+
+\subsection{MaxQuantity}
+
+A tárgyak MaxQuantity értéke azt határozza meg, mennyire stackelhet fel egy adott Item az inventoryban, ha túllépi a MaxQuantity számát, akkor új stack-et kezd.
+
+\Section{Tárgy nevek}
+
+\subsection{Vigor Flask}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+
+\noindent Elérhető interakciók:
+\begin{itemize}
+    \item Használat: Adott karakteren 3 körig érvényesül a Vigor effekt.(Lásd Effektek)
+    \item Eldobás: Adott cellán 3 körig érvényesül a Vigor effekt.(Lásd Effektek)
+\end{itemize}
+
+\subsection{Steel Flask}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+
+\noindent Elérhető interakciók:
+\begin{itemize}
+    \item Használat: Adott karakteren 3 körig érvényesül a Steel effekt.(Lásd Effektek)
+    \item Eldobás: Adott cellán 3 körig érvényesül a Steel effekt.(Lásd Effektek)
+\end{itemize}
+
+\subsection{Poison Flask}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+
+\noindent Elérhető interakciók:
+\begin{itemize}
+    \item Használat: Adott karakteren 3 körig érvényesül a Poison effekt.(Lásd Effektek)
+    \item Eldobás: Adott cellán 3 körig érvényesül a Poison effekt.(Lásd Effektek)
+\end{itemize}
+
+\subsection{Weakness Flask}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+
+\noindent Elérhető interakciók:
+\begin{itemize}
+    \item Használat: Adott karakteren 3 körig érvényesül a Weakness effekt.(Lásd Effektek)
+    \item Eldobás: Adott cellán 3 körig érvényesül a Weakness effekt.(Lásd Effektek)
+\end{itemize}
+
+\subsection{Entity Helm no.1}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: ]2,4[
+    \item Kitérés: ]-2,-4[
+    \item Kitartás: ]2,4[
+    \item Pontosság: ]-2,-4[
+\end{itemize}
+
+\subsection{Entity Helm no.2}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: ]-2,-4[
+    \item Kitérés: ]2,4[
+    \item Kitartás: ]-2,-4[
+    \item Pontosság: ]2,4[
+\end{itemize}
+
+\subsection{Entity Armor no.1}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: ]2,4[
+    \item Kitérés: ]-2,-4[
+    \item Kitartás: ]2,4[
+    \item Pontosság: ]-2,-4[
+\end{itemize}
+
+\subsection{Entity Armor no.2}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: ]-2,-4[
+    \item Kitérés: ]2,4[
+    \item Kitartás: ]-2,-4[
+    \item Pontosság: ]2,4[
+\end{itemize}
+
+\subsection{Entity Weapon no.1}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: ]1,5[
+    \item Kitérés: ]-1,-3[
+    \item Kitartás: ]0,-1[
+    \item Pontosság: ]-1,2[
+\end{itemize}
+
+\subsection{Entity Weapon no.2}
+
+Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
+Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+
+\begin{itemize}
+    \item Erő: ]-1,2[
+    \item Kitérés: ]1,3[
+    \item Kitartás: 0
+    \item Pontosság: ]1,5[
+\end{itemize}
+
+\subsection{Kulcs}
+
+Vagy Ágensektől, vagy celláról szerezhetőek meg.
+Szerepük a ládák kinyitása az ágens által.
+Dedikált helye van az ágens inventoryjában, lásd: 
 
 \Section{Ágensek}
 
@@ -233,11 +441,11 @@ Minden blokkhoz tartoznak adatok.
     \item Az Ágensek rendelkeznek egy szinttel, ami a legelején az 1es szintről indul.
     \item Más az ágensek ellenséges ágensekre mért végső találat ad tapasztalatpontot, amelyből ha megszerez egy adott mennyiséget, az ágens szintet lép.
     \item A legelső szintlépéshez szükséges tapasztalatpont mennyisége 100. Minden következő szinthez 10\%-kal több tapasztalatpont szükséges, mint az előző szinthez.
-    \item Szintlépéskor az ágens a Karakter oldalon a szintlépéskor kapott 3 pontját képes elosztani a fő 4 statisztikára.(Lásd: Statisztika)
+    \item Szintlépéskor az ágens a Karakter oldalon eldönti, hogy mely statiszikát fejleszti(szintenként 3 pont). Lásd: \nameref{statisztika}
 \end{itemize}
 
 \subsection{Statisztika}
-
+\label{statisztika}
 \begin{itemize}
     \item Ágensek 4 alap statisztikával rendelkeznek.
     \item Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
@@ -256,7 +464,7 @@ Minden blokkhoz tartoznak adatok.
     \item Pontosság: 12
 \end{itemize}
 
-\noindent A következő tárgyakat hagyhatja hátra elpusztulásakor:
+\noindent A következő tárgyakkal kezd a szimulációban:
 
 \begin{itemize}
     \item Entity Helm no.2,
@@ -277,7 +485,7 @@ Minden blokkhoz tartoznak adatok.
     \item Pontosság: 8
 \end{itemize}
 
-\noindent A következő tárgyakat hagyhatja hátra elpusztulásakor:
+\noindent A következő tárgyakkal kezd a szimulációban:
 
 \begin{itemize}
     \item Entity Helm no.1,
@@ -310,6 +518,8 @@ A Statisztikák határozzák meg karakterünk paramétereit, mint például:
 \noindent A pontos értékek a következő LVL-hez szükséges statisztikák eléréséhez: \ref{table:scalingleveltable}
 
 \subsection{Sebzés számlálás}
+
+\label{számlálás}
 
 A támadásnak két végkimenetele lehet:
 
@@ -344,9 +554,9 @@ A támadásnak két végkimenetele lehet:
 \noindent Akciók és Tárgyak amelyektől változik a megjelenés:
 
 \begin{itemize}
-    \item Entity állása. Látszódik, hogy milyen irányba néz.
+    \item Ágens állása. Látszódik, hogy milyen irányba néz.
     \item Felszerelt Flask. Látszódik, hogyha van nála általa használható Flask.
-    \item Dobás. Dobásnál az entity dobóállásba áll az adott irányba.
+    \item Dobás. Dobásnál az ágens dobóállásba áll az adott irányba.
     \item CélTárgyat tartalmazó szoba kulcs tartalmazása.
 \end{itemize}
 
@@ -401,7 +611,7 @@ A támadásnak két végkimenetele lehet:
     \item Lépés. 
     
     \begin{itemize}
-        \item A lépés akkor lehetséges, hogyha az ágens közvetlen közelében, azaz vagy az X vagy az Y koordinátájával szomszédos cellán nem tartózkodik mozgást korlátozó ágens/térbeli objektum.
+        \item A lépés akkor lehetséges, hogyha az ágens közvetlen közelében, azaz vagy az X vagy az Y koordinátájával szomszédos cellán nem tartózkodik mozgást korlátozó ágens/térbeli objektum. Lásd itt: \nameref{object}
         \item Ez az akció az ágens körének felhasználást igényli, ahhoz hogy végrehajtsa azt.
     \end{itemize}
 
@@ -513,32 +723,14 @@ A következő ábrán látható az ágens cselekvésének meghatározására szo
 \Section{Cél Tárgy}
 
 Map teljesítéséhez szükséges tárgy.
-A mapon egy zárt szobában helyezkedik el, kulcsát egy generáláskor meghatározott Entity hagyja hátra elpusztulásakor.
-A szobában egy a több puzzle közül kerül legenerálásra per map.
-Ha a karakterünk teljesíti a puzzle-t, akkor megnyeri a mapot, és az adott szobában nyílik egy lefele lépcső, amely a következő mapra visz.
-A következő map hasonlóan kerül legenerálásra, mint az előző, csak az entityk statisztikái a karakterünk statisztikáihoz arányosan növekednek meg.
+A mapon egy zárt szobában helyezkedik el, kulcsát a mapon a barátságos frakcióhoz közelebbi szobában helyezi el.
+A kulcs szükséges a cél tárgyat tartalmazó láda kinyitásához, a cél tárgyat megszerezve el kell vinni az ágenseknek a saját kezdő szobájába a győzelemhez.
 
 \begin{itemize}
     \item Cél szoba elérését segítő jelek:
     A szobákban a falakon elhelyezett nyilak, amelyeket csak adott szögből láthatóak(Lásd: Kamera szög) mutatják meg az utat a Cél Tárgyat tartalmazó szobát.
     \item Puzzle-t segítő nyomok:
     Generáláskor random szobákban elhelyez a falakon nyomokat, amelyek a puzzle megoldását segítik elő, ezek nagy részének felderítése nélkül nem képes megoldani a puzzle a karakterünk.
-\end{itemize}
-
-\Section{Puzzle}
-
-Puzzle-oknak léteznek a lehetséges próbálásainak maximális száma, mielőtt a karakter automatikusan veszít.
-
-\noindent Lehetséges Puzzle:
-
-\begin{itemize}
-    \item Három Kar.
-    
-    Minden karnak 3 lehetséges állása van(bal, közép, jobb), ha a karakter eltalálja a minden kar helyes állását, megszerzi a Cél Tárgyat.
-    
-    Különböző megoldások száma: $3^3$
-
-    Vereséget jelentő próbálkozások száma: 4.
 \end{itemize}
 
 \Section{Effektek}
@@ -573,162 +765,6 @@ A szimulációban Entity és Entity vagy Entity és karakter közötti HP elvét
     \item cellák effekt tulajdonságának manipulálciója(Lásd:Effektet változtató tárgyak eldobása), effektek által,
     \item csapdák által, amelyek a szimuláció kezdetekor generálódtak.
 \end{itemize}
-
-\Section{Tárgyak}
-
-A tárgyakhoz a következő adatok tartoznak:
-\begin{itemize}
-    \item ItemID (egészérték)
-    \item ItemName (integer)
-    \item ItemType (általunk meghatárotozott típusuk egyike)
-    \item Quantity (egészérték)
-    \item MaxQuantity (egészérték)
-\end{itemize}
-
-\subsection{ItemID}
-
-A tárgyak generálásakor minden tárgy kap egy egyedi ID-t, ez az ID határozza meg, hogy statisztikái milyennek lettek legenerálva az adott nyílt intervallumon belül.
-A karakterre felszerelhető tárgyak értékei randomizáltak, a map generálaskor döntődnek el egy adott nyílt intervallumon belül.
-
-\subsection{ItemName}
-
-A tárgyak tartalmaznak tárgynevet, azonos nevű tárgyak tulajdonságainak értékei azonos nyílt intervallumon belül generáltak.
-
-\subsection{ItemType}
-
-A tárgyak típusai a szimulátorban a következők lehetnek:
-\begin{itemize}
-    \item Inventoryból használható tárgyak(körért),
-    \item Karakterre felszerelhető tárgyak(körért),
-    \item Adott célra használható tárgyak(Lásd: Kulcs, CélTárgy).
-\end{itemize}
-
-\subsection{Quantity}
-
-A tárgyak Quantity adatja azt az integer számot tartalmazza, amennyi létezik az inventoryban.
-
-\subsection{MaxQuantity}
-
-A tárgyak MaxQuantity értéke azt határozza meg, mennyire stackelhet fel egy adott Item az inventoryban, ha túllépi a MaxQuantity számát, akkor új stack-et kezd.
-
-\Section{Tárgy nevek}
-
-\subsection{Vigor Flask}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 5\%-os eséllyel, de egyszerre csak háromnál kevesebbet hagyhat hátra.
-
-\noindent Elérhető interakciók:
-\begin{itemize}
-    \item Használat: Adott karakteren 3 körig érvényesül a Vigor effekt.(Lásd Effektek)
-    \item Eldobás: Adott cellán 3 körig érvényesül a Vigor effekt.(Lásd Effektek)
-\end{itemize}
-
-\subsection{Steel Flask}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 5\%-os eséllyel, de egyszerre csak háromnál kevesebbet hagyhat hátra.
-
-\noindent Elérhető interakciók:
-\begin{itemize}
-    \item Használat: Adott karakteren 3 körig érvényesül a Steel effekt.(Lásd Effektek)
-    \item Eldobás: Adott cellán 3 körig érvényesül a Steel effekt.(Lásd Effektek)
-\end{itemize}
-
-\subsection{Poison Flask}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 5\%-os eséllyel, de egyszerre csak háromnál kevesebbet hagyhat hátra.
-
-\noindent Elérhető interakciók:
-\begin{itemize}
-    \item Használat: Adott karakteren 3 körig érvényesül a Poison effekt.(Lásd Effektek)
-    \item Eldobás: Adott cellán 3 körig érvényesül a Poison effekt.(Lásd Effektek)
-\end{itemize}
-
-\subsection{Weakness Flask}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 5\%-os eséllyel, de egyszerre csak háromnál kevesebbet hagyhat hátra.
-
-\noindent Elérhető interakciók:
-\begin{itemize}
-    \item Használat: Adott karakteren 3 körig érvényesül a Weakness effekt.(Lásd Effektek)
-    \item Eldobás: Adott cellán 3 körig érvényesül a Weakness effekt.(Lásd Effektek)
-\end{itemize}
-
-\subsection{Entity Helm no.1}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő: ]2,4[
-    \item Kitérés: ]-2,-4[
-    \item Kitartás: ]2,4[
-    \item Pontosság: ]-2,-4[
-\end{itemize}
-
-\subsection{Entity Helm no.2}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő: ]-2,-4[
-    \item Kitérés: ]2,4[
-    \item Kitartás: ]-2,-4[
-    \item Pontosság: ]2,4[
-\end{itemize}
-
-\subsection{Entity Armor no.1}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő: ]2,4[
-    \item Kitérés: ]-2,-4[
-    \item Kitartás: ]2,4[
-    \item Pontosság: ]-2,-4[
-\end{itemize}
-
-\subsection{Entity Armor no.2}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő: ]-2,-4[
-    \item Kitérés: ]2,4[
-    \item Kitartás: ]-2,-4[
-    \item Pontosság: ]2,4[
-\end{itemize}
-
-\subsection{Entity Weapon no.1}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő: ]1,5[
-    \item Kitérés: ]-1,-3[
-    \item Kitartás: ]0,-1[
-    \item Pontosság: ]-1,2[
-\end{itemize}
-
-\subsection{Entity Weapon no.2}
-
-Entity elpusztulásakor az adott cellán hagyja hátra 10\%-os eséllyel, de egyszerre csak egy tárgyat hagyhat hátra.
-ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak a ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő: ]-1,2[
-    \item Kitérés: ]1,3[
-    \item Kitartás: 0
-    \item Pontosság: ]1,5[
-\end{itemize}
-
-\subsection{Kulcs}
-
-Vagy Entityktől, vagy celláról szerezhetőek meg.
-Szerepük a ládák kinyitása az ágens által.
 
 \Section{Interface felület}
 
@@ -824,6 +860,8 @@ Szerepük a ládák kinyitása az ágens által.
 
 \Section{Mapon található mozgást kizáró objektumok}
 
+\label{object}
+
 \subsection{Láda}
 
 A ládák map generáláskor kerülnek bizonyos cellákra.
@@ -865,6 +903,8 @@ Az általunk nem felfedezett map részek, semmilyen módon nem láthatóak álta
 de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adott cellák frissülését(Lásd: Új Entity megjelenése) már nem fogjuk látni.
 
 \Section{Irányítás}
+
+Irányítási terv, abban az esetben, ha az ágens irányítható lenne a későbbiekben.
 
 \begin{itemize}
     \item Kamera szabad mód be- és kikapcsolása: SPACE
@@ -950,21 +990,14 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=1]{images/playerturnUML.png}
-	\caption{Player Turn}
-	\label{fig:playerturn}
-\end{figure}
-
-\begin{figure}[!ht]
-	\centering
 	\includegraphics[scale=1]{images/entityturnUML.png}
-	\caption{Entity Turn}
+	\caption{Agent Turn}
 	\label{fig:entityturn}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.3]{images/simulationER.png}
+	\includegraphics[scale=0.3]{images/simulationER3.png}
 	\caption{Simulation}
 	\label{fig:simulation}
 \end{figure}
@@ -1023,4 +1056,11 @@ de nem látja a karakterünk, akkor csak a terület alakját láthatjuk, az adot
 	\includegraphics[scale=0.2]{images/uiopen.png}
 	\caption{Ablakok megnyitási feltételek}
 	\label{fig:Ablakok megnyitásaának feltételei}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.2]{images/mapgen.png}
+	\caption{Map generálása}
+	\label{fig:Map generálás}
 \end{figure}
