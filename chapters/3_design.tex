@@ -102,7 +102,7 @@ Ennek a megvalósításához szükséges leírni mely adatokat kell eltárolnunk
 
 \end{itemize}
 
-\subsection{Szemantikai adatmodell}
+\subsection{ER adatmodell}
 
 \nameref{fig:Szemantikai modell}
 
@@ -219,6 +219,12 @@ A szemantikai adatmodellben összesen 12 egyed szerepel, amelyek a következők:
         \item Desc: Az effekt típus leírása, String érték.
     \end{itemize}
 
+    \item Inventory egyed tulajdonságai:
+    \item 
+    \begin{itemize}
+        \item Slots: Az inventoryban maximális helyet meghatározó érték, integer érték.
+    \end{itemize}
+
 \end{itemize}
 
 \subsection{Egyedek közöti kapcsolat}
@@ -248,16 +254,17 @@ A szemantikai adatmodellben összesen 12 egyed szerepel, amelyek a következők:
 \subsection{Szemantikai adatmodell konvertálása relációs modellre}
 
 
+
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.25]{images/szemantikaimodel4.drawio.png}
+	\includegraphics[scale=0.25]{images/szemantikaimodel6.drawio.png}
 	\caption{Szemantikai modell}
 	\label{fig:Szemantikai modell}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=0.35]{images/relaciosadatmodel4.drawio.png}
+	\includegraphics[scale=0.35]{images/relaciosadatmodel6.drawio.png}
 	\caption{Relációs modell}
 	\label{fig:Relációs modell}
 \end{figure}
