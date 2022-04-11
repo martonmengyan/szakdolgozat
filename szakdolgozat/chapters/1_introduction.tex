@@ -1,0 +1,16 @@
+\Chapter{Bevezetés}
+% szintek, szintek közötti mozgás
+A szakdolgozat egy szimulációs környezet létrehozásával fog kezdődni, amelyet felül nézetből vehetünk szemügyre.
+Körökre osztott, a karakterünket és az ágenseket egy fix sorrendbe rakjuk, amely meghatározza, mikor jön melyik karakter.
+A szimulációs környezet véges számú különböző szobákból és folyósókból épül fel. Két szobát egy folyosó köt össze, amelyet a folyosó mindkét végén egy ajtó zár le. Több részre van bontva, amelyek nem elérhetőek egyidejűleg.(?hány szint, 3-5?)
+Ezeket a részeket 'szint'-eknek nevezzük(?fix pályák vagy valamennyire randomizált pályák?). Minden szint különböző terep nehézségeket okoz. Pl. lassabb mozgás. Ahhoz hogy a következő szintre léphessünk tovább, teljesíteni kell az adott szintet először.
+Szintek közötti mozgás egy adott helyen történik, egy szobában, egy nem mozdítható objektum segítéségével. Mivel a szimulációs környezet úgymond 'dungeon'-t imitál,
+ezért a szintek közötti lépés egy lépcső használatával történik. Minden szinten adott, hogy milyen ágensek vesznek részt a szimulációban.
+
+% ágensek
+Az ágensek két nagyobb csoportra vannak osztva, amelyeket 'frakció'-knak nevezünk. Minden frakciónak van egy teljesítendő célja, amelyet meg kell gátolnunk a továbbjutáshoz.
+A játékos is rendelkezik egy adott céllal, amelyet a frakciók szintén próbálnak meggátolni. A frakciók szabotálják a másik frakció céljainak élérést is.
+Ha a valemelyik frakció teljesíti a célját, vagy a játékos 'HP'-ja, másnéven életereje elfogy, akkor a játékos vereségével fejeződik be a játék.
+
+%map felépítése?
+A szobák és folyosók blokkokból épülnek fel. Ezeken a blokkokon helyezkedhetnek el a karakterek limitáltan, azaz egynél több karakter nem tartózkodhat rajta.
