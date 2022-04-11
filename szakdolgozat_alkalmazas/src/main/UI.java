@@ -28,8 +28,8 @@ public class UI {
 		
 		switch(gp.gameScreenNumber) {
 		case "normal":
-			drawPlayerMaxHPSlots();
-			drawPlayerCurrentHP();
+			//drawPlayerMaxHPSlots();
+			//drawPlayerCurrentHP();
 			break;
 		case "end":
 			drawEndScreen();
@@ -43,7 +43,7 @@ public class UI {
 		}
 	}
 	
-	public void drawPlayerMaxHPSlots() {
+	/*public void drawPlayerMaxHPSlots() {
 		
 		g2.setFont(arial_60);
 		g2.setColor(Color.white);
@@ -81,7 +81,7 @@ public class UI {
 			i++;
 			x += textLength(g2,"-");
 		}
-	}
+	}*/
 	
 	//PAUSE SCREEN
 	public void drawPauseScreen() {

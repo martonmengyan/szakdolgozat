@@ -13,8 +13,9 @@ import object.SuperObject;
 
 public class GamePanel extends JPanel implements Runnable {
 
-
 	private static final long serialVersionUID = 1L;
+	private static int index = 0;
+	
 	//SCREEN
 	final int originalTileSize = 16; //16x16
 	final int scale = 3;
@@ -51,7 +52,6 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setFocusable(true);
 		this.setBackground(Color.black);
 		gameScreenNumber = "title";		
-		
 	}
 	
 	public void setupObjects() {
@@ -70,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		
-		double drawInterval = 1000000000/60;
+		double drawInterval = 1000000000/10;
 		double nextDrawTime = System.nanoTime() + drawInterval;
 		
 		while(gameThread != null) {
@@ -98,30 +98,27 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void update() {
-		
+
 		if(gameScreenNumber == "normal") {
 			if(player.life>0) {
 				
 				player.update();
-				}
-		}
-		if(gameScreenNumber == "pause") {
-			//not updating the player coordinate
-		}
-		
-		if(gameScreenNumber == "normal") {
-			for(int i = 0; i < entity.length; i++) {
-				if(entity[i] != null) {
-					if(entity[i].life>0) {
-						entity[i].update();
-					}
-				}
+			}
+			
+			if(entity[index] != null && !entity[index].dead) {
+					entity[index].update();
+				
+			}
+			index++;
+			if(index >= entity.length) {
+				index = 0;
 			}
 		}
+		
 		if(gameScreenNumber == "pause") {
 			//not updating the player coordinate
 		}
-	}
+	}		
 
 	public void paintComponent(Graphics g) {
 		
@@ -144,19 +141,22 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			
 			//entity list, item drop on dead
-			for(int i = 0; i < entity.length; i++) {
+			for(int i=0; i<entity.length;i++)
 				if(entity[i] != null) {
 					if(entity[i].dead==false) {
 						if(entity[i].life>0) {
 							entity[i].draw(g2, this);
+		
 						}else {
 							entity[i].dead = true;
 							aSetter.createObject(entity[i].worldX, entity[i].worldY, "Boots");
 						}
 					}
 				}
-				
-			}
+			
+			
+
+			
 			
 			//player for test
 			if(player.life>0) {

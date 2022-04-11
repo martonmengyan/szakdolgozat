@@ -42,9 +42,22 @@ public class AssetSetter {
 	}
 	
 	public void SetEntity() {
+		
+		gp.entity[1] = new Entity_1(gp);
+		gp.entity[1].worldX=4*gp.TILE_SIZE;
+		gp.entity[1].worldY=2*gp.TILE_SIZE;
+		
+		gp.entity[2] = new Entity_1(gp);
+		gp.entity[2].worldX=1*gp.TILE_SIZE;
+		gp.entity[2].worldY=2*gp.TILE_SIZE;
+		
 		gp.entity[0] = new Entity_1(gp);
 		gp.entity[0].worldX=1*gp.TILE_SIZE;
-		gp.entity[0].worldY=2*gp.TILE_SIZE;
+		gp.entity[0].worldY=1*gp.TILE_SIZE;
+		
+		gp.entity[3] = new Entity_1(gp);
+		gp.entity[3].worldX=1*gp.TILE_SIZE;
+		gp.entity[3].worldY=3*gp.TILE_SIZE;
 	}
 	
 	public void createObject(int x, int y, String objects) {

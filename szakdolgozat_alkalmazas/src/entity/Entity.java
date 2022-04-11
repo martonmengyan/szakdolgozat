@@ -75,9 +75,8 @@ public class Entity {
     }
     
     public void update() {
-		setAction();
-		
-		if(gp.player.moved==true && dead == false) {
+
+			setAction();
 			
 			collisionOn = false;
 			gp.colChecker.checkTile(this);
@@ -85,6 +84,8 @@ public class Entity {
 	    	int objIndex = gp.colChecker.checkObject(this, true);
 	    	pickUpObject(objIndex);
     	
+	    	int entityIndex = gp.colChecker.checkEntity(this, gp.entity);
+	    	
 		
 			if(collisionOn == false) {
 				
@@ -123,10 +124,10 @@ public class Entity {
 					spriteCounter = 0;
 				}
 				
-				//gp.eventH.checkPotionEvent(this);
+				gp.eventH.checkPotionEvent(this);
 			}
 		}
-    }
+    
     
     public void loadDeathImage() {
     	try {
@@ -185,4 +186,5 @@ public class Entity {
 			g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, observer);
 		}
     }
+    
 }

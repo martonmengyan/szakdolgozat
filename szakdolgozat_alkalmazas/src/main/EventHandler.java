@@ -27,13 +27,6 @@ public class EventHandler {
 		//create potion event for duration
 	}
 	
-	/*public void checkPotionEvent() {
-		
-		if(hit(2,1) == true) {
-			gp.player.life--;
-		}
-	}*/
-	
 	public void checkPotionEvent(Entity entity) {
 		
 		if(hit(2,1,entity) == true) {

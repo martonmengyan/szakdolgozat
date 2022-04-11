@@ -39,7 +39,7 @@ public class Player extends Entity {
     	solidAreaDefaultX = solidArea.x;
     	solidAreaDefaultY = solidArea.y;
 
-        loadImage();
+        //loadImage();
 
         setDefaultValues();
     }
@@ -56,11 +56,11 @@ public class Player extends Entity {
     	speed = gp.TILE_SIZE;
     	
     	//STARTING HP
-    	maxLife=10;
+    	maxLife=1000;
     	life = maxLife;
     }
 
-    private void loadImage() {
+    /*private void loadImage() {
         try {
             up1 = ImageIO.read(getClass().getResourceAsStream("/player/player_up1.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream("/player/player_up2.png"));
@@ -152,11 +152,11 @@ public class Player extends Entity {
         g2.drawImage(image, screenPos.x, screenPos.y, gp.TILE_SIZE, gp.TILE_SIZE, observer);
         
     }
-    
+    */
     public void update() {
     	
     	    	
-    	//check if moved yet
+    	/*//check if moved yet
     	if(moved==true) {
 	    	
     		//heal 1 HP once per 3 turn until its max life
@@ -170,9 +170,9 @@ public class Player extends Entity {
 	    	//event check
 	    	gp.eventH.checkPotionEvent(this);
 	    	
-	    	gp.player.moved=false;
+	    	moved=false;
 	    	
-    	}
+    	}*/
     	
     	//DIRECTION
     	if(keyH.up == true || keyH.down == true || keyH.left == true || keyH.right == true) {
@@ -188,7 +188,9 @@ public class Player extends Entity {
 			}   
 	    	
 	    	//collision check
+	    	/*
 	    	collisionOn = false;
+	    	 
 	    	gp.colChecker.checkTile(this);
 	    	
 	    	int objIndex = gp.colChecker.checkObject(this, true);
@@ -197,40 +199,32 @@ public class Player extends Entity {
 	    		pickUpObject(objIndex);
 	    		keyH.wantToPickUp = false;
 	    		}
-
+	    	*/
 	    	//movement if possible once
-	    	if(collisionOn == false) {
+	    	//if(collisionOn == false) {
 	    		if(keyH.up == true || keyH.down == true || keyH.right == true || keyH.left == true) {
 	    		
 		    		switch(direction) {
 		    		case "up":
 		    			worldY -= speed;
-		    			keyH.up = false;
-		    			System.out.println("moved to up");
-		    			gp.player.moved = true;
+		    			moved = true;
 		    			break;
 		    		case "down":
 		    			worldY += speed;
-		    			keyH.down = false;
-		    			System.out.println("moved to down");
-		    			gp.player.moved = true;
+		    			moved = true;
 		    			break;
 		    		case "left":
 		    			worldX -= speed;
-		    			keyH.left = false;
-		    			System.out.println("moved to left");
-		    			gp.player.moved = true;
+		    			moved = true;
 		    			break;
 		    		case "right":
 		    			worldX += speed;
-		    			keyH.right = false;
-		    			System.out.println("moved to right");
-		    			gp.player.moved = true;
+		    			moved = true;
 		    			break;
 		    		}
 	    		}
 	    	
-		    	spriteCounter++;
+		    	/*spriteCounter++;
 		    	if(spriteCounter >= 1) {
 		    		if(spriteNum == 1) {
 		    			spriteNum = 2;
@@ -239,8 +233,8 @@ public class Player extends Entity {
 		    			spriteNum = 1;
 		    		}
 		    		spriteCounter = 0;
-		    	}
-	    	}
+		    	}*/
+	    	//}
     	}
     }
 }

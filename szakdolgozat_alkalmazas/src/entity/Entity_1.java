@@ -52,7 +52,6 @@ public class Entity_1 extends Entity {
     }
     
     public void setAction() {
-    	if(gp.player.moved==true && dead==false) {
 	    	Random random = new Random();
 	    	int index = random.nextInt(1000)+1;
 	
@@ -66,6 +65,6 @@ public class Entity_1 extends Entity {
 	    		direction="down";
 	    	}
     	}
-    }
+    
 	    
 }
