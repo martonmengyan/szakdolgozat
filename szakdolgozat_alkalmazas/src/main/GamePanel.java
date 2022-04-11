@@ -95,7 +95,10 @@ public class GamePanel extends JPanel implements Runnable {
 	public void update() {
 		
 		if(gameScreenNumber == "normal") {
-			player.update();
+			if(player.life>0) {
+				
+				player.update();
+				}
 		}
 		if(gameScreenNumber == "pause") {
 			//not updating the player coordinate
@@ -121,7 +124,10 @@ public class GamePanel extends JPanel implements Runnable {
 				}
 			}
 			
-			player.draw(g2, this);
+			if(player.life>0) {
+				player.draw(g2, this);
+			}
+
 			
 			ui.draw(g2);
 			break;

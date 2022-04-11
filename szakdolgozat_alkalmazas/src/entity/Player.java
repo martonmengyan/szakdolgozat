@@ -56,6 +56,10 @@ public class Player extends Entity {
     	direction = "down";
     	
     	speed = gp.TILE_SIZE;
+    	
+    	//STARTING HP
+    	maxLife=1;
+    	life = maxLife;
     }
 
     private void loadImage() {
@@ -83,6 +87,7 @@ public class Player extends Entity {
     		case "Key":
     			ammountKey++;
     			gp.obj[i] = null;
+    			gp.player.life--;
     			System.out.println("Key:"+ammountKey);
     			break;
     		case "Door":

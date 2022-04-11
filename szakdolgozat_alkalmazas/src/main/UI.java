@@ -11,6 +11,7 @@ public class UI {
 	
 	//font
 	Font arial_40;
+	Font arial_60;
 	
 	//for menu
 	public int chosenMenuNumber = 0;
@@ -19,6 +20,7 @@ public class UI {
 		this.gp = gp;
 		
 		arial_40 = new Font("Arial", Font.PLAIN, 40);
+		arial_60 = new Font("Arial", Font.PLAIN, 60);
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -26,6 +28,7 @@ public class UI {
 		
 		switch(gp.gameScreenNumber) {
 		case "normal":
+			drawPlayerCurrentHP();
 			break;
 		case "end":
 			drawEndScreen();
@@ -36,6 +39,26 @@ public class UI {
 		case "title":
 			drawTitleScreen();
 			break;
+		}
+	}
+	
+	public void drawPlayerCurrentHP() {
+		
+		g2.setFont(arial_60);
+		g2.setColor(Color.red);
+		
+		int x;
+		int y;
+		int i;
+		
+		x = gp.TILE_SIZE/2;
+		y = gp.TILE_SIZE/2;
+		i=0;
+		
+		while(i<gp.player.life) {
+			g2.drawString("-",x,y);
+			i++;
+			x += textLength(g2,"-");
 		}
 	}
 	
