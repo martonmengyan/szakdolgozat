@@ -19,4 +19,7 @@ public class Entity {
     
     public int maxLife;
     public int life;
+    
+    public boolean moved = false;
+    public int healTurn = 0;
 }

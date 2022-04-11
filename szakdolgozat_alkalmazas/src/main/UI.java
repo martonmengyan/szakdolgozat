@@ -28,6 +28,7 @@ public class UI {
 		
 		switch(gp.gameScreenNumber) {
 		case "normal":
+			drawPlayerMaxHPSlots();
 			drawPlayerCurrentHP();
 			break;
 		case "end":
@@ -39,6 +40,26 @@ public class UI {
 		case "title":
 			drawTitleScreen();
 			break;
+		}
+	}
+	
+	public void drawPlayerMaxHPSlots() {
+		
+		g2.setFont(arial_60);
+		g2.setColor(Color.white);
+		
+		int x;
+		int y;
+		int i;
+		
+		x = gp.TILE_SIZE/2;
+		y = gp.TILE_SIZE/2;
+		i=0;
+		
+		while(i<gp.player.maxLife) {
+			g2.drawString("-",x,y);
+			i++;
+			x += textLength(g2,"-");
 		}
 	}
 	

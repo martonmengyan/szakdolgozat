@@ -58,7 +58,7 @@ public class Player extends Entity {
     	speed = gp.TILE_SIZE;
     	
     	//STARTING HP
-    	maxLife=1;
+    	maxLife=10;
     	life = maxLife;
     }
 
@@ -87,7 +87,6 @@ public class Player extends Entity {
     		case "Key":
     			ammountKey++;
     			gp.obj[i] = null;
-    			gp.player.life--;
     			System.out.println("Key:"+ammountKey);
     			break;
     		case "Door":
@@ -105,6 +104,12 @@ public class Player extends Entity {
     			gp.gameScreenNumber = "end";
     			break;
     		}
+    	}
+    }
+    
+    public void playerHPRegenerate() {
+    	if(true) {
+    		gp.player.life++;
     	}
     }
 
@@ -151,6 +156,23 @@ public class Player extends Entity {
     }
     
     public void update() {
+    	    	
+    	if(moved==true) {
+	    	
+    		//heal 1 HP once per 3 turn until its max life
+    		if(gp.player.life < gp.player.maxLife) {
+	        	if(healTurn == 2) {
+	        		playerHPRegenerate();
+	        		healTurn = 0;
+	        	}else healTurn++;
+    		}
+    		
+	    	//event check
+	    	gp.eventH.checkPotionEvent();
+	    	
+	    	gp.player.moved=false;
+	    	
+    	}
     	
     	//DIRECTION
     	if(keyH.up == true || keyH.down == true || keyH.left == true || keyH.right == true) {
@@ -175,7 +197,7 @@ public class Player extends Entity {
 	    		pickUpObject(objIndex);
 	    		keyH.wantToPickUp = false;
 	    		}
-	    	
+
 	    	//movement if possible once
 	    	if(collisionOn == false) {
 	    		if(keyH.up == true || keyH.down == true || keyH.right == true || keyH.left == true) {
@@ -185,21 +207,25 @@ public class Player extends Entity {
 		    			worldY -= speed;
 		    			keyH.up = false;
 		    			System.out.println("moved to up");
+		    			gp.player.moved = true;
 		    			break;
 		    		case "down":
 		    			worldY += speed;
 		    			keyH.down = false;
 		    			System.out.println("moved to down");
+		    			gp.player.moved = true;
 		    			break;
 		    		case "left":
 		    			worldX -= speed;
 		    			keyH.left = false;
 		    			System.out.println("moved to left");
+		    			gp.player.moved = true;
 		    			break;
 		    		case "right":
 		    			worldX += speed;
 		    			keyH.right = false;
 		    			System.out.println("moved to right");
+		    			gp.player.moved = true;
 		    			break;
 		    		}
 	    		}
