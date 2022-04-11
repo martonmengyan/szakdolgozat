@@ -20,6 +20,7 @@ public class Main {
 	        window.setVisible(true);
 	        
 	        gamePanel.setupObjects();
+	        gamePanel.setupEntities();
 			gamePanel.startGameThread();
 
 	    }

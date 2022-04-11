@@ -13,19 +13,17 @@ import main.KeyHandler;
 
 public class Player extends Entity {
 	
-	GamePanel gp;
 	KeyHandler keyH;
 
     //PLAYER POSITION
     private Point screenPos;
     public final int screenX;
     public final int screenY;
-    
-    int ammountKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
     	
-    	this.gp = gp;
+    	super(gp);
+    	
     	this.keyH = keyH;
     	
     	screenX = gp.screenWidth/2 - (gp.TILE_SIZE/2);
@@ -156,7 +154,9 @@ public class Player extends Entity {
     }
     
     public void update() {
+    	
     	    	
+    	//check if moved yet
     	if(moved==true) {
 	    	
     		//heal 1 HP once per 3 turn until its max life
@@ -168,7 +168,7 @@ public class Player extends Entity {
     		}
     		
 	    	//event check
-	    	gp.eventH.checkPotionEvent();
+	    	gp.eventH.checkPotionEvent(this);
 	    	
 	    	gp.player.moved=false;
 	    	

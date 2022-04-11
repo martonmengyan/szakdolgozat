@@ -36,9 +36,9 @@ public class GamePanel extends JPanel implements Runnable {
 	public UI ui = new UI(this);
 	public EventHandler eventH = new EventHandler(this);
 	Thread gameThread;
-	
+
 	public Player player = new Player(this,keyH);
-	public Entity entity = new Entity();
+	public Entity entity[] = new Entity[10];
 	public SuperObject obj[] = new SuperObject[10];
 	
 	public String gameScreenNumber;
@@ -56,6 +56,10 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void setupObjects() {
 		aSetter.setObject();
+	}
+	
+	public void setupEntities() {
+		aSetter.SetEntity();
 	}
 	
 	public void startGameThread() {
@@ -104,6 +108,19 @@ public class GamePanel extends JPanel implements Runnable {
 		if(gameScreenNumber == "pause") {
 			//not updating the player coordinate
 		}
+		
+		if(gameScreenNumber == "normal") {
+			for(int i = 0; i < entity.length; i++) {
+				if(entity[i] != null) {
+					if(entity[i].life>0) {
+						entity[i].update();
+					}
+				}
+			}
+		}
+		if(gameScreenNumber == "pause") {
+			//not updating the player coordinate
+		}
 	}
 
 	public void paintComponent(Graphics g) {
@@ -119,12 +136,29 @@ public class GamePanel extends JPanel implements Runnable {
 		case "normal":
 			tileM.draw(g2,this);
 			
+			//object list
 			for(int i = 0; i < obj.length; i++) {
 				if(obj[i] != null) {
 					obj[i].draw(g2, this, this);
 				}
 			}
 			
+			//entity list, item drop on dead
+			for(int i = 0; i < entity.length; i++) {
+				if(entity[i] != null) {
+					if(entity[i].dead==false) {
+						if(entity[i].life>0) {
+							entity[i].draw(g2, this);
+						}else {
+							entity[i].dead = true;
+							aSetter.createObject(entity[i].worldX, entity[i].worldY, "Boots");
+						}
+					}
+				}
+				
+			}
+			
+			//player for test
 			if(player.life>0) {
 				player.draw(g2, this);
 			}
