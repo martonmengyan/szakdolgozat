@@ -32,6 +32,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int WORLDROWS = 50;
 	public final int WORLDCOLUMNS = 50;
 
+	public double drawInterval = 1000000000/3;
+	
 	KeyHandler keyH = new KeyHandler(this);
 	BlockManager tileM = new BlockManager(this);
 	public CollisionChecker colChecker = new CollisionChecker(this);
@@ -74,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		
-		double drawInterval = 1000000000/10;
+		
 		double nextDrawTime = System.nanoTime() + drawInterval;
 		
 		while(gameThread != null) {
@@ -104,23 +106,21 @@ public class GamePanel extends JPanel implements Runnable {
 	public void update() {
 
 		if(gameScreenNumber == "normal") {
-				
+			
 			player.update();
 
-			if(!isPaused && entityList.size() != 0) {
-				entityList.get(index).update();	
-				if(entityList.get(index).life<=0) {
-					entityList.remove(index);
-					entityIndex = 0;
+			for(int i=0; i<entityList.size();i++) {
+				if(!isPaused && entityList.size() != 0) {
+					entityList.get(i).update();	
+					if(entityList.get(i).life<=0) {
+						entityList.remove(i);
+						entityIndex = 0;
+					}
 				}
-			}else gameScreenNumber = "end";
-			
-			index++;
-			System.out.println("index=" + index + "size=" + entityList.size());
-			if(index >= entityList.size()) {
-				index = 0;
+				if(entityList.size() == 0) {
+					gameScreenNumber = "end";
+				}
 			}
-			
 		}
 		
 	}		
@@ -137,24 +137,22 @@ public class GamePanel extends JPanel implements Runnable {
 				break;
 			case "normal":
 				tileM.draw(g2,this);
-			
-				for(int i=0; i<entityList.size(); i++) {
-					
-					entityList.get(i).draw(g2,this);
-				}
-				
 				for(int i=0; i<objectList.size(); i++) {
 					objectList.get(i).draw(g2,this);
 				}
-						
+				for(int i=0; i<entityList.size(); i++) {
+					entityList.get(i).draw(g2,this);
+				}
+				for(int j=0; j<entityList.size(); j++) {
+					entityList.get(j).drawEntityHP(g2, player);
+				}
+		
 				//player for test
 		
 				player.draw(g2, this);
 		
 				ui.draw(g2, entityList);
-				
-				
-				
+
 				break;
 			case "end":
 				ui.draw(g2, entityList);

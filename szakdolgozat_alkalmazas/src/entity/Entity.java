@@ -225,22 +225,21 @@ public class Entity {
 		   worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
 			
 			g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, observer);
-			if(type==2) {
-				drawEntityHP(g2,this,screenX,screenY);
-			}
+			//drawEntityHP(g2,this,screenX,screenY);
 			
 		}
     }
     
 	
-	public void drawEntityHP(Graphics2D g2,Entity entity,int x, int y) {
-
+	public void drawEntityHP(Graphics2D g2,Entity entity) {
+		int screenX = worldX - gp.player.worldX + gp.player.screenX;
+		int screenY = worldY - gp.player.worldY + gp.player.screenY;
 		
 		g2.setColor(Color.black);
-		g2.fillRect(x-1, y-16, gp.TILE_SIZE+2, 6);
+		g2.fillRect(screenX-1, screenY-16, gp.TILE_SIZE+2, 6);
 		
 		g2.setColor(Color.red);
-		g2.fillRect(x, y-15, (gp.TILE_SIZE/maxLife)*life, 4);
+		g2.fillRect(screenX, screenY-15, (gp.TILE_SIZE/maxLife)*life, 4);
 		
 	}
 	
