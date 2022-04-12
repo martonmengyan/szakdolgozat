@@ -8,13 +8,17 @@ import javax.imageio.ImageIO;
 import entity.Entity;
 import main.GamePanel;
 
-public class Object_Boots extends Entity {
+public class Object_Entity_Helmet_01 extends Entity {
+	
 	GamePanel gp;
-	 public Object_Boots(GamePanel gp) {
+	
+	 public Object_Entity_Helmet_01(GamePanel gp) {
+		 
 		 super(gp);
-		 name ="Boots";
+		 
+		 name ="Entity_Helmet_01";
 		 try {
-			 down1 = ImageIO.read(getClass().getResourceAsStream("/objects/boots.png"));
+			 down1 = ImageIO.read(getClass().getResourceAsStream("/objects/Entity_Helmet_01.png"));
 			 
 		 }catch(IOException e) {
 			 e.printStackTrace();
@@ -25,5 +29,10 @@ public class Object_Boots extends Entity {
 					28);
 		 solidAreaDefaultX = 0;
 		 solidAreaDefaultY = 0;
+		 
+		 itemStr = 0;
+		 itemVit = 0;
+		 itemEva = 0;
+		 itemAcc = 0;
 	 }
 }

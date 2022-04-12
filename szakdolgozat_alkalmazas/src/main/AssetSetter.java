@@ -1,5 +1,8 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import entity.*;
 import object.*;
 
@@ -12,80 +15,31 @@ public class AssetSetter {
 	}
 	
 	public void setObject() {
-		gp.obj[0] = new Object_Key();
-		gp.obj[0].worldX=1*gp.TILE_SIZE;
-		gp.obj[0].worldY=1*gp.TILE_SIZE;
 		
-		gp.obj[1] = new Object_Door();
-		gp.obj[1].worldX=5*gp.TILE_SIZE;
-		gp.obj[1].worldY=4*gp.TILE_SIZE;
-		
-		gp.obj[5] = new Object_Door();
-		gp.obj[5].worldX=1*gp.TILE_SIZE;
-		gp.obj[5].worldY=4*gp.TILE_SIZE;
-		
-		gp.obj[6] = new Object_Door();
-		gp.obj[6].worldX=6*gp.TILE_SIZE;
-		gp.obj[6].worldY=1*gp.TILE_SIZE;
-		
-		gp.obj[2] = new Object_Chest();
-		gp.obj[2].worldX=10*gp.TILE_SIZE;
-		gp.obj[2].worldY=6*gp.TILE_SIZE;
-		
-		gp.obj[3] = new Object_Boots();
-		gp.obj[3].worldX=10*gp.TILE_SIZE;
-		gp.obj[3].worldY=10*gp.TILE_SIZE;
-		
-		gp.obj[4] = new Object_Brick();
-		gp.obj[4].worldX=3*gp.TILE_SIZE;
-		gp.obj[4].worldY=3*gp.TILE_SIZE;
+		createEntity(0,1,1,new Object_Key(gp), gp.objectList);
+		createEntity(1,5,4,new Object_Door(gp), gp.objectList);
+		createEntity(2,10,6,new Object_Chest(gp), gp.objectList);
+		createEntity(3,10,10,new Object_Boots(gp), gp.objectList);
+		createEntity(4,3,3,new Object_Brick(gp), gp.objectList);
+		createEntity(5,1,5,new Object_Door(gp), gp.objectList);
+		createEntity(6,6,1,new Object_Door(gp), gp.objectList);
 	}
 	
 	public void SetEntity() {
+
+		createEntity(0,4,2,new Entity_1(gp), gp.entityList);
+		createEntity(1,1,2,new Entity_1(gp), gp.entityList);
+		createEntity(2,1,4,new Entity_1(gp), gp.entityList);
+		createEntity(3,1,3,new Entity_1(gp), gp.entityList);
 		
-		gp.entity[1] = new Entity_1(gp);
-		gp.entity[1].worldX=4*gp.TILE_SIZE;
-		gp.entity[1].worldY=2*gp.TILE_SIZE;
-		
-		gp.entity[2] = new Entity_1(gp);
-		gp.entity[2].worldX=1*gp.TILE_SIZE;
-		gp.entity[2].worldY=2*gp.TILE_SIZE;
-		
-		gp.entity[0] = new Entity_1(gp);
-		gp.entity[0].worldX=1*gp.TILE_SIZE;
-		gp.entity[0].worldY=1*gp.TILE_SIZE;
-		
-		gp.entity[3] = new Entity_1(gp);
-		gp.entity[3].worldX=1*gp.TILE_SIZE;
-		gp.entity[3].worldY=3*gp.TILE_SIZE;
 	}
 	
-	public void createObject(int x, int y, String objects) {
-		int i = 0;
-		while(gp.obj[i] != null) {
-			i++;
-		}
-		switch(objects) {
-		case "Boots":
-			gp.obj[i] = new Object_Boots();
-			gp.obj[i].worldX=x;
-			gp.obj[i].worldY=y;
-			break;
-		case "Key":
-			gp.obj[i] = new Object_Key();
-			gp.obj[i].worldX=x;
-			gp.obj[i].worldY=y;
-			break;
-		case "Door":
-			gp.obj[i] = new Object_Door();
-			gp.obj[i].worldX=x;
-			gp.obj[i].worldY=y;
-			break;
-		case "Chest":
-			gp.obj[i] = new Object_Chest();
-			gp.obj[i].worldX=x;
-			gp.obj[i].worldY=y;
-			break;
-		}				
-	}
+	
+	public void createEntity(int objID, int x, int y, Entity object, ArrayList<Entity> ArrayList){
+        ArrayList.add(object);
+        ArrayList.get(ArrayList.size()-1).worldX=x*gp.TILE_SIZE;
+        ArrayList.get(ArrayList.size()-1).worldY=y*gp.TILE_SIZE;
+    }
+	
+
 }

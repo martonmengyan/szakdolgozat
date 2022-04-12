@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
+import object.*;
 
 public class Entity_1 extends Entity {
 
@@ -29,11 +30,24 @@ public class Entity_1 extends Entity {
 	}
 	
 	private void setDefaultValues() {
+		type=2;
 		direction = "down";
 		speed = gp.TILE_SIZE;
 		
-		maxLife=1;
+		str=1;
+    	vit=4;
+    	eva=1;
+    	acc=1;
+    	
+		maxLife=vit;
     	life = maxLife;
+    	
+    	exp=0;
+    	reqExp=10;
+    	
+    	currentWeapon = new Object_Entity_Weapon_01(gp);
+    	currentArmor = new Object_Entity_Armor_01(gp);
+    	currentHelmet = new Object_Entity_Helmet_01(gp);
 	}
 	
     public void loadImage() {

@@ -1,17 +1,33 @@
 package object;
 
+import java.awt.Rectangle;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Object_Key extends SuperObject {
-	 public Object_Key() {
+import entity.Entity;
+import main.GamePanel;
+
+public class Object_Key extends Entity {
+	
+	GamePanel gp;
+	
+	 public Object_Key(GamePanel gp) {
+		 
+		 super(gp);
+		 
 		 name ="Key";
 		 try {
-			 image = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
+			 down1 = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
 			 
 		 }catch(IOException e) {
 			 e.printStackTrace();
 		 }
+		 solidArea = new Rectangle(10,
+					10,
+					28,
+					28);
+		 solidAreaDefaultX = 0;
+		 solidAreaDefaultY = 0;
 	 }
 }

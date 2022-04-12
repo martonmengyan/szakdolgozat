@@ -8,6 +8,7 @@ public class KeyHandler implements KeyListener {
 	GamePanel gp;
 	public boolean up,left,right,down;
 	public boolean wantToPickUp;
+
 	
 	public KeyHandler(GamePanel gp) {
 		this.gp = gp;
@@ -61,18 +62,35 @@ public class KeyHandler implements KeyListener {
 		        left = true;
 		    }
 		    if (key == KeyEvent.VK_P) {
-		        gp.gameScreenNumber = "pause";
+		    	if(gp.isPaused==true) {
+	        		gp.isPaused = false;
+	        	}else gp.isPaused=true;
 		    }
 	        if (key == KeyEvent.VK_E) {
 	            wantToPickUp = true;
 	        }
+	        if (key == KeyEvent.VK_S) {
+	        	if(gp.statIsVisible==true) {
+	        		gp.statIsVisible = false;
+	        	}else gp.statIsVisible=true;
+	        	
+	        }
+	        if (key == KeyEvent.VK_A) {
+	        	if (gp.statIsVisible){
+	        		if(gp.entityIndex>0) {
+	        			gp.entityIndex--;
+	        		}else gp.entityIndex=gp.entityList.size()-1;
+	        		
+	        	}
+	        }
+	        if (key == KeyEvent.VK_D) {
+	        	if (gp.statIsVisible){
+	        		if(gp.entityIndex<gp.entityList.size()-1) {
+	        			gp.entityIndex++;
+	        		}else gp.entityIndex=0;
+	        	}
+	        }
 		    break;
-		case "pause":
-			//DURING PAUSE
-		    if (key == KeyEvent.VK_P) {
-		        gp.gameScreenNumber = "normal";
-		    }
-	        break;
 		}
 	}
 

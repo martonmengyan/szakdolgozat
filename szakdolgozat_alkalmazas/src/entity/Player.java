@@ -56,7 +56,7 @@ public class Player extends Entity {
     	speed = gp.TILE_SIZE;
     	
     	//STARTING HP
-    	maxLife=1000;
+    	maxLife=0;
     	life = maxLife;
     }
 

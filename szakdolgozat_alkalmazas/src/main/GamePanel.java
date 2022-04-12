@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.*;
 
 import block.BlockManager;
 import entity.*;
-import object.SuperObject;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -37,12 +39,14 @@ public class GamePanel extends JPanel implements Runnable {
 	public UI ui = new UI(this);
 	public EventHandler eventH = new EventHandler(this);
 	Thread gameThread;
-
+	public int entityIndex = 0;
 	public Player player = new Player(this,keyH);
-	public Entity entity[] = new Entity[10];
-	public SuperObject obj[] = new SuperObject[10];
+	public ArrayList<Entity> entityList = new ArrayList<>();
+	public ArrayList<Entity> objectList = new ArrayList<>();
 	
 	public String gameScreenNumber;
+	public boolean statIsVisible=false;
+	public boolean isPaused = false;
 	
 
 	public GamePanel() {
@@ -100,24 +104,25 @@ public class GamePanel extends JPanel implements Runnable {
 	public void update() {
 
 		if(gameScreenNumber == "normal") {
-			if(player.life>0) {
 				
-				player.update();
-			}
+			player.update();
+
+			if(!isPaused && entityList.size() != 0) {
+				entityList.get(index).update();	
+				if(entityList.get(index).life<=0) {
+					entityList.remove(index);
+					entityIndex = 0;
+				}
+			}else gameScreenNumber = "end";
 			
-			if(entity[index] != null && !entity[index].dead) {
-					entity[index].update();
-				
-			}
 			index++;
-			if(index >= entity.length) {
+			System.out.println("index=" + index + "size=" + entityList.size());
+			if(index >= entityList.size()) {
 				index = 0;
 			}
+			
 		}
 		
-		if(gameScreenNumber == "pause") {
-			//not updating the player coordinate
-		}
 	}		
 
 	public void paintComponent(Graphics g) {
@@ -127,51 +132,33 @@ public class GamePanel extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D)g;
 		
 		switch(gameScreenNumber) {
-		case "title":
-			ui.draw(g2);
-			break;
-		case "normal":
-			tileM.draw(g2,this);
+			case "title":
+				ui.draw(g2, entityList);
+				break;
+			case "normal":
+				tileM.draw(g2,this);
 			
-			//object list
-			for(int i = 0; i < obj.length; i++) {
-				if(obj[i] != null) {
-					obj[i].draw(g2, this, this);
+				for(int i=0; i<entityList.size(); i++) {
+					
+					entityList.get(i).draw(g2,this);
 				}
-			}
-			
-			//entity list, item drop on dead
-			for(int i=0; i<entity.length;i++)
-				if(entity[i] != null) {
-					if(entity[i].dead==false) {
-						if(entity[i].life>0) {
-							entity[i].draw(g2, this);
+				
+				for(int i=0; i<objectList.size(); i++) {
+					objectList.get(i).draw(g2,this);
+				}
+						
+				//player for test
 		
-						}else {
-							entity[i].dead = true;
-							aSetter.createObject(entity[i].worldX, entity[i].worldY, "Boots");
-						}
-					}
-				}
-			
-			
-
-			
-			
-			//player for test
-			if(player.life>0) {
 				player.draw(g2, this);
-			}
-
-			
-			ui.draw(g2);
-			break;
-		case "end":
-			ui.draw(g2);
-			break;
-		case "pause":
-			ui.draw(g2);
-			break;
+		
+				ui.draw(g2, entityList);
+				
+				
+				
+				break;
+			case "end":
+				ui.draw(g2, entityList);
+				break;
 		}
 		
 	}
