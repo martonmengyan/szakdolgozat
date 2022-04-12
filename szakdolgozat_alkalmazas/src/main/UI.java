@@ -59,10 +59,7 @@ public class UI {
 				drawPauseScreen();
 			}
 			if(gp.statIsVisible) {
-				if(entityList.size()>0) {
-					drawStatScreen(entityList.get(gp.entityIndex));
-				}else drawNotReadyStatScreen();
-				
+				drawStatScreen(entityList.get(gp.entityIndex));				
 			}
 			break;
 		case "end":
@@ -170,23 +167,6 @@ public class UI {
 		text = "PRESS D";
 		g2.drawString(text, x+width-5-textLength(g2,text), y+5 + height-10);		
 	}
-	
-	//PAUSE SCREEN
-		public void drawNotReadyStatScreen() {
-			
-			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			
-			int x = 20;
-			int y = gp.screenHeight/2-gp.TILE_SIZE*4;
-			final int width = gp.TILE_SIZE*5;
-			final int height = gp.TILE_SIZE*9;
-			
-			g2.setColor(Color.gray);
-			g2.fillRect(x, y, width, height);
-			
-			g2.setColor(Color.black);
-			g2.fillRect(x+5, y+20, width-10, height-40);
-		}
 	
 	//PAUSE SCREEN
 	public void drawPauseScreen() {
