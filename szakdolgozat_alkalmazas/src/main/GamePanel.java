@@ -48,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public String gameScreenNumber;
 	public boolean statIsVisible=false;
+	public boolean inventoryIsVisible=false;
 	public boolean isPaused = false;
 	
 
@@ -113,6 +114,11 @@ public class GamePanel extends JPanel implements Runnable {
 				if(!isPaused && entityList.size() != 0) {
 					entityList.get(i).update();	
 					if(entityList.get(i).life<=0) {
+						for(int j=0; j<entityList.get(i).inventory.size(); j++) {
+							objectList.add(entityList.get(i).inventory.get(j));
+							objectList.get(objectList.size()-1).worldX = entityList.get(i).worldX;
+							objectList.get(objectList.size()-1).worldY = entityList.get(i).worldY;
+						}
 						entityList.remove(i);
 						entityIndex = 0;
 					}
@@ -144,7 +150,7 @@ public class GamePanel extends JPanel implements Runnable {
 					entityList.get(i).draw(g2,this);
 				}
 				for(int j=0; j<entityList.size(); j++) {
-					entityList.get(j).drawEntityHP(g2, player);
+					entityList.get(j).drawEntityHP(g2);
 				}
 		
 				//player for test

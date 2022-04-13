@@ -30,6 +30,8 @@ public class Object_Entity_Helmet_01 extends Entity {
 		 solidAreaDefaultX = 0;
 		 solidAreaDefaultY = 0;
 		 
+		 typeName = "Helmet";
+		 type=2;
 		 itemStr = 0;
 		 itemVit = 0;
 		 itemEva = 0;

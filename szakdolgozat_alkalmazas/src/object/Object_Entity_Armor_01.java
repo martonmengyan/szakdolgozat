@@ -30,6 +30,8 @@ public class Object_Entity_Armor_01 extends Entity {
 		 solidAreaDefaultX = 0;
 		 solidAreaDefaultY = 0;
 		 
+		 typeName = "Armor";
+		 type=2;
 		 itemStr = 0;
 		 itemVit = 0;
 		 itemEva = 0;

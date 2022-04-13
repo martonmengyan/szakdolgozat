@@ -23,10 +23,9 @@ public class Entity_1 extends Entity {
 		solidAreaDefaultY = solidArea.y;
 		
 
-			loadImage();
-
-		
+		loadImage();
 		setDefaultValues();
+		setItems();
 	}
 	
 	private void setDefaultValues() {
@@ -48,7 +47,33 @@ public class Entity_1 extends Entity {
     	currentWeapon = new Object_Entity_Weapon_01(gp);
     	currentArmor = new Object_Entity_Armor_01(gp);
     	currentHelmet = new Object_Entity_Helmet_01(gp);
+    	key = new Object_Key(gp);
+    	
+    	attack = getAttack();
+    	setItemStat(currentWeapon);
+    	setItemStat(currentArmor);
+    	setItemStat(currentHelmet);
 	}
+	
+	public void setItems() {
+		inventory.add(currentWeapon);
+		inventory.add(currentArmor);
+		inventory.add(currentHelmet);
+		//inventory.add(key);
+	}
+	
+	public void setItemStat(Entity entity) {
+		Random random = new Random();
+		entity.str=random.nextInt(5 + 7) - 7;
+		entity.vit=random.nextInt(5 + 7) - 7;
+		entity.eva=random.nextInt(5 + 7) - 7;
+		entity.acc=random.nextInt(5 + 7) - 7;
+	}
+	
+	public int getAttack() {
+		return attack;
+	}
+	
 	
     public void loadImage() {
         try {

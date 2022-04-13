@@ -23,11 +23,13 @@ public class Object_Key extends Entity {
 		 }catch(IOException e) {
 			 e.printStackTrace();
 		 }
+		 type=0;
 		 solidArea = new Rectangle(10,
 					10,
 					28,
 					28);
 		 solidAreaDefaultX = 0;
 		 solidAreaDefaultY = 0;
+		 typeName = "Key";
 	 }
 }

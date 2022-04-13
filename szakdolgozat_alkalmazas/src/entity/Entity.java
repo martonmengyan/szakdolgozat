@@ -40,8 +40,9 @@ public class Entity {
 	
     public int ammountKey = 0;
     public int index = 0;
+    
     //char
-    public int type = 0;
+    public int type;
     public int maxLife;
     public int life;
     public int lvl;
@@ -54,7 +55,11 @@ public class Entity {
     public Entity currentWeapon;
     public Entity currentArmor;
     public Entity currentHelmet;
-    //public Entity eqKey;
+    public Entity key;
+    
+    public String typeName;
+    
+    public int attack;
     
     //item
     public int itemStr;
@@ -66,10 +71,8 @@ public class Entity {
     public boolean moved = false;
     public int healTurn = 0;
     
-
-    
     public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int inventorySize = 20;
+    public final int inventorySize = 4;
     
     public Entity(GamePanel gp) {
     	this.gp = gp;
@@ -89,7 +92,10 @@ public class Entity {
     		switch(objectName) {
     		case "Key":
     			ammountKey++;
-    			gp.objectList.remove(i);
+    			if(inventory.size()!=inventorySize) {
+    				inventory.add(gp.objectList.get(i));
+    				gp.objectList.remove(i);
+    			}    			
     			System.out.println("Key:"+ammountKey);
     			break;
     		case "Door":
@@ -231,7 +237,7 @@ public class Entity {
     }
     
 	
-	public void drawEntityHP(Graphics2D g2,Entity entity) {
+	public void drawEntityHP(Graphics2D g2) {
 		int screenX = worldX - gp.player.worldX + gp.player.screenX;
 		int screenY = worldY - gp.player.worldY + gp.player.screenY;
 		

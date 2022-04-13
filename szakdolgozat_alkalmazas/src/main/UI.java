@@ -6,7 +6,9 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,6 +27,11 @@ public class UI {
 	Font font_40;
 	Font arial_40;
 	
+	//for slots in inventory
+	public int slotCol = 1;
+	public int slotRow = 1;
+	public int maxSlotCol = 4;
+	public int maxSlotRow = 1;
 	
 	//for menu
 	public int chosenMenuNumber = 0;
@@ -59,7 +66,10 @@ public class UI {
 				drawPauseScreen();
 			}
 			if(gp.statIsVisible) {
-				drawStatScreen(entityList.get(gp.entityIndex));				
+				drawStatWindow(entityList.get(gp.entityIndex));	
+				if(gp.inventoryIsVisible) {
+					drawInventoryWindow(entityList.get(gp.entityIndex));
+				}
 			}
 			break;
 		case "end":
@@ -71,7 +81,127 @@ public class UI {
 		}
 	}
 	
-	public void drawStatScreen(Entity entity) {
+	public void drawInventoryWindow(Entity entity) {
+		
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+		//WINDOW
+		int windowX = gp.TILE_SIZE*5 + 30;
+		int windowY = gp.screenHeight/2-gp.TILE_SIZE*4;
+		final int width = gp.TILE_SIZE*5;
+		final int height = gp.TILE_SIZE*9;
+		String text = "Inventory";
+		
+		g2.setColor(Color.gray);
+		g2.fillRect(windowX, windowY, width, height);
+		
+		g2.setColor(Color.black);
+		g2.fillRect(windowX+5, windowY+20, width-10, height-40);
+		
+		g2.setFont(font_15);
+		g2.setColor(Color.white);
+		
+		g2.drawString(text, windowX+5, windowY+16);
+		
+		//INVENTORY SLOTS
+		int startFromX = windowX +20;
+		int startFromY = windowY +40;
+		int slotX = startFromX;
+		int slotY = startFromY;
+		
+		//SLOT BACKGROUND
+		Color myWhite = new Color(255, 191, 128);
+		g2.setColor(myWhite);
+		g2.fillRect(startFromX, startFromY, gp.TILE_SIZE*4, gp.TILE_SIZE);
+		
+		//EVERY SLOT
+		g2.setColor(Color.gray);
+		g2.setStroke(new BasicStroke(4));
+		
+		for(int i = 0; i<maxSlotCol; i++) {
+			for(int j = 0; j<maxSlotRow; j++) {
+				g2.drawRect(startFromX + (gp.TILE_SIZE * i), startFromY + (gp.TILE_SIZE * j), gp.TILE_SIZE, gp.TILE_SIZE);
+			}
+		}
+		
+		//ITEMS
+		for(int i = 0; i < entity.inventory.size(); i++) {
+			g2.drawImage(entity.inventory.get(i).down1.getScaledInstance(gp.TILE_SIZE, gp.TILE_SIZE, Image.SCALE_DEFAULT), slotX, slotY, null);
+
+
+			slotX += gp.TILE_SIZE;
+			
+			if(i == 4 || i == 8) {
+				slotX = startFromX;
+				slotY += gp.TILE_SIZE;
+			}
+		}
+		
+		//ITEM STATS
+		int itemIndex = getInventoryIndex();
+		if(itemIndex  < entity.inventory.size()) {
+			drawItemStatistics(startFromX,startFromY,entity.inventory.get(itemIndex));
+
+		}
+		
+		//CHOSEN SLOT
+		g2.setColor(Color.white);
+		g2.setStroke(new BasicStroke(4));
+		g2.drawRect(startFromX + (gp.TILE_SIZE * (slotCol-1)), startFromY + (gp.TILE_SIZE * (slotRow-1)), gp.TILE_SIZE, gp.TILE_SIZE);
+		
+		
+	}
+	
+	public void drawItemStatistics(int x, int y, Entity entity) {
+		
+		int startFromX = x - 10;
+		int startFromY = y + (gp.TILE_SIZE*(maxSlotRow+1)-20);
+		String[] names = {"Str","Vit","Eva","Acc"};
+		int emptiness = 30;
+		
+		g2.setFont(font_25);
+		g2.setColor(Color.white);
+		g2.drawString(entity.typeName, startFromX+5, startFromY+50+emptiness*0);
+		
+		if(entity.type==2) {
+			for(int i=0; i<names.length; i++) {
+				g2.setFont(font_25);
+				g2.setColor(Color.white);
+				g2.drawString(names[i], startFromX+5, startFromY+50+emptiness*(i+1));
+				
+			}		
+
+			String value;
+			int i=1;
+			value=String.valueOf(entity.str);
+			g2.setFont(font_25);
+			g2.setColor(Color.white);
+			g2.drawString(value, x+startFromX-gp.TILE_SIZE*2-textLength(g2,"_"), startFromY+50+emptiness*i);
+			i++;
+			value=String.valueOf(entity.vit);
+			g2.setFont(font_25);
+			g2.setColor(Color.white);
+			g2.drawString(value, x+startFromX-gp.TILE_SIZE*2-textLength(g2,"_"), startFromY+50+emptiness*i);
+			i++;
+			value=String.valueOf(entity.eva);
+			g2.setFont(font_25);
+			g2.setColor(Color.white);
+			g2.drawString(value, x+startFromX-gp.TILE_SIZE*2-textLength(g2,"_"), startFromY+50+emptiness*i);
+			i++;
+			value=String.valueOf(entity.acc);
+			g2.setFont(font_25);
+			g2.setColor(Color.white);
+			g2.drawString(value, x+startFromX-gp.TILE_SIZE*2-textLength(g2,"_"), startFromY+50+emptiness*i);
+		}
+		
+	}
+	
+	public int getInventoryIndex() {
+		int itemIndex = (slotCol-1) + ((slotRow-1)*5);
+		return itemIndex;
+	}
+
+	public void drawStatWindow(Entity entity) {
 		
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
@@ -161,10 +291,10 @@ public class UI {
 		//BUTTONS
 		g2.setColor(Color.white);
 		g2.setFont(font_15);
-		text = "PRESS A";
+		text = "PRESS Q";
 		g2.drawString(text, x+5, y+5 + height-10);
 		
-		text = "PRESS D";
+		text = "PRESS E";
 		g2.drawString(text, x+width-5-textLength(g2,text), y+5 + height-10);		
 	}
 	

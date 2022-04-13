@@ -69,13 +69,13 @@ public class KeyHandler implements KeyListener {
 	        if (key == KeyEvent.VK_E) {
 	            wantToPickUp = true;
 	        }
-	        if (key == KeyEvent.VK_S) {
+	        if (key == KeyEvent.VK_C) {
 	        	if(gp.statIsVisible==true) {
 	        		gp.statIsVisible = false;
 	        	}else gp.statIsVisible=true;
 	        	
 	        }
-	        if (key == KeyEvent.VK_A) {
+	        if (key == KeyEvent.VK_Q) {
 	        	if (gp.statIsVisible){
 	        		if(gp.entityIndex>0) {
 	        			gp.entityIndex--;
@@ -83,15 +83,48 @@ public class KeyHandler implements KeyListener {
 	        		
 	        	}
 	        }
-	        if (key == KeyEvent.VK_D) {
+	        if (key == KeyEvent.VK_E) {
 	        	if (gp.statIsVisible){
 	        		if(gp.entityIndex<gp.entityList.size()-1) {
 	        			gp.entityIndex++;
 	        		}else gp.entityIndex=0;
 	        	}
 	        }
-		    break;
+	        if (gp.statIsVisible) {
+	        	if (key == KeyEvent.VK_I) {
+		        	if (!gp.inventoryIsVisible){
+		        		gp.inventoryIsVisible=true;
+		        	}else gp.inventoryIsVisible=false;
+		        	
+		        }
+				if (key == KeyEvent.VK_W) {
+			    	if(gp.ui.slotRow > 1) {
+			        	gp.ui.slotRow--;
+			        }else gp.ui.slotRow = gp.ui.maxSlotRow;
+
+			    }
+			    if (key == KeyEvent.VK_A) {
+			    	if(gp.ui.slotCol > 1) {
+			        	gp.ui.slotCol--;
+			        }else gp.ui.slotCol = gp.ui.maxSlotCol-1;
+
+			    }
+			    if (key == KeyEvent.VK_S) {
+			        if(gp.ui.slotRow < gp.ui.maxSlotRow) {
+			        	gp.ui.slotRow++;
+			        }else gp.ui.slotRow = 1;
+			    }
+			    if (key == KeyEvent.VK_D) {
+			    	if(gp.ui.slotCol < gp.ui.maxSlotCol) {
+			        	gp.ui.slotCol++;
+			        }else gp.ui.slotCol = 1;
+
+			    }
+	        }
+	        break;
+	        
 		}
+		
 	}
 
 	@Override
