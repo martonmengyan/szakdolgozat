@@ -38,7 +38,6 @@ public class Entity {
 	public Point worldPos;
 	public Rectangle solidArea;
 	
-    public int ammountKey = 0;
     public int index = 0;
     
     //char
@@ -91,19 +90,15 @@ public class Entity {
     		
     		switch(objectName) {
     		case "Key":
-    			ammountKey++;
     			if(inventory.size()!=inventorySize) {
     				inventory.add(gp.objectList.get(i));
     				gp.objectList.remove(i);
     			}    			
-    			System.out.println("Key:"+ammountKey);
     			break;
     		case "Door":
-    			if(ammountKey > 0) {
+    			if(hasKey()) {
     				gp.objectList.remove(i);
-    				ammountKey--;
     			}
-    			System.out.println("Key:"+ammountKey);
     			break;
     		case "Boots":
     			//utasítás
@@ -114,6 +109,17 @@ public class Entity {
     			break;
     		}
     	}
+    }
+    
+    public boolean hasKey() {
+    	boolean hasKey = false;
+    	for(int i=0; i<inventory.size(); i++) {
+    		if(inventory.get(i).typeName == "Key") {
+    			hasKey = true;   
+    			inventory.remove(i);
+    		}
+    	}
+		return hasKey;
     }
     
     public void update() {
