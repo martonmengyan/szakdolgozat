@@ -125,6 +125,12 @@ public class GamePanel extends JPanel implements Runnable {
 						entityList.remove(i);
 						entityIndex = 0;
 					}else entityList.get(i).update();	
+					//check if any entity died after attack
+					for(int k=0; k<entityList.size();k++) {
+						if(entityList.get(k).life<=0) {
+							entityList.remove(k);
+						}
+					}
 				}
 				if(entityList.size() == 0) {
 					gameScreenNumber = "end";

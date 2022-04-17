@@ -188,6 +188,7 @@ public class Entity {
 
 		}else if(wantToOpenDoor) {
 			openDoor(objIndex);
+			
 		}else if(wantToMove) {
 			setAction();
 			collisionOn = false;
@@ -332,7 +333,7 @@ public class Entity {
 		y = worldY;
 		
 		for(int i=0;i<entityList.size();i++) {
-			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y) {
+			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y && entityList.get(i).faction!=faction) {
 				closeEnemyArray.add(i);
 			}
 		}
@@ -342,7 +343,7 @@ public class Entity {
 		y = worldY;
 		
 		for(int i=0;i<entityList.size();i++) {
-			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y) {
+			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y && entityList.get(i).faction!=faction) {
 				closeEnemyArray.add(i);
 			}
 		}
@@ -352,7 +353,7 @@ public class Entity {
 		y = worldY + gp.TILE_SIZE;
 		
 		for(int i=0;i<entityList.size();i++) {
-			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y) {
+			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y && entityList.get(i).faction!=faction) {
 				closeEnemyArray.add(i);
 			}
 		}
@@ -362,7 +363,7 @@ public class Entity {
 		y = worldY - gp.TILE_SIZE;
 		
 		for(int i=0;i<entityList.size();i++) {
-			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y) {
+			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y && entityList.get(i).faction!=faction) {
 				closeEnemyArray.add(i);
 			}
 		}
