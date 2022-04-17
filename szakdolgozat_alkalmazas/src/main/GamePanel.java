@@ -123,12 +123,22 @@ public class GamePanel extends JPanel implements Runnable {
 							}
 						}
 						entityList.remove(i);
-						entityIndex = 0;
-					}else entityList.get(i).update();	
+
+					}else entityList.get(i).update();
+					
 					//check if any entity died after attack
 					for(int k=0; k<entityList.size();k++) {
 						if(entityList.get(k).life<=0) {
+							for(int j=0; j<entityList.get(k).inventoryList.size(); j++) {
+								//only drop the key from inventory
+								if(entityList.get(k).inventoryList.get(j).name=="Key") {
+									objectList.add(entityList.get(k).inventoryList.get(j));
+									objectList.get(objectList.size()-1).worldX = entityList.get(k).worldX;
+									objectList.get(objectList.size()-1).worldY = entityList.get(k).worldY;
+								}
+							}
 							entityList.remove(k);
+							entityIndex = 0;
 						}
 					}
 				}
