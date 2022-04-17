@@ -31,7 +31,7 @@ public class UI {
 	public int slotCol = 1;
 	public int slotRow = 1;
 	public int maxSlotCol = 4;
-	public int maxSlotRow = 1;
+	public int maxSlotRow = 2;
 	
 	//for menu
 	public int chosenMenuNumber = 0;
@@ -109,10 +109,15 @@ public class UI {
 		int slotX = startFromX;
 		int slotY = startFromY;
 		
-		//SLOT BACKGROUND
+		//INVENTORY BACKGROUND
 		Color myWhite = new Color(255, 191, 128);
 		g2.setColor(myWhite);
-		g2.fillRect(startFromX, startFromY, gp.TILE_SIZE*4, gp.TILE_SIZE);
+		
+		for(int i = 0; i<maxSlotCol; i++) {
+			for(int j = 0; j<maxSlotRow; j++) {
+				g2.fillRect(startFromX, startFromY + (gp.TILE_SIZE * j), gp.TILE_SIZE*4, gp.TILE_SIZE);
+			}
+		}
 		
 		//EVERY SLOT
 		g2.setColor(Color.gray);
@@ -125,8 +130,8 @@ public class UI {
 		}
 		
 		//ITEMS
-		for(int i = 0; i < entity.inventory.size(); i++) {
-			g2.drawImage(entity.inventory.get(i).down1.getScaledInstance(gp.TILE_SIZE, gp.TILE_SIZE, Image.SCALE_DEFAULT), slotX, slotY, null);
+		for(int i = 0; i < entity.inventoryList.size(); i++) {
+			g2.drawImage(entity.inventoryList.get(i).down1.getScaledInstance(gp.TILE_SIZE, gp.TILE_SIZE, Image.SCALE_DEFAULT), slotX, slotY, null);
 
 
 			slotX += gp.TILE_SIZE;
@@ -139,8 +144,8 @@ public class UI {
 		
 		//ITEM STATS
 		int itemIndex = getInventoryIndex();
-		if(itemIndex  < entity.inventory.size()) {
-			drawItemStatistics(startFromX,startFromY,entity.inventory.get(itemIndex));
+		if(itemIndex  < entity.inventoryList.size()) {
+			drawItemStatistics(startFromX,startFromY,entity.inventoryList.get(itemIndex));
 
 		}
 		

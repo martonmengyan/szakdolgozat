@@ -29,9 +29,9 @@ public class EventHandler {
 	
 	public void checkPotionEvent(Entity entity) {
 		
-		if(hit(2,1,entity) == true) {
+		/*if(hit(2,1,entity) == true) {
 			entity.life--;
-		}
+		}*/
 	}
 	
 	public boolean hit(int damageCol, int damageRow, Entity entity) {

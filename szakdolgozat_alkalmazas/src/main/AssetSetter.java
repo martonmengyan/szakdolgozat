@@ -27,10 +27,10 @@ public class AssetSetter {
 	
 	public void SetEntity() {
 
-		createEntity(0,4,2,new Entity_1(gp), gp.entityList);
-		createEntity(1,1,2,new Entity_1(gp), gp.entityList);
-		createEntity(2,1,4,new Entity_1(gp), gp.entityList);
-		createEntity(3,1,3,new Entity_1(gp), gp.entityList);
+		createEntity(0,4,2,new Entity_Faction0(gp), gp.entityList);
+		//createEntity(1,1,2,new Entity_Faction0(gp), gp.entityList);
+		//createEntity(2,1,4,new Entity_Faction1(gp), gp.entityList);
+		createEntity(3,1,3,new Entity_Faction1(gp), gp.entityList);
 		
 	}
 	

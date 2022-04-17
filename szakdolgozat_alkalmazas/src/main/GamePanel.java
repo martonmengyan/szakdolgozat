@@ -16,7 +16,6 @@ import entity.*;
 public class GamePanel extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	private static int index = 0;
 	
 	//SCREEN
 	final int originalTileSize = 16; //16x16
@@ -112,16 +111,20 @@ public class GamePanel extends JPanel implements Runnable {
 
 			for(int i=0; i<entityList.size();i++) {
 				if(!isPaused && entityList.size() != 0) {
-					entityList.get(i).update();	
+
 					if(entityList.get(i).life<=0) {
-						for(int j=0; j<entityList.get(i).inventory.size(); j++) {
-							objectList.add(entityList.get(i).inventory.get(j));
-							objectList.get(objectList.size()-1).worldX = entityList.get(i).worldX;
-							objectList.get(objectList.size()-1).worldY = entityList.get(i).worldY;
+						//item drop at dead
+						for(int j=0; j<entityList.get(i).inventoryList.size(); j++) {
+							//only drop the key from inventory
+							if(entityList.get(i).inventoryList.get(j).name=="Key") {
+								objectList.add(entityList.get(i).inventoryList.get(j));
+								objectList.get(objectList.size()-1).worldX = entityList.get(i).worldX;
+								objectList.get(objectList.size()-1).worldY = entityList.get(i).worldY;
+							}
 						}
 						entityList.remove(i);
 						entityIndex = 0;
-					}
+					}else entityList.get(i).update();	
 				}
 				if(entityList.size() == 0) {
 					gameScreenNumber = "end";

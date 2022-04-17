@@ -66,9 +66,6 @@ public class KeyHandler implements KeyListener {
 	        		gp.isPaused = false;
 	        	}else gp.isPaused=true;
 		    }
-	        if (key == KeyEvent.VK_E) {
-	            wantToPickUp = true;
-	        }
 	        if (key == KeyEvent.VK_C) {
 	        	if(gp.statIsVisible==true) {
 	        		gp.statIsVisible = false;
@@ -80,7 +77,8 @@ public class KeyHandler implements KeyListener {
 	        		if(gp.entityIndex>0) {
 	        			gp.entityIndex--;
 	        		}else gp.entityIndex=gp.entityList.size()-1;
-	        		
+	        		gp.ui.slotCol = 1;
+	        		gp.ui.slotRow = 1;
 	        	}
 	        }
 	        if (key == KeyEvent.VK_E) {
@@ -88,6 +86,8 @@ public class KeyHandler implements KeyListener {
 	        		if(gp.entityIndex<gp.entityList.size()-1) {
 	        			gp.entityIndex++;
 	        		}else gp.entityIndex=0;
+	        		gp.ui.slotCol = 1;
+	        		gp.ui.slotRow = 1;
 	        	}
 	        }
 	        if (gp.statIsVisible) {
