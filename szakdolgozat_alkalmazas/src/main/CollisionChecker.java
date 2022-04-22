@@ -13,7 +13,7 @@ public class CollisionChecker {
 	}
 	
 	public void checkTile(Entity entity) {
-		
+		/*
 		int entityLeftWorldX = entity.worldX + entity.solidArea.x;
 		int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
 		int entityTopWorldY = entity.worldY + entity.solidArea.y;
@@ -29,7 +29,6 @@ public class CollisionChecker {
 		switch(entity.testDirection) {
 		case "up":
 			entityTopRow = (entityTopWorldY - entity.speed)/gp.TILE_SIZE;
-			System.out.println(entityBottomWorldY+","+entityTopRow);
 			tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
 			tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
 			if(gp.tileM.block[tileNum1].collision == true || gp.tileM.block[tileNum2].collision == true) {
@@ -38,7 +37,6 @@ public class CollisionChecker {
 			break;
 		case "down":
 			entityBottomRow = (entityBottomWorldY + entity.speed)/gp.TILE_SIZE;
-			System.out.println(entityBottomWorldY+","+entityBottomRow);
 			tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
 			tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
 			if(gp.tileM.block[tileNum1].collision == true || gp.tileM.block[tileNum2].collision == true) {
@@ -47,7 +45,6 @@ public class CollisionChecker {
 			break;
 		case "left":
 			entityLeftCol = (entityLeftWorldX - entity.speed)/gp.TILE_SIZE;
-			System.out.println(entityLeftWorldX+","+entityLeftCol);
 			tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
 			tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
 			if(gp.tileM.block[tileNum1].collision == true || gp.tileM.block[tileNum2].collision == true) {
@@ -56,7 +53,6 @@ public class CollisionChecker {
 			break;
 		case "right":
 			entityRightCol = (entityRightWorldX + entity.speed)/gp.TILE_SIZE;
-			System.out.println(entityRightWorldX+","+entityRightCol);
 			tileNum1 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
 			tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
 			if(gp.tileM.block[tileNum1].collision == true || gp.tileM.block[tileNum2].collision == true) {
@@ -64,6 +60,7 @@ public class CollisionChecker {
 			}
 			break;
 		}
+		*/
 	}
 	
 	public int checkCurrentBlock(Entity entity, boolean player) {

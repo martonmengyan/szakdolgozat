@@ -9,7 +9,11 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
@@ -29,7 +33,7 @@ public class Entity {
     
     public int spriteCounter = 0;
     public int spriteNum = 1;
-    
+    public int HPturn = 0;
     public boolean collisionOn = false;
     public int solidAreaDefaultX, solidAreaDefaultY;
     
@@ -37,7 +41,10 @@ public class Entity {
 	public String name;
 	public boolean collision = false;
 	
-	public Point worldPos;
+	public Map<Point,Integer> hashMap = new HashMap<Point,Integer>();
+	public ArrayList<Point> worldPos;
+
+	public ArrayList<Point> possibleBlocks;
 	public Rectangle solidArea;
 	
     public int index = 0;
@@ -106,10 +113,6 @@ public class Entity {
     				gp.objectList.remove(i);
     			}    			
     			break;
-    		case "Boots":
-    			//utasítás
-    			gp.objectList.remove(i);
-    			break;
     		case "Chest":
     			gp.gameScreenNumber = "end";
     			break;
@@ -152,28 +155,39 @@ public class Entity {
 		boolean wantToAttack = false;
 		boolean wantToPickUp = false;
 		boolean wantToOpenDoor = false;
+		boolean wantToMoveToKey = false;
 		
     	int objIndex;
     	int curObjIndex;
-    	int entityIndex;
     	
+    	saveBlocks();
     	curObjIndex = gp.colChecker.checkCurrentBlock(this, true);
 		objIndex = gp.colChecker.checkObject(this, true);
-    	entityIndex = gp.colChecker.checkEntity(this, gp.entityList);
     	
     	//check conditions before DO
     	
     	if(curObjIndex != 999) {
-    		wantToPickUp = true;
+    		if(gp.objectList.get(curObjIndex) != null) {
+    			if(gp.objectList.get(curObjIndex).name=="Chest" || gp.objectList.get(curObjIndex).name=="Key") {
+        			wantToPickUp = true;
+    			}
+
+    		}
+    		
     	}
     	if(objIndex != 999) {
-    		if(gp.objectList.get(objIndex) != null && gp.objectList.get(objIndex).name=="Door" && hasKey()==true)
-    		wantToOpenDoor = true;
+    		if(gp.objectList.get(objIndex) != null && gp.objectList.get(objIndex).name=="Door" && hasKey()==true) {
+    			wantToOpenDoor = true;
+    		}
+    		
     	}
 		if(isEnemyClose(gp.entityList).size()>0) {
 			wantToAttack = true;
 		}
 		
+		if(isKeyClose(gp.objectList).size()>0) {
+			wantToMoveToKey = true;
+		}
 		
 		//DO
 		
@@ -181,7 +195,9 @@ public class Entity {
 			attackAction(gp.entityList,isEnemyClose(gp.entityList));
 
 		}else if(wantToEquip) {
-			if(itemIsBetterThanCurrent(inventoryList.get(inventoryList.size())));
+			if(itemIsBetterThanCurrent(inventoryList.get(inventoryList.size()))) {
+				equipBetterItem(inventoryList.get(inventoryList.size()));
+			}
 			
 		}else if(wantToPickUp) {
 			pickUpObject(curObjIndex);
@@ -189,29 +205,30 @@ public class Entity {
 		}else if(wantToOpenDoor) {
 			openDoor(objIndex);
 			
+		}else if(wantToMoveToKey) {
+			moveToKeyBlock(gp.objectList,isKeyClose(gp.objectList));
+			entityMove();
+		
 		}else if(wantToMove) {
+
 			setAction();
-			collisionOn = false;
-			gp.colChecker.checkTile(this);
 			
-	    	curObjIndex = gp.colChecker.checkCurrentBlock(this, true);
-			objIndex = gp.colChecker.checkObject(this, true);
-	    	entityIndex = gp.colChecker.checkEntity(this, gp.entityList);
+			ArrayList<Point> detectableBlocks = detectArray(gp.entityList,gp.objectList);
+
+			if(!checkIfNewEnemy(detectableBlocks,gp.entityList)) {
+				if(!checkIfNewItem(detectableBlocks,gp.objectList)) {
+					possibleBlocks();
+				}
+				
+			}
+			
+
 			entityMove();
 
 		}
 		
-		gp.eventH.checkPotionEvent(this);
 		
 	
-    }
-    
-    public void loadDeathImage() {
-    	try {
-    		deadImage = ImageIO.read(getClass().getResourceAsStream("/object/Object_Chest.png"));
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
     }
     
     public void draw(Graphics2D g2, ImageObserver observer) {
@@ -371,6 +388,66 @@ public class Entity {
 		return closeEnemyArray;
 	}
 	
+	public ArrayList<Integer> isKeyClose(ArrayList<Entity> objectList) {
+
+		ArrayList<Integer> closeKeyArray = new ArrayList<>();
+		int x=0;
+		int y=0;
+		
+		//check x+gp.TILE_SIZE, x-gp.TILE_SIZE, y+gp.TILE_SIZE, y-gp.TILE_SIZE
+		
+		//check above
+		x = worldX + gp.TILE_SIZE;
+		y = worldY;
+		
+		for(int i=0;i<objectList.size();i++) {
+			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
+				if(objectList.get(i).name == "Chest" || objectList.get(i).name == "Key") {
+					closeKeyArray.add(i);
+				}
+
+			}
+		}
+		
+		//check under
+		x = worldX - gp.TILE_SIZE;
+		y = worldY;
+		
+		for(int i=0;i<objectList.size();i++) {
+			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
+				if(objectList.get(i).name == "Chest" || objectList.get(i).name == "Key") {
+					closeKeyArray.add(i);
+				}
+			}
+		}
+		
+		//check right
+		x = worldX;
+		y = worldY + gp.TILE_SIZE;
+		
+		for(int i=0;i<objectList.size();i++) {
+			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
+				if(objectList.get(i).name == "Chest" || objectList.get(i).name == "Key") {
+					closeKeyArray.add(i);
+				}
+			}
+		}
+		
+		//check left
+		x = worldX;
+		y = worldY - gp.TILE_SIZE;
+		
+		for(int i=0;i<objectList.size();i++) {
+			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
+				if(objectList.get(i).name == "Chest" || objectList.get(i).name == "Key") {
+					closeKeyArray.add(i);
+				}
+			}
+		}
+		
+		return closeKeyArray;
+	}
+	
 	//Attack decision
 	public void attackAction(ArrayList<Entity> entityList, ArrayList<Integer> enemyIndex) {
 		int damageNumber = 1;		
@@ -389,11 +466,46 @@ public class Entity {
 				}
 			}
 			
+			//rotate to enemy coordinates
+			direction = directionFromCoordinates(new Point(entityList.get(targetIndex).worldX/48,entityList.get(targetIndex).worldY/48));
+						
 			//check if attack is evaded before attack calculation
 			if(!isEvaded(this,entityList.get(targetIndex))) {
 				//damageNumber = getAttackNumber(this,target);
 				entityList.get(targetIndex).life-=damageNumber;
 			}
+			
+			System.out.println("Attacked: " + entityList.get(targetIndex).worldX/48 + "," + entityList.get(targetIndex).worldY/48 + "!");
+		}
+	}
+	
+	public void moveToKeyBlock(ArrayList<Entity> objectList, ArrayList<Integer> keyIndex) {
+	
+		Random random = new Random();
+		int targetIndex;
+		
+		if(keyIndex.size()>0) {
+			
+			targetIndex = keyIndex.get(0);
+			
+			if(keyIndex.size()>1) {
+				
+				//what if there is more than 1 key to pick up?
+				targetIndex = random.nextInt(keyIndex.size()-0)+0;
+				//what if there is a chest? choose the chest!
+				for(int i=0; i<keyIndex.size();i++) {
+					if(objectList.get(keyIndex.get(i)).name == "Chest") {
+						targetIndex = keyIndex.get(i);
+						break;
+					}
+					
+				}
+
+			}
+			
+			//rotate to enemy coordinates
+			direction = directionFromCoordinates(new Point(objectList.get(targetIndex).worldX/48,objectList.get(targetIndex).worldY/48));
+			System.out.println("Moved to key: " + direction);
 		}
 	}
 	
@@ -411,7 +523,15 @@ public class Entity {
 				if(inventoryList.get(i).isEquipped && inventoryList.get(i).typeName == pickedupItemTypeName) {
 					if(itemIsBetterThanCurrent(inventoryList.get(i))) {
 							inventoryList.get(i).isEquipped = false;
+							str -= inventoryList.get(i).str;
+							vit -= inventoryList.get(i).vit; 
+							eva -= inventoryList.get(i).eva; 
+							acc -= inventoryList.get(i).acc; 
 							pickedupItem.isEquipped = true;
+							str += pickedupItem.str;
+							vit += pickedupItem.vit; 
+							eva += pickedupItem.eva; 
+							acc += pickedupItem.acc; 
 					}
 				}
 			}
@@ -420,7 +540,7 @@ public class Entity {
 	//Attack damage number calculation if it hits
 	public int getAttackNumber(Entity attacker, Entity defender) {
 		
-		//str statisztikától függően kiszámolásra kerül a sebzés számláló
+		//based on statistics
 		int damageNumber = 0;
 		return damageNumber;
 	}
@@ -450,9 +570,18 @@ public class Entity {
 				System.out.println("moved to right");
 				moved = true;
 				break;
-			
 			}
+			
+			hashMap.put(new Point(worldX/48,worldY/48), hashMap.get(new Point(worldX/48,worldY/48))==null?1: hashMap.get(new Point(worldX/48,worldY/48)) +1);
 		
+			/*
+			//hashMap kiiratása
+			 
+			for(Point p:hashMap.keySet()) {
+				System.out.println(p.x + "," + p.y + "," + hashMap.get(p));
+			}
+			*/
+			
 			spriteCounter++;
 			if(spriteCounter >= 1) {
 				if(spriteNum == 1) {
@@ -466,6 +595,361 @@ public class Entity {
 		}
 	}
 	
+	public void saveBlocks() {
+		
+		worldPos = new ArrayList<>();
+				
+		switch(direction) {
+		case "up":
+			//y+1
+			worldPos.add(new Point(worldX/48,worldY/48 - gp.TILE_SIZE/48 * 1));
+			//y-1
+			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * +1));
+			//x-1
+			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * -1,worldY/48));
+			//x+1
+			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * +1,worldY/48));
+			break;
+		case "down":
+			//y-1
+			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * +1));
+			//y+1
+			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * -1));
+			//x-1
+			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * -1,worldY/48));
+			//x+1
+			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * +1,worldY/48));
+			break;
+		case "right":
+			//x+1
+			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * 1, worldY/48));	
+			//y-1
+			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * +1));
+			//y+1
+			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * -1));
+			//x-1
+			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * -1,worldY/48));
+			break;
+		case "left":
+			//x-1
+			worldPos.add(new Point(worldX/48 - gp.TILE_SIZE/48 * 1, worldY/48));
+			//y-1
+			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * +1));
+			//y+1
+			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * -1));
+			//x+1
+			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * +1,worldY/48));
+			break;
+		}
 
+		//remove if not acceptable
+		
+		for(int i=worldPos.size()-1;i>=0;i--) {
+			if(gp.tileM.mapTileNum[worldPos.get(i).x][worldPos.get(i).y] != 2) {
+				worldPos.remove(i);
+			}
+		}
+		
+		for(int i=worldPos.size()-1;i>=0;i--) {
+			for(int j=0; j<gp.objectList.size();j++) {
+				if(worldPos.get(i).x == gp.objectList.get(j).worldX/48 && worldPos.get(i).y == gp.objectList.get(j).worldY/48 && gp.objectList.get(j).collision == true) {
+					worldPos.remove(i);
+					break;
+				}
+				
+			}
+		}
+		
+		for(int i=worldPos.size()-1;i>=0;i--) {
+			for(int j=0; j<gp.entityList.size();j++) {
+				if(worldPos.get(i).x == gp.entityList.get(j).worldX/48 && worldPos.get(i).y == gp.entityList.get(j).worldY/48) {
+					worldPos.remove(i);
+					break;
+				}
+				
+			}
+		}
+
+		System.out.println("---------------------------------");
+		System.out.println("Lehetseges lepesek:");
+		
+		for(int i=0;i<worldPos.size();i++) {
+			System.out.println( i+1 + ": " + worldPos.get(i).x +","+ worldPos.get(i).y);
+		}
+		
+		
+	}
+
+	public void possibleBlocks() {
+		var map = hashMap.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(
+			    Map.Entry::getKey, 
+			    Map.Entry::getValue, 
+			    (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+		
+		int minHash = 0;
+		Random random = new Random(); 
+		boolean isHashFound = false;
+		ArrayList<Point> nullHashBlocks = new ArrayList<>();
+		
+		for(int i=0;i<worldPos.size();i++) {
+			if(hashMap.get(worldPos.get(i)) == null) {
+				nullHashBlocks.add(worldPos.get(i));
+			} 
+		}
+		
+		if(nullHashBlocks.size()>0) {
+			int index = random.nextInt((nullHashBlocks.size() - 0) + 0);
+			direction = directionFromCoordinates(nullHashBlocks.get(index));
+		}
+		
+		if(nullHashBlocks.size()==0) {	
+			for(Point p:map.keySet()) {
+				for(int i=0; i<worldPos.size();i++) {
+					if(p.x == worldPos.get(i).x && p.y == worldPos.get(i).y) {						
+						minHash = map.get(p);
+						System.out.println("min:" + minHash);
+						isHashFound = true;
+						break;					
+					}					
+				}
+				if(isHashFound == true){
+					break;
+				}
+			}
+			
+			possibleBlocks = new ArrayList<>();
+			
+			for(Point p:map.keySet()) {
+				System.out.println("x:" + p.x + ",y: " + p.y + ",hash:" + map.get(p));
+				for(int i=0; i<worldPos.size();i++) {					
+					if(p.x == worldPos.get(i).x && p.y == worldPos.get(i).y && minHash == map.get(p)) {
+						possibleBlocks.add(p);
+					}
+				}
+			}
+						
+			int index = random.nextInt((possibleBlocks.size() - 0) + 0);			
+			direction = directionFromCoordinates(possibleBlocks.get(index));
+		}
+	}
 	
+	public String directionFromCoordinates(Point worldPos) {
+		String dir = "down";
+		int difx;
+		int dify;
+
+		difx = worldPos.x - worldX/48;
+		dify = worldPos.y - worldY/48;
+		System.out.println("current position: "+worldX/48 + "," +worldY/48);
+		System.out.println("chosen position: "+worldPos.x + "," +worldPos.y);
+		collisionOn = false;
+		if(difx == 0) {
+			if(dify < 0) {
+				dir = "up";
+				System.out.println("chosen direction: up!");
+			} else {
+				dir = "down";
+				System.out.println("chosen direction: down!");
+			}			
+		}else if (dify == 0) {
+			if(difx > 0) {
+				dir = "right";
+				System.out.println("chosen direction: right!");
+			} else {
+				dir = "left";
+				System.out.println("chosen direction: left!");
+			}
+		}
+		return dir;
+	}
+	
+	public ArrayList<Point> detectArray(ArrayList<Entity> entityList, ArrayList<Entity> objectList) {
+
+		ArrayList<Point> detectableBlocks = new ArrayList<>();
+		
+		boolean isRemoved = false;
+		
+		//up
+		if(worldX/48>0 && worldY/48 -2>0 && worldX/48<50 && worldY/48 -2<50) {
+			isRemoved = false;
+			for(int j=0; j<entityList.size(); j++){
+				if(worldX/48 == entityList.get(j).worldX/48 && worldY/48 -1 == entityList.get(j).worldY/48){						
+					isRemoved = true;
+					break;
+				}
+			}
+			if(!isRemoved) {				
+				for(int j=0; j<objectList.size(); j++){
+					if(worldX/48 == objectList.get(j).worldX/48 && worldY/48 -1 == objectList.get(j).worldY/48 && objectList.get(j).collision == true){						
+						isRemoved = true;
+						break;						
+					}
+				}			
+			}
+			if(!isRemoved) {
+				if(gp.tileM.mapTileNum[worldX/48][worldY/48 - 1]!=2) {						
+					isRemoved = true;
+				}			
+			}
+			if(!isRemoved) {
+				System.out.println("up added");
+				detectableBlocks.add(new Point(worldX/48,worldY/48 - 2));
+			}				
+		}
+		//down
+		isRemoved=false;
+		if(worldX/48>0 && worldY/48 +2>0 && worldX/48<50 && worldY/48 +2<50) {
+			isRemoved = false;
+			for(int j=0; j<entityList.size(); j++){
+				if(worldX/48 == entityList.get(j).worldX/48 && worldY/48 + 1 == entityList.get(j).worldY/48){						
+					isRemoved = true;
+					break;
+				}
+			}
+			if(!isRemoved) {				
+				for(int j=0; j<objectList.size(); j++){
+					if(worldX/48 == objectList.get(j).worldX/48 && worldY/48 +1 == objectList.get(j).worldY/48 && objectList.get(j).collision == true){							
+						isRemoved = true;
+						break;							
+					}
+				}			
+			}
+			if(!isRemoved) {
+				if(gp.tileM.mapTileNum[worldX/48][worldY/48 + 1]!=2) {						
+					isRemoved = true;
+				}			
+			}
+			if(!isRemoved) {
+				System.out.println("down added");					
+				detectableBlocks.add(new Point(worldX/48,worldY/48 + 2));
+			}
+		}		
+		//right
+		if(worldX/48 + 2>0 && worldY/48>0 && worldX/48 + 2<50 && worldY/48<50) {
+			isRemoved = false;
+			for(int j=0; j<entityList.size(); j++){
+				if(worldX/48  + 1 == entityList.get(j).worldX/48 && worldY/48== entityList.get(j).worldY/48){						
+					isRemoved = true;
+					break;
+				}
+			}
+			if(!isRemoved) {				
+				for(int j=0; j<objectList.size(); j++){
+					if(worldX/48  + 1 == objectList.get(j).worldX/48 && worldY/48== objectList.get(j).worldY/48 && objectList.get(j).collision == true){							
+						isRemoved = true;
+						break;							
+					}
+				}			
+			}
+			if(!isRemoved) {
+				if(gp.tileM.mapTileNum[worldX/48 + 1][worldY/48]!=2) {						
+					isRemoved = true;
+				}			
+			}
+			if(!isRemoved) {
+				System.out.println("right added");
+				detectableBlocks.add(new Point(worldX/48 + 2,worldY/48));
+			}
+			
+		}
+		//left
+		if(worldX/48 -2>0 && worldY/48>0 && worldX/48 - 2<50 && worldY/48<50) {
+			isRemoved = false;
+			for(int j=0; j<entityList.size(); j++){
+				if(worldX/48 - 1 == entityList.get(j).worldX/48 && worldY/48== entityList.get(j).worldY/48){						
+					isRemoved = true;
+					break;
+				}
+			}
+			if(!isRemoved) {				
+				for(int j=0; j<objectList.size(); j++){
+					if(worldX/48 - 1 == objectList.get(j).worldX/48 && worldY/48== objectList.get(j).worldY/48 && objectList.get(j).collision == true){							
+						isRemoved = true;
+						break;							
+					}
+				}			
+			}
+			if(!isRemoved) {
+				if(gp.tileM.mapTileNum[worldX/48 - 1][worldY/48]!=2) {						
+					isRemoved = true;
+				}			
+			}
+			if(!isRemoved) {
+				System.out.println("left added");
+				detectableBlocks.add(new Point(worldX/48 - 2,worldY/48));
+			}
+		}
+			
+		for(int k=0;k<detectableBlocks.size();k++) {
+			System.out.println(detectableBlocks.get(k).x+", "+detectableBlocks.get(k).y);
+		}
+		return detectableBlocks;
+	}
+	
+	public boolean checkIfNewEnemy(ArrayList<Point> worldpos, ArrayList<Entity> entityList) {
+		
+		boolean isDetected = false;
+		for(int i=0; i<worldpos.size();i++){
+			for(int j=0; j<entityList.size(); j++) {
+				if(faction != entityList.get(j).faction) {
+					if(worldpos.get(i).x == entityList.get(j).worldX/48 && worldpos.get(i).y == entityList.get(j).worldY/48) {
+						if(worldX - entityList.get(j).worldX == 0) {
+							if(worldY - entityList.get(j).worldY > 0) {
+								direction = "up";
+								isDetected = true;
+							}else {
+								direction = "down";
+								isDetected = true;
+							}
+						} else if(worldY - entityList.get(j).worldY == 0) {
+							if(worldX - entityList.get(j).worldX > 0) {
+								direction = "left";
+								isDetected = true;
+							}else {
+								direction = "right";
+								isDetected = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return isDetected;
+		
+	}
+	
+	public boolean checkIfNewItem(ArrayList<Point> worldpos, ArrayList<Entity> objectList) {
+		
+		boolean isDetected = false;
+		for(int i=0; i<worldpos.size();i++){
+			for(int j=0; j<objectList.size(); j++) {
+				if(objectList.get(j).name == "Key" || objectList.get(j).name == "Chest") {
+					if(worldpos.get(i).x == objectList.get(j).worldX/48 && worldpos.get(i).y == objectList.get(j).worldY/48) {
+						if(worldX - objectList.get(j).worldX == 0) {
+							if(worldY - objectList.get(j).worldY > 0) {
+								direction = "up";
+								isDetected = true;
+								System.out.println(objectList.get(j).name + " detected: up");
+							}else {
+								direction = "down";
+								isDetected = true;
+								System.out.println(objectList.get(j).name+" detected: down");
+							}
+						} else if(worldY - objectList.get(j).worldY == 0) {
+							if(worldX - objectList.get(j).worldX > 0) {
+								direction = "left";
+								isDetected = true;
+								System.out.println(objectList.get(j).name+" detected: left");
+							}else {
+								direction = "right";
+								isDetected = true;
+								System.out.println(objectList.get(j).name+" detected: right");
+							}
+						}
+					}
+				}
+			}
+		}
+		return isDetected;
+	}	
 }

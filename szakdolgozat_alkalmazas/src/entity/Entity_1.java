@@ -22,7 +22,7 @@ public class Entity_1 extends Entity {
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
-		loadImage();
+		
 		setDefaultValues();
 		setItems();
     	equipStats(inventoryList.get(1));
@@ -32,7 +32,7 @@ public class Entity_1 extends Entity {
 	
 	public void setDefaultValues() {
 		type=2;
-		direction = "down";
+		direction = "right";
 		speed = gp.TILE_SIZE;
 		
 		str=1;
@@ -73,24 +73,9 @@ public class Entity_1 extends Entity {
 		entity.acc=random.nextInt(3 + 2) - 2;
 	}
 	
-	
-    public void loadImage() {
-        try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/player_up1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/player_up2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/player_down1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/player_down2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/player_left11.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/player_left22.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/player_right11.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right22.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     
     public void setAction() {
-		Random random = new Random();    	
+		/*Random random = new Random();    	
 
     	do {
     		int index = random.nextInt(1000)+1;
@@ -111,7 +96,7 @@ public class Entity_1 extends Entity {
     			System.out.println("WRONG DIRECTION");
     		}
     	} while(collisionOn != false);
-    	direction = testDirection;
+    	direction = testDirection;*/
     }
     
 	public void equipStats(Entity entity) {

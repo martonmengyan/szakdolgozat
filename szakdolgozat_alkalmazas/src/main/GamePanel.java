@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public double drawInterval = 1000000000/3;
 	
 	KeyHandler keyH = new KeyHandler(this);
-	BlockManager tileM = new BlockManager(this);
+	public BlockManager tileM = new BlockManager(this);
 	public CollisionChecker colChecker = new CollisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this);
 	public UI ui = new UI(this);
@@ -166,6 +166,17 @@ public class GamePanel extends JPanel implements Runnable {
 					objectList.get(i).draw(g2,this);
 				}
 				for(int i=0; i<entityList.size(); i++) {
+					if(!isPaused) {
+						if(entityList.get(i).HPturn == 5) {
+							if(entityList.get(i).maxLife > entityList.get(i).life) {
+								entityList.get(i).life++;
+								entityList.get(i).HPturn = 0;
+							}
+							
+						}else entityList.get(i).HPturn++;
+					}
+
+					
 					entityList.get(i).draw(g2,this);
 				}
 				for(int j=0; j<entityList.size(); j++) {

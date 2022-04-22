@@ -49,6 +49,7 @@ public class KeyHandler implements KeyListener {
 			break;
 		case "normal":
 			//DURING SIMULATION
+			
 			if (key == KeyEvent.VK_UP) {
 		        up = true;
 		    }
