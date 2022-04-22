@@ -151,6 +151,11 @@ public class Entity {
     		switch(objectName) {
     		case "Door":
     			gp.objectList.remove(i);
+    			for(int j=0;j<inventoryList.size();j++) {
+    				if(inventoryList.get(j).typeName == "Key") {
+    					inventoryList.remove(j);
+    				}
+    			}
     			break;
     		}
     	}
@@ -162,7 +167,7 @@ public class Entity {
     	for(int i=0; i<inventoryList.size(); i++) {
     		if(inventoryList.get(i).typeName == "Key") {
     			hasKey = true;   
-    			inventoryList.remove(i);
+    			
     		}
     	}
 		return hasKey;
@@ -177,7 +182,7 @@ public class Entity {
 		boolean wantToAttack = false;
 		boolean wantToPickUp = false;
 		boolean wantToOpenDoor = false;
-		boolean wantToMoveToKey = false;
+		boolean wantToMoveToItem = false;
 		
     	int objIndex;
     	int curObjIndex;
@@ -210,7 +215,7 @@ public class Entity {
 		}
 		
 		if(isItemClose(gp.objectList).size()>0) {
-			wantToMoveToKey = true;
+			wantToMoveToItem = true;
 		}
 		if(inventoryList.get(inventoryList.size()-1).name != "Key") {
 			if(itemIsBetterThanCurrent(inventoryList.get(inventoryList.size()-1))) {
@@ -230,8 +235,10 @@ public class Entity {
 
 		}else if(wantToOpenDoor) {
 			openDoor(objIndex);
+
+
 			
-		}else if(wantToMoveToKey) {
+		}else if(wantToMoveToItem) {
 			moveToKeyBlock(gp.objectList,isItemClose(gp.objectList));
 			entityMove();
 		
@@ -558,6 +565,7 @@ public class Entity {
 						eva += pickedupItem.eva; 
 						acc += pickedupItem.acc; 
 						System.out.println("Equipped better item!");
+						break;
 				}
 			}
 		}
@@ -948,7 +956,7 @@ public class Entity {
 		boolean isDetected = false;
 		for(int i=0; i<worldpos.size();i++){
 			for(int j=0; j<objectList.size(); j++) {
-				if(objectList.get(j).typeName == "Key" || objectList.get(j).typeName == "Chest" || objectList.get(j).typeName == "Armor" || objectList.get(j).typeName == "Helmet") {
+				if(objectList.get(j).typeName == "Key" || objectList.get(j).typeName == "Chest" || objectList.get(j).typeName == "Armor" || objectList.get(j).typeName == "Helmet" || (objectList.get(j).typeName == "Door" && hasKey()==true)) {
 					if(worldpos.get(i).x == objectList.get(j).worldX/48 && worldpos.get(i).y == objectList.get(j).worldY/48) {
 						if(worldX - objectList.get(j).worldX == 0) {
 							if(worldY - objectList.get(j).worldY > 0) {

@@ -20,7 +20,7 @@ public class AssetSetter {
 		createEntity(0,1,1,new Object_Key(gp), gp.objectList);
 		createEntity(1,5,4,new Object_Door(gp), gp.objectList);
 		createEntity(2,22,6,new Object_Chest(gp), gp.objectList);
-		createEntity(3,4,3,new Object_Entity_Armor_01(gp), gp.objectList);
+		createEntity(3,4,1,new Object_Entity_Armor_01(gp), gp.objectList);
 		createEntity(4,3,3,new Object_Brick(gp), gp.objectList);
 		createEntity(5,1,5,new Object_Door(gp), gp.objectList);
 		createEntity(6,6,1,new Object_Door(gp), gp.objectList);
@@ -31,7 +31,7 @@ public class AssetSetter {
 	
 	public void SetEntity() {
 
-		createEntity(0,4,2,new Entity_Faction0(gp), gp.entityList);
+		createEntity(0,4,3,new Entity_Faction0(gp), gp.entityList);
 		//createEntity(1,1,6,new Entity_Faction0(gp), gp.entityList);
 		//createEntity(2,3,1,new Entity_Faction1(gp), gp.entityList);
 		//createEntity(3,1,4,new Entity_Faction1(gp), gp.entityList);

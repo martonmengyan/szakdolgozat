@@ -20,7 +20,7 @@ public class Object_Door extends Entity {
 			 e.printStackTrace();
 		 }
 		 collision = true;
-	
+		 typeName = "Door";
 		 solidArea = new Rectangle(10,
 					10,
 					28,
