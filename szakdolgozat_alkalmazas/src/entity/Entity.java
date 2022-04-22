@@ -210,9 +210,11 @@ public class Entity {
     		
     	}
 
+    	ArrayList<Integer> isEnemyCloseIndexList = isEnemyClose(gp.entityList);
     	
     	
-		if(isEnemyClose(gp.entityList).size()>0) {
+    	
+		if(isEnemyCloseIndexList.size()>0) {
 			wantToAttack = true;
 		}
 		
@@ -228,7 +230,7 @@ public class Entity {
 		//DO
 
 		if(wantToAttack) {
-			attackAction(gp.entityList,isEnemyClose(gp.entityList));
+			attackAction(gp.entityList,isEnemyCloseIndexList);
 
 		}else if(wantToEquip) {			
 			equipBetterItem(inventoryList.get(inventoryList.size()-1));	
@@ -376,44 +378,57 @@ public class Entity {
 		
 		//check x+gp.TILE_SIZE, x-gp.TILE_SIZE, y+gp.TILE_SIZE, y-gp.TILE_SIZE
 		
-		//check above
-		x = worldX + gp.TILE_SIZE;
-		y = worldY;
-		
-		for(int i=0;i<entityList.size();i++) {
-			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y && entityList.get(i).faction!=faction) {
-				closeEnemyArray.add(i);
-			}
-		}
-		
-		//check under
+		//check left
 		x = worldX - gp.TILE_SIZE;
 		y = worldY;
 		
 		for(int i=0;i<entityList.size();i++) {
 			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y && entityList.get(i).faction!=faction) {
+				System.out.println("added:"+x/48 +y/48);
 				closeEnemyArray.add(i);
+				break;
+			}
+		}
+		//check right
+		x = worldX + gp.TILE_SIZE;
+		y = worldY;
+		
+		for(int i=0;i<entityList.size();i++) {
+			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y && entityList.get(i).faction!=faction) {
+				System.out.println("added:"+x/48 +y/48);
+				closeEnemyArray.add(i);
+				break;
 			}
 		}
 		
-		//check right
+		//check under
 		x = worldX;
 		y = worldY + gp.TILE_SIZE;
 		
 		for(int i=0;i<entityList.size();i++) {
 			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y && entityList.get(i).faction!=faction) {
+				System.out.println("added:"+x/48 +y/48);
 				closeEnemyArray.add(i);
+				break;
 			}
 		}
 		
-		//check left
+		//check above
 		x = worldX;
 		y = worldY - gp.TILE_SIZE;
 		
 		for(int i=0;i<entityList.size();i++) {
 			if(entityList.get(i).worldX == x && entityList.get(i).worldY == y && entityList.get(i).faction!=faction) {
 				closeEnemyArray.add(i);
+				System.out.println("added:"+x/48 +y/48);
+				break;
 			}
+		}
+		
+		for(int i=0;i<closeEnemyArray.size();i++) {
+			
+			System.out.println(i+1 + ". index: " +closeEnemyArray.get(i));
+			
 		}
 		
 		return closeEnemyArray;
@@ -520,7 +535,7 @@ public class Entity {
 				//what if there is more than 1 enemy, which one should be attacked?
 				for(int i=0; i<enemyIndex.size();i++) {
 					if(entityList.get(targetIndex).life>entityList.get(enemyIndex.get(i)).life) {
-						targetIndex = i;
+						targetIndex = enemyIndex.get(i);
 					}
 				}
 			}
