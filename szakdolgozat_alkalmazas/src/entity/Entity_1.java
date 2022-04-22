@@ -40,7 +40,7 @@ public class Entity_1 extends Entity {
     	eva=1;
     	acc=1;
     	
-		maxLife=vit;
+		maxLife=vit*3;
     	life = maxLife;
     	
     	exp=0;

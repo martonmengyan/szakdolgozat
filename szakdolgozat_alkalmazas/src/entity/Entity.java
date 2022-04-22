@@ -210,20 +210,23 @@ public class Entity {
     		
     	}
 
+    	
+    	
 		if(isEnemyClose(gp.entityList).size()>0) {
 			wantToAttack = true;
 		}
 		
-		if(isItemClose(gp.objectList).size()>0) {
+		if(isItemClose(gp.objectList,gp.entityList).size()>0) {
 			wantToMoveToItem = true;
 		}
+		
 		if(inventoryList.get(inventoryList.size()-1).name != "Key") {
 			if(itemIsBetterThanCurrent(inventoryList.get(inventoryList.size()-1))) {
 				wantToEquip = true;
 			}
 		}
 		//DO
-		
+
 		if(wantToAttack) {
 			attackAction(gp.entityList,isEnemyClose(gp.entityList));
 
@@ -236,10 +239,8 @@ public class Entity {
 		}else if(wantToOpenDoor) {
 			openDoor(objIndex);
 
-
-			
 		}else if(wantToMoveToItem) {
-			moveToKeyBlock(gp.objectList,isItemClose(gp.objectList));
+			moveToKeyBlock(gp.objectList,isItemClose(gp.objectList,gp.entityList));
 			entityMove();
 		
 		}else if(wantToMove) {
@@ -255,12 +256,9 @@ public class Entity {
 				
 			}
 			
-
 			entityMove();
 
 		}
-		
-		
 	
     }
     
@@ -421,12 +419,12 @@ public class Entity {
 		return closeEnemyArray;
 	}
 	
-	public ArrayList<Integer> isItemClose(ArrayList<Entity> objectList) {
+	public ArrayList<Integer> isItemClose(ArrayList<Entity> objectList, ArrayList<Entity> entityList) {
 
 		ArrayList<Integer> closeKeyArray = new ArrayList<>();
 		int x=0;
 		int y=0;
-		
+		boolean isPossible = true;
 		//check x+gp.TILE_SIZE, x-gp.TILE_SIZE, y+gp.TILE_SIZE, y-gp.TILE_SIZE
 		
 		//check above
@@ -436,7 +434,14 @@ public class Entity {
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
 				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
-					closeKeyArray.add(i);
+					for(int j=0; j<entityList.size();j++) {
+						if(objectList.get(i).worldX == entityList.get(i).worldX && objectList.get(i).worldY == entityList.get(i).worldY) {
+							isPossible = false;
+						}
+					}
+					if(isPossible) {
+						closeKeyArray.add(i);
+					}
 				}
 
 			}
@@ -449,7 +454,14 @@ public class Entity {
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
 				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
-					closeKeyArray.add(i);
+					for(int j=0; j<entityList.size();j++) {
+						if(objectList.get(i).worldX == entityList.get(i).worldX && objectList.get(i).worldY == entityList.get(i).worldY) {
+							isPossible = false;
+						}
+					}
+					if(isPossible) {
+						closeKeyArray.add(i);
+					}
 				}
 			}
 		}
@@ -461,7 +473,14 @@ public class Entity {
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
 				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
-					closeKeyArray.add(i);
+					for(int j=0; j<entityList.size();j++) {
+						if(objectList.get(i).worldX == entityList.get(i).worldX && objectList.get(i).worldY == entityList.get(i).worldY) {
+							isPossible = false;
+						}
+					}
+					if(isPossible) {
+						closeKeyArray.add(i);
+					}
 				}
 			}
 		}
@@ -473,7 +492,14 @@ public class Entity {
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
 				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
-					closeKeyArray.add(i);
+					for(int j=0; j<entityList.size();j++) {
+						if(objectList.get(i).worldX == entityList.get(i).worldX && objectList.get(i).worldY == entityList.get(i).worldY) {
+							isPossible = false;
+						}
+					}
+					if(isPossible) {
+						closeKeyArray.add(i);
+					}
 				}
 			}
 		}
