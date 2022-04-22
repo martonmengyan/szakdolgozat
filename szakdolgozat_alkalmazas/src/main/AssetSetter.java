@@ -34,7 +34,7 @@ public class AssetSetter {
 		//createEntity(0,1,2,new Entity_Faction0(gp), gp.entityList);
 		//createEntity(1,1,3,new Entity_Faction0(gp), gp.entityList);
 		createEntity(2,3,1,new Entity_Faction0(gp), gp.entityList);
-		//createEntity(3,1,4,new Entity_Faction0(gp), gp.entityList);
+		createEntity(3,1,4,new Entity_Faction1(gp), gp.entityList);
 		
 	}
 	

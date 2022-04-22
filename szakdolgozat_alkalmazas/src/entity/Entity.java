@@ -371,10 +371,21 @@ public class Entity {
 	}
 	
 	//Hit or Miss
-	public boolean isEvaded(Entity attacker, Entity defender) {
+	public boolean isEvaded(Entity defender) {
 			
-			//A támadó acc, és a védekező eva statisztikájától függően kiszámolásra kerül, hogy betalál-e
 			boolean isEvaded = false;
+			int min=0;
+			Random random = new Random(); 
+			int index = random.nextInt((5 - 1) + 1);
+			int evadeChance = acc-defender.eva;
+			if(evadeChance>0){
+				min=1;
+			} else min=0;
+			
+
+			if(index<=min) {
+				isEvaded = true;
+			}
 			return isEvaded;
 		}
 	
@@ -554,12 +565,13 @@ public class Entity {
 			direction = directionFromCoordinates(new Point(entityList.get(targetIndex).worldX/48,entityList.get(targetIndex).worldY/48));
 						
 			//check if attack is evaded before attack calculation
-			if(!isEvaded(this,entityList.get(targetIndex))) {
+			if(!isEvaded(entityList.get(targetIndex))) {
 				damageNumber = damage();
 				entityList.get(targetIndex).life-=damageNumber;
-			}
+				System.out.println("Attacked: " + entityList.get(targetIndex).worldX/48 + "," + entityList.get(targetIndex).worldY/48 + "!");
+			} else System.out.println("EVADED");
 			
-			System.out.println("Attacked: " + entityList.get(targetIndex).worldX/48 + "," + entityList.get(targetIndex).worldY/48 + "!");
+			
 		}
 	}
 	
