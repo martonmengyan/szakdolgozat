@@ -46,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public ArrayList<Entity> objectList = new ArrayList<>();
 	
 	public String gameScreenNumber;
+	public String winnerFaction;
 	public boolean statIsVisible=false;
 	public boolean inventoryIsVisible=false;
 	public boolean isPaused = false;
@@ -180,6 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
 					entityList.get(i).draw(g2,this);
 				}
 				for(int j=0; j<entityList.size(); j++) {
+					//entityList.get(j).maxLife = entityList.get(j).vit*3;
 					entityList.get(j).drawEntityHP(g2);
 				}
 		

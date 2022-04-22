@@ -294,9 +294,6 @@ public class UI {
 		g2.setFont(font_25);
 		g2.setColor(Color.white);
 		g2.drawString(value, x+width-50, y+50+emptiness*i);
-
-			
-		
 		
 		//BUTTONS
 		g2.setColor(Color.white);
@@ -329,14 +326,25 @@ public class UI {
 	public void drawEndScreen() {
 		
 		g2.setFont(font_40);
-		g2.setColor(Color.white);
+		if(gp.winnerFaction == "Red") {
+			g2.setColor(Color.red);
+		}
+		g2.setColor(Color.blue);
 		
 		String text;
 		int x;
 		int y;
 		
-		text = "End of Simulation";
-		x = gp.screenWidth/2 - textLength(g2,text)/2;
+		text = "End";
+		x = gp.screenWidth/2 - textLength(g2,"End of Simulation")/2;
+		y = gp.screenHeight/2;
+		
+		g2.drawString(text, x, y);
+		
+		g2.setColor(Color.white);
+		
+		text = "of Simulation";
+		x = gp.screenWidth/2 - textLength(g2,"End of Simulation")/2 + textLength(g2,"End ");
 		y = gp.screenHeight/2;
 		
 		g2.drawString(text, x, y);

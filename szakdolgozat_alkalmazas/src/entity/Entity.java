@@ -31,6 +31,8 @@ public class Entity {
     public String testDirection = "down";
     public int speed;
     
+    
+    public boolean cannotMove = false;
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public int HPturn = 0;
@@ -84,7 +86,7 @@ public class Entity {
     public int itemAcc;
     public int itemEva;
     
-    public boolean dead = false;
+
     public boolean moved = false;
     public int healTurn = 0;
     
@@ -137,6 +139,10 @@ public class Entity {
     			break;
     		case "Chest":
     			gp.gameScreenNumber = "end";
+    			if(faction == 1) {
+    				gp.winnerFaction = "Blue";
+    			} else gp.winnerFaction = "Red";
+    			
     			break;
     		}
     	}
@@ -183,6 +189,7 @@ public class Entity {
 		boolean wantToPickUp = false;
 		boolean wantToOpenDoor = false;
 		boolean wantToMoveToItem = false;
+		cannotMove = false;
 		
     	int objIndex;
     	int curObjIndex;
@@ -211,14 +218,13 @@ public class Entity {
     	}
 
     	ArrayList<Integer> isEnemyCloseIndexList = isEnemyClose(gp.entityList);
-    	
-    	
+    	ArrayList<Integer> isItemCloseIndexList = isItemClose(gp.objectList,gp.entityList);
     	
 		if(isEnemyCloseIndexList.size()>0) {
 			wantToAttack = true;
 		}
 		
-		if(isItemClose(gp.objectList,gp.entityList).size()>0) {
+		if(isItemCloseIndexList.size()>0) {
 			wantToMoveToItem = true;
 		}
 		
@@ -242,23 +248,27 @@ public class Entity {
 			openDoor(objIndex);
 
 		}else if(wantToMoveToItem) {
-			moveToKeyBlock(gp.objectList,isItemClose(gp.objectList,gp.entityList));
-			entityMove();
-		
+			if(cannotMove==false) {
+				moveToKeyBlock(gp.objectList,isItemCloseIndexList);
+				entityMove();
+			} else System.out.println("Skipped Turn");
+	
 		}else if(wantToMove) {
+			if(cannotMove==false) {
+				setAction();
+				
+				ArrayList<Point> detectableBlocks = detectArray(gp.entityList,gp.objectList);
 
-			setAction();
-			
-			ArrayList<Point> detectableBlocks = detectArray(gp.entityList,gp.objectList);
-
-			if(!checkIfNewEnemy(detectableBlocks,gp.entityList)) {
-				if(!checkIfNewItem(detectableBlocks,gp.objectList)) {
-					possibleBlocks();
+				if(!checkIfNewEnemy(detectableBlocks,gp.entityList)) {
+					if(!checkIfNewItem(detectableBlocks,gp.objectList)) {
+						possibleBlocks();
+					}
+					
 				}
 				
-			}
-			
-			entityMove();
+				entityMove();
+			} else System.out.println("Skipped Turn");
+
 
 		}
 	
@@ -316,7 +326,6 @@ public class Entity {
 		}
     }
     
-	
 	public void drawEntityHP(Graphics2D g2) {
 		int screenX = worldX - gp.player.worldX + gp.player.screenX;
 		int screenY = worldY - gp.player.worldY + gp.player.screenY;
@@ -442,7 +451,7 @@ public class Entity {
 		boolean isPossible = true;
 		//check x+gp.TILE_SIZE, x-gp.TILE_SIZE, y+gp.TILE_SIZE, y-gp.TILE_SIZE
 		
-		//check above
+		//check right
 		x = worldX + gp.TILE_SIZE;
 		y = worldY;
 		
@@ -450,8 +459,9 @@ public class Entity {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
 				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
 					for(int j=0; j<entityList.size();j++) {
-						if(objectList.get(i).worldX == entityList.get(i).worldX && objectList.get(i).worldY == entityList.get(i).worldY) {
+						if(objectList.get(i).worldX == entityList.get(j).worldX && objectList.get(i).worldY == entityList.get(j).worldY) {
 							isPossible = false;
+							break;
 						}
 					}
 					if(isPossible) {
@@ -462,7 +472,7 @@ public class Entity {
 			}
 		}
 		
-		//check under
+		//check left
 		x = worldX - gp.TILE_SIZE;
 		y = worldY;
 		
@@ -470,7 +480,7 @@ public class Entity {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
 				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
 					for(int j=0; j<entityList.size();j++) {
-						if(objectList.get(i).worldX == entityList.get(i).worldX && objectList.get(i).worldY == entityList.get(i).worldY) {
+						if(objectList.get(i).worldX == entityList.get(j).worldX && objectList.get(i).worldY == entityList.get(j).worldY) {
 							isPossible = false;
 						}
 					}
@@ -481,7 +491,7 @@ public class Entity {
 			}
 		}
 		
-		//check right
+		//check down
 		x = worldX;
 		y = worldY + gp.TILE_SIZE;
 		
@@ -489,7 +499,7 @@ public class Entity {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
 				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
 					for(int j=0; j<entityList.size();j++) {
-						if(objectList.get(i).worldX == entityList.get(i).worldX && objectList.get(i).worldY == entityList.get(i).worldY) {
+						if(objectList.get(i).worldX == entityList.get(j).worldX && objectList.get(i).worldY == entityList.get(j).worldY) {
 							isPossible = false;
 						}
 					}
@@ -500,7 +510,7 @@ public class Entity {
 			}
 		}
 		
-		//check left
+		//check up
 		x = worldX;
 		y = worldY - gp.TILE_SIZE;
 		
@@ -508,7 +518,7 @@ public class Entity {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
 				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
 					for(int j=0; j<entityList.size();j++) {
-						if(objectList.get(i).worldX == entityList.get(i).worldX && objectList.get(i).worldY == entityList.get(i).worldY) {
+						if(objectList.get(i).worldX == entityList.get(j).worldX && objectList.get(i).worldY == entityList.get(j).worldY) {
 							isPossible = false;
 						}
 					}
@@ -545,7 +555,7 @@ public class Entity {
 						
 			//check if attack is evaded before attack calculation
 			if(!isEvaded(this,entityList.get(targetIndex))) {
-				//damageNumber = getAttackNumber(this,target);
+				damageNumber = damage();
 				entityList.get(targetIndex).life-=damageNumber;
 			}
 			
@@ -568,11 +578,19 @@ public class Entity {
 				targetIndex = random.nextInt(keyIndex.size()-0)+0;
 				//what if there is a chest? choose the chest!
 				for(int i=0; i<keyIndex.size();i++) {
-					if(objectList.get(keyIndex.get(i)).name == "Chest") {
+					if(objectList.get(keyIndex.get(i)).typeName == "Chest") {
 						targetIndex = keyIndex.get(i);
 						break;
+					}else if(objectList.get(keyIndex.get(i)).typeName == "Key") {
+						targetIndex = keyIndex.get(i);
+						break;
+					}else if(objectList.get(keyIndex.get(i)).typeName == "Armor") {
+						targetIndex = keyIndex.get(i);
+						break;
+					}else if(objectList.get(keyIndex.get(i)).typeName == "Helmet") {
+						targetIndex = keyIndex.get(i);
+						break;	
 					}
-					
 				}
 
 			}
@@ -583,7 +601,13 @@ public class Entity {
 		}
 	}
 	
-	public void damage(int targetIndex) {
+	public int damage() {
+		int damage=0;
+		damage = str/2;
+		if(damage<=0) {
+			damage = 1;
+		}
+		return damage;
 		
 	}
 	
@@ -611,14 +635,6 @@ public class Entity {
 			}
 		}
 	
-	//Attack damage number calculation if it hits
-	public int getAttackNumber(Entity attacker, Entity defender) {
-		
-		//based on statistics
-		int damageNumber = 0;
-		return damageNumber;
-	}
-
 	//Entity move
 	public void entityMove() {
 		if(collisionOn == false) {
@@ -750,6 +766,9 @@ public class Entity {
 		for(int i=0;i<worldPos.size();i++) {
 			System.out.println( i+1 + ": " + worldPos.get(i).x +","+ worldPos.get(i).y);
 		}
+		if(worldPos.size()==0) {
+			cannotMove = true;
+		}
 		
 		
 	}
@@ -801,9 +820,14 @@ public class Entity {
 					}
 				}
 			}
-						
-			int index = random.nextInt((possibleBlocks.size() - 0) + 0);			
-			direction = directionFromCoordinates(possibleBlocks.get(index));
+			
+			if(possibleBlocks.size()!=0) {
+				int index = random.nextInt((possibleBlocks.size() - 0) + 0);
+				direction = directionFromCoordinates(possibleBlocks.get(index));
+				System.out.println("Skipped Turn");
+			} else cannotMove = true;
+			
+			
 		}
 	}
 	
