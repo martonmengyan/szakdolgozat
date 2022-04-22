@@ -23,11 +23,12 @@ public class Object_Chest extends Entity {
 			 e.printStackTrace();
 		}
 		collision = true;
-		 solidArea = new Rectangle(10,
+		typeName = "Chest";
+		solidArea = new Rectangle(10,
 					10,
 					28,
 					28);
-		 solidAreaDefaultX = 0;
-		 solidAreaDefaultY = 0;
+		solidAreaDefaultX = 0;
+		solidAreaDefaultY = 0;
 		}
 }

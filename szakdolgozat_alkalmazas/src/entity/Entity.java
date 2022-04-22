@@ -89,7 +89,7 @@ public class Entity {
     public int healTurn = 0;
     
     public ArrayList<Entity> inventoryList = new ArrayList<>();
-    public final int inventorySize = 4;
+    public final int inventorySize = 8;
     
     public Entity(GamePanel gp) {
     	this.gp = gp;
@@ -111,6 +111,28 @@ public class Entity {
     			if(inventoryList.size()!=inventorySize) {
     				inventoryList.add(gp.objectList.get(i));
     				gp.objectList.remove(i);
+    			}    			
+    			break;
+    		case "Entity_Armor_01":
+    			if(inventoryList.size()!=inventorySize) {
+    				inventoryList.add(gp.objectList.get(i));
+    				gp.objectList.remove(i);
+    				Random random = new Random();
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 + 0) - 0;
+    			}    			
+    			break;
+    		case "Entity_Helmet_01":
+    			if(inventoryList.size()!=inventorySize) {
+    				inventoryList.add(gp.objectList.get(i));
+    				gp.objectList.remove(i);
+    				Random random = new Random();
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 + 0) - 0;
     			}    			
     			break;
     		case "Chest":
@@ -166,38 +188,42 @@ public class Entity {
     	
     	//check conditions before DO
     	
-    	if(curObjIndex != 999) {
-    		if(gp.objectList.get(curObjIndex) != null) {
-    			if(gp.objectList.get(curObjIndex).name=="Chest" || gp.objectList.get(curObjIndex).name=="Key") {
-        			wantToPickUp = true;
-    			}
-
-    		}
-    		
-    	}
     	if(objIndex != 999) {
     		if(gp.objectList.get(objIndex) != null && gp.objectList.get(objIndex).name=="Door" && hasKey()==true) {
     			wantToOpenDoor = true;
     		}
     		
     	}
+		
+    	if(curObjIndex != 999) {
+    		if(gp.objectList.get(curObjIndex) != null) {
+    			if(gp.objectList.get(curObjIndex).typeName=="Chest" || gp.objectList.get(curObjIndex).typeName=="Key" || gp.objectList.get(curObjIndex).typeName=="Armor" || gp.objectList.get(curObjIndex).typeName=="Helmet" ) {
+        			wantToPickUp = true;
+    			}
+
+    		}
+    		
+    	}
+
 		if(isEnemyClose(gp.entityList).size()>0) {
 			wantToAttack = true;
 		}
 		
-		if(isKeyClose(gp.objectList).size()>0) {
+		if(isItemClose(gp.objectList).size()>0) {
 			wantToMoveToKey = true;
 		}
-		
+		if(inventoryList.get(inventoryList.size()-1).name != "Key") {
+			if(itemIsBetterThanCurrent(inventoryList.get(inventoryList.size()-1))) {
+				wantToEquip = true;
+			}
+		}
 		//DO
 		
 		if(wantToAttack) {
 			attackAction(gp.entityList,isEnemyClose(gp.entityList));
 
-		}else if(wantToEquip) {
-			if(itemIsBetterThanCurrent(inventoryList.get(inventoryList.size()))) {
-				equipBetterItem(inventoryList.get(inventoryList.size()));
-			}
+		}else if(wantToEquip) {			
+			equipBetterItem(inventoryList.get(inventoryList.size()-1));	
 			
 		}else if(wantToPickUp) {
 			pickUpObject(curObjIndex);
@@ -206,7 +232,7 @@ public class Entity {
 			openDoor(objIndex);
 			
 		}else if(wantToMoveToKey) {
-			moveToKeyBlock(gp.objectList,isKeyClose(gp.objectList));
+			moveToKeyBlock(gp.objectList,isItemClose(gp.objectList));
 			entityMove();
 		
 		}else if(wantToMove) {
@@ -301,7 +327,7 @@ public class Entity {
 	//check if new item is better than equipped
 	public boolean itemIsBetterThanCurrent(Entity pickedupItem) {
 		boolean better = false;
-		
+				
 		int strDif;
 		int vitDif;
 		int evaDif;
@@ -388,7 +414,7 @@ public class Entity {
 		return closeEnemyArray;
 	}
 	
-	public ArrayList<Integer> isKeyClose(ArrayList<Entity> objectList) {
+	public ArrayList<Integer> isItemClose(ArrayList<Entity> objectList) {
 
 		ArrayList<Integer> closeKeyArray = new ArrayList<>();
 		int x=0;
@@ -402,7 +428,7 @@ public class Entity {
 		
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
-				if(objectList.get(i).name == "Chest" || objectList.get(i).name == "Key") {
+				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
 					closeKeyArray.add(i);
 				}
 
@@ -415,7 +441,7 @@ public class Entity {
 		
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
-				if(objectList.get(i).name == "Chest" || objectList.get(i).name == "Key") {
+				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
 					closeKeyArray.add(i);
 				}
 			}
@@ -427,7 +453,7 @@ public class Entity {
 		
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
-				if(objectList.get(i).name == "Chest" || objectList.get(i).name == "Key") {
+				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
 					closeKeyArray.add(i);
 				}
 			}
@@ -439,7 +465,7 @@ public class Entity {
 		
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
-				if(objectList.get(i).name == "Chest" || objectList.get(i).name == "Key") {
+				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
 					closeKeyArray.add(i);
 				}
 			}
@@ -521,18 +547,17 @@ public class Entity {
 			//find the same type equipped item for switch
 			for(int i=0; i<inventoryList.size();i++) {
 				if(inventoryList.get(i).isEquipped && inventoryList.get(i).typeName == pickedupItemTypeName) {
-					if(itemIsBetterThanCurrent(inventoryList.get(i))) {
-							inventoryList.get(i).isEquipped = false;
-							str -= inventoryList.get(i).str;
-							vit -= inventoryList.get(i).vit; 
-							eva -= inventoryList.get(i).eva; 
-							acc -= inventoryList.get(i).acc; 
-							pickedupItem.isEquipped = true;
-							str += pickedupItem.str;
-							vit += pickedupItem.vit; 
-							eva += pickedupItem.eva; 
-							acc += pickedupItem.acc; 
-					}
+						inventoryList.get(i).isEquipped = false;
+						str -= inventoryList.get(i).str;
+						vit -= inventoryList.get(i).vit; 
+						eva -= inventoryList.get(i).eva; 
+						acc -= inventoryList.get(i).acc; 
+						pickedupItem.isEquipped = true;
+						str += pickedupItem.str;
+						vit += pickedupItem.vit; 
+						eva += pickedupItem.eva; 
+						acc += pickedupItem.acc; 
+						System.out.println("Equipped better item!");
 				}
 			}
 		}
@@ -923,7 +948,7 @@ public class Entity {
 		boolean isDetected = false;
 		for(int i=0; i<worldpos.size();i++){
 			for(int j=0; j<objectList.size(); j++) {
-				if(objectList.get(j).name == "Key" || objectList.get(j).name == "Chest") {
+				if(objectList.get(j).typeName == "Key" || objectList.get(j).typeName == "Chest" || objectList.get(j).typeName == "Armor" || objectList.get(j).typeName == "Helmet") {
 					if(worldpos.get(i).x == objectList.get(j).worldX/48 && worldpos.get(i).y == objectList.get(j).worldY/48) {
 						if(worldX - objectList.get(j).worldX == 0) {
 							if(worldY - objectList.get(j).worldY > 0) {

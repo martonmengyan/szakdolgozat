@@ -136,7 +136,7 @@ public class UI {
 
 			slotX += gp.TILE_SIZE;
 			
-			if(i == 4 || i == 8) {
+			if(i == 3) {
 				slotX = startFromX;
 				slotY += gp.TILE_SIZE;
 			}
@@ -161,7 +161,7 @@ public class UI {
 		
 		int startFromX = x - 10;
 		int startFromY = y + (gp.TILE_SIZE*(maxSlotRow+1)-20);
-		String[] names = {"Str","Vit","Eva","Acc"};
+		String[] names = {"Str","Vit","Eva","Acc","Equipped:"};
 		int emptiness = 30;
 		
 		g2.setFont(font_25);
@@ -197,12 +197,17 @@ public class UI {
 			g2.setFont(font_25);
 			g2.setColor(Color.white);
 			g2.drawString(value, x+startFromX-gp.TILE_SIZE*2-textLength(g2,"_"), startFromY+50+emptiness*i);
+			i++;
+			value=String.valueOf(entity.isEquipped);
+			g2.setFont(font_25);
+			g2.setColor(Color.white);
+			g2.drawString(value, x+startFromX-gp.TILE_SIZE*2-textLength(g2,"___"), startFromY+50+emptiness*i);
 		}
 		
 	}
 	
 	public int getInventoryIndex() {
-		int itemIndex = (slotCol-1) + ((slotRow-1)*5);
+		int itemIndex = (slotCol-1) + ((slotRow-1)*4);
 		return itemIndex;
 	}
 

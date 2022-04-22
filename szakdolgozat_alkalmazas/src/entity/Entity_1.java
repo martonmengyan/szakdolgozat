@@ -25,7 +25,7 @@ public class Entity_1 extends Entity {
 		
 		setDefaultValues();
 		setItems();
-    	equipStats(inventoryList.get(1));
+		equipStats(currentWeapon);
     	equipStats(currentArmor);
     	equipStats(currentHelmet);
 	}
