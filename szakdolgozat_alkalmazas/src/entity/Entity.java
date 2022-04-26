@@ -52,13 +52,10 @@ public class Entity {
     public int type;
     public int maxLife;
     public int life;
-    public int lvl;
     public int str;
     public int vit;
     public int acc;
     public int eva;
-    public int exp;
-    public int reqExp;
     public Entity currentWeapon;
     public Entity currentArmor;
     public Entity currentHelmet;

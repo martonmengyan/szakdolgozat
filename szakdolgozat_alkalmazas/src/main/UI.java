@@ -219,7 +219,7 @@ public class UI {
 		final int width = gp.TILE_SIZE*5;
 		final int height = gp.TILE_SIZE*9;
 		String text = "Statistics";
-		String[] names = {"Number:","Level","Exp","ReqExp","HP","Str","Vit","Eva","Acc"};
+		String[] names = {"Number:","HP","Str","Vit","Eva","Acc"};
 		int emptiness = 30;
 		
 		
@@ -251,21 +251,6 @@ public class UI {
 		g2.setFont(font_25);
 		g2.setColor(Color.white);
 		g2.drawString(value, x + textLength(g2,names[i]) + textLength(g2,value), y+50+emptiness*i);
-		i++;
-		value=String.valueOf(entity.lvl);
-		g2.setFont(font_25);
-		g2.setColor(Color.white);
-		g2.drawString(value, x+width-50, y+50+emptiness*i);
-		i++;
-		value=String.valueOf(entity.exp);
-		g2.setFont(font_25);
-		g2.setColor(Color.white);
-		g2.drawString(value, x+width-50, y+50+emptiness*i);
-		i++;
-		value=String.valueOf(entity.reqExp);
-		g2.setFont(font_25);
-		g2.setColor(Color.white);
-		g2.drawString(value, x+width-50, y+50+emptiness*i);
 		i++;
 		value=String.valueOf(entity.life);
 		g2.setFont(font_25);

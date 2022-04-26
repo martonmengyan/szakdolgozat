@@ -32,9 +32,6 @@ public class Entity_1 extends Entity {
 		maxLife=12;
     	life = maxLife;
     	
-    	exp=0;
-    	reqExp=10;
-    	
     	currentWeapon = new Object_Entity_Weapon_01(gp);
     	currentArmor = new Object_Entity_Armor_01(gp);
     	currentHelmet = new Object_Entity_Helmet_01(gp);
