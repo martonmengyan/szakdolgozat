@@ -29,7 +29,10 @@ public class Camera extends Entity {
     	worldX = gp.TILE_SIZE * 2;
     	worldY = gp.TILE_SIZE * 2;
     	
-    	direction="down";
+    	//STARTING DIRECTION
+    	direction = "down";
+    	
+    	speed = gp.TILE_SIZE;
     }
 
     public void update() {    	    	    	
