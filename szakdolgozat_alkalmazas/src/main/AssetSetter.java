@@ -20,8 +20,8 @@ public class AssetSetter {
 		
 		//Doors
 		createEntity(1,7,2,new Object_Door(gp), gp.objectList);
-		createEntity(5,3,6,new Object_Door(gp), gp.objectList);
-		createEntity(6,1,2,new Object_Door(gp), gp.objectList);
+		createEntity(5,3,7,new Object_Door(gp), gp.objectList);
+		//createEntity(6,1,2,new Object_Door(gp), gp.objectList);
 		
 		//Equipable Items
 		createEntity(3,4,2,new Object_Entity_Helmet_02(gp), gp.objectList);

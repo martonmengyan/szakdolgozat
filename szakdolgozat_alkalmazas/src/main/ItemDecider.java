@@ -71,11 +71,11 @@ public class ItemDecider {
 				}
 				
 				//right
-				Y = entity.worldY;
-				X = entity.worldX + entity.speed;
+				Y = entity.worldY/48;
+				X = entity.worldX/48 + entity.speed/48;
 				
 				if(Y > 0 && Y < 50 && X > 0 && X < 50) {
-					if(X == gp.objectList.get(i).worldX && Y == gp.objectList.get(i).worldY) {
+					if(X == gp.objectList.get(i).worldX/48 && Y == gp.objectList.get(i).worldY/48) {
 						index = i;	
 						break;
 					}
