@@ -15,13 +15,13 @@ public class BlockManager {
 
 	GamePanel gp;
 	public Block[] block;
-	public int mapTileNum[][];
+	public int mapBlockNum[][];
 	
 	public BlockManager(GamePanel gp) {
 		this.gp = gp;
 		
 		block = new Block[10];
-		mapTileNum = new int[gp.WORLDCOLUMNS][gp.WORLDROWS];
+		mapBlockNum = new int[gp.WORLDCOLUMNS][gp.WORLDROWS];
 		
 		getTileImage();
 		loadMap("/maps/world01.txt");
@@ -63,7 +63,7 @@ public class BlockManager {
 					
 					int num = Integer.parseInt(numbers[col]);
 					
-					mapTileNum[col][row] = num;
+					mapBlockNum[col][row] = num;
 					col++;
 				}
 				if(col == gp.WORLDCOLUMNS) {
@@ -84,17 +84,17 @@ public class BlockManager {
 
 		while(worldCol < gp.WORLDCOLUMNS && worldRow < gp.WORLDROWS) {
 			
-			int tileNum = mapTileNum[worldCol][worldRow];
+			int tileNum = mapBlockNum[worldCol][worldRow];
 			
 			int worldX = worldCol * gp.TILE_SIZE;
 			int worldY = worldRow * gp.TILE_SIZE;
-			int screenX = worldX - gp.player.worldX + gp.player.screenX;
-			int screenY = worldY - gp.player.worldY + gp.player.screenY;
+			int screenX = worldX - gp.camera.worldX + gp.camera.screenX;
+			int screenY = worldY - gp.camera.worldY + gp.camera.screenY;
 			
-			if(worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX &&
-			   worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX &&
-			   worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
-			   worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
+			if(worldX + gp.TILE_SIZE > gp.camera.worldX - gp.camera.screenX &&
+			   worldX - gp.TILE_SIZE < gp.camera.worldX + gp.camera.screenX &&
+			   worldY + gp.TILE_SIZE > gp.camera.worldY - gp.camera.screenY &&
+			   worldY - gp.TILE_SIZE < gp.camera.worldY + gp.camera.screenY) {
 				
 				g2.drawImage(block[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, observer);
 			}

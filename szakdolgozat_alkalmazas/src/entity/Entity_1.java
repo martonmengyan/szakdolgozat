@@ -1,10 +1,7 @@
 package entity;
 
-import java.awt.Rectangle;
-import java.io.IOException;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import object.*;
@@ -13,14 +10,6 @@ public class Entity_1 extends Entity {
 
 	public Entity_1(GamePanel gp) {
 		super(gp);
-		
-		solidArea = new Rectangle(10,
-				10, 
-				28, 
-				28);
-		
-		solidAreaDefaultX = solidArea.x;
-		solidAreaDefaultY = solidArea.y;
 		
 		
 		setDefaultValues();
@@ -34,13 +23,13 @@ public class Entity_1 extends Entity {
 		type=2;
 		direction = "right";
 		speed = gp.TILE_SIZE;
-		
-		str=1;
-    	vit=4;
-    	eva=1;
-    	acc=1;
+		Random random = new Random();
+		str=random.nextInt(2 + 1) - 1;
+    	vit=random.nextInt(2 + 1) - 1;
+    	eva=random.nextInt(2 + 1) - 1;
+    	acc=random.nextInt(2 + 1) - 1;
     	
-		maxLife=vit*3;
+		maxLife=12;
     	life = maxLife;
     	
     	exp=0;
@@ -72,32 +61,6 @@ public class Entity_1 extends Entity {
 		entity.eva=random.nextInt(3 + 2) - 2;
 		entity.acc=random.nextInt(3 + 2) - 2;
 	}
-	
-    
-    public void setAction() {
-		/*Random random = new Random();    	
-
-    	do {
-    		int index = random.nextInt(1000)+1;
-    		collisionOn = false;
-    		if(index<=250) {
-    			testDirection="up";
-        	}else if(index<=500 && index>250) {
-        		testDirection="left";
-        	}else if(index<=750 && index>500) {
-        		testDirection="right";
-        	}else if(index<=1000 && index>750) {
-        		testDirection="down";
-        	}
-			int objIndex = gp.colChecker.checkObject(this, true);
-	    	int entityIndex = gp.colChecker.checkEntity(this, gp.entityList);
-	    	gp.colChecker.checkTile(this);
-    		if(collisionOn == true) {
-    			System.out.println("WRONG DIRECTION");
-    		}
-    	} while(collisionOn != false);
-    	direction = testDirection;*/
-    }
     
 	public void equipStats(Entity entity) {
 		str += entity.str;

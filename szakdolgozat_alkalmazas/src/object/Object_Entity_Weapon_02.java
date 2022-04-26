@@ -1,6 +1,5 @@
 package object;
 
-
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -8,23 +7,23 @@ import javax.imageio.ImageIO;
 import entity.Entity;
 import main.GamePanel;
 
-public class Object_Entity_Armor_01 extends Entity {
+public class Object_Entity_Weapon_02 extends Entity {
 	
 	GamePanel gp;
 	
-	 public Object_Entity_Armor_01(GamePanel gp) {
+	 public Object_Entity_Weapon_02(GamePanel gp) {
 		 
 		 super(gp);
 		 
-		 name ="Entity_Armor_01";
+		 name ="Entity_Weapon_02";
 		 try {
-			 down1 = ImageIO.read(getClass().getResourceAsStream("/objects/Entity_Armor_01.png"));
+			 down1 = ImageIO.read(getClass().getResourceAsStream("/objects/Entity_Weapon_02.png"));
 			 
 		 }catch(IOException e) {
 			 e.printStackTrace();
 		 }
 		 
-		 typeName = "Armor";
+		 typeName = "Weapon";
 		 type=2;
 		 itemStr = 0;
 		 itemVit = 0;

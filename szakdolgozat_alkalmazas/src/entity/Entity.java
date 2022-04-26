@@ -4,10 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,10 +13,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import javax.imageio.ImageIO;
-
 import main.GamePanel;
-import object.Object_Key;
 
 public class Entity {
 
@@ -28,7 +23,6 @@ public class Entity {
     public int worldX, worldY;
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, deadImage;
     public String direction = "down";
-    public String testDirection = "down";
     public int speed;
     
     
@@ -37,7 +31,6 @@ public class Entity {
     public int spriteNum = 1;
     public int HPturn = 0;
     public boolean collisionOn = false;
-    public int solidAreaDefaultX, solidAreaDefaultY;
     
 	public BufferedImage image = null;
 	public String name;
@@ -47,7 +40,6 @@ public class Entity {
 	public ArrayList<Point> worldPos;
 
 	public ArrayList<Point> possibleBlocks;
-	public Rectangle solidArea;
 	
     public int index = 0;
     
@@ -55,8 +47,6 @@ public class Entity {
     
     //0 or 1
     public int faction;
-    
-    public int ID;
     
     //char
     public int type;
@@ -74,11 +64,7 @@ public class Entity {
     public Entity currentHelmet;
     public Entity key;
     
-    public int savedBlockNum[][];
-    
     public String typeName;
-    
-    public int attack;
     
     //item
     public int itemStr;
@@ -86,7 +72,6 @@ public class Entity {
     public int itemAcc;
     public int itemEva;
     
-
     public boolean moved = false;
     public int healTurn = 0;
     
@@ -96,10 +81,6 @@ public class Entity {
     public Entity(GamePanel gp) {
     	this.gp = gp;
     	arial_60 = new Font("Arial", Font.PLAIN, 60);
-    }
-    
-    public void setAction() {
-    	
     }
     
     public void pickUpObject(int i) {
@@ -137,12 +118,57 @@ public class Entity {
     				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 + 0) - 0;
     			}    			
     			break;
-    		case "Chest":
+    		case "Entity_Weapon_01":
+    			if(inventoryList.size()!=inventorySize) {
+    				inventoryList.add(gp.objectList.get(i));
+    				gp.objectList.remove(i);
+    				Random random = new Random();
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 + 0) - 0;
+    			}    			
+    			break;
+    		case "Entity_Armor_02":
+    			if(inventoryList.size()!=inventorySize) {
+    				inventoryList.add(gp.objectList.get(i));
+    				gp.objectList.remove(i);
+    				Random random = new Random();
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(6 + 2) - 2;
+    			}    			
+    			break;
+    		case "Entity_Helmet_02":
+    			if(inventoryList.size()!=inventorySize) {
+    				inventoryList.add(gp.objectList.get(i));
+    				gp.objectList.remove(i);
+    				Random random = new Random();
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(6 + 2) - 2;
+    			}    			
+    			break;
+    		case "Entity_Weapon_02":
+    			if(inventoryList.size()!=inventorySize) {
+    				inventoryList.add(gp.objectList.get(i));
+    				gp.objectList.remove(i);
+    				Random random = new Random();
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(6 + 2) - 2;
+    			}    			
+    			break;
+    		case "Chest_Red":
     			gp.gameScreenNumber = "end";
-    			if(faction == 1) {
-    				gp.winnerFaction = "Blue";
-    			} else gp.winnerFaction = "Red";
-    			
+    			gp.winnerFaction = 1;
+    			break;
+    		case "Chest_Blue":
+    			gp.gameScreenNumber = "end";
+    			gp.winnerFaction = 0;
     			break;
     		}
     	}
@@ -156,18 +182,18 @@ public class Entity {
     		
     		switch(objectName) {
     		case "Door":
-    			gp.objectList.remove(i);
+    			direction = directionFromCoordinates(new Point(gp.objectList.get(i).worldX/48,gp.objectList.get(i).worldY/48));
+    			gp.objectList.remove(i);  			
     			for(int j=0;j<inventoryList.size();j++) {
     				if(inventoryList.get(j).typeName == "Key") {
-    					inventoryList.remove(j);
+    					inventoryList.remove(j);		
     				}
     			}
     			break;
     		}
     	}
     }
-    
-    
+       
     public boolean hasKey() {
     	boolean hasKey = false;
     	for(int i=0; i<inventoryList.size(); i++) {
@@ -191,17 +217,17 @@ public class Entity {
 		boolean wantToMoveToItem = false;
 		cannotMove = false;
 		
-    	int objIndex;
+    	int doorIndex;
     	int curObjIndex;
     	
     	saveBlocks();
-    	curObjIndex = gp.colChecker.checkCurrentBlock(this, true);
-		objIndex = gp.colChecker.checkObject(this, true);
+    	curObjIndex = gp.itemDecider.checkCurrentBlock(this);
+		doorIndex = gp.itemDecider.checkObject(this);
     	
     	//check conditions before DO
     	
-    	if(objIndex != 999) {
-    		if(gp.objectList.get(objIndex) != null && gp.objectList.get(objIndex).name=="Door" && hasKey()==true) {
+    	if(doorIndex != 999) {
+    		if(gp.objectList.get(doorIndex) != null && gp.objectList.get(doorIndex).name=="Door" && hasKey()==true) {
     			wantToOpenDoor = true;
     		}
     		
@@ -209,7 +235,7 @@ public class Entity {
 		
     	if(curObjIndex != 999) {
     		if(gp.objectList.get(curObjIndex) != null) {
-    			if(gp.objectList.get(curObjIndex).typeName=="Chest" || gp.objectList.get(curObjIndex).typeName=="Key" || gp.objectList.get(curObjIndex).typeName=="Armor" || gp.objectList.get(curObjIndex).typeName=="Helmet" ) {
+    			if(gp.objectList.get(curObjIndex).typeName=="Chest" && faction!=gp.objectList.get(curObjIndex).faction || gp.objectList.get(curObjIndex).typeName=="Key" || gp.objectList.get(curObjIndex).typeName=="Armor" || gp.objectList.get(curObjIndex).typeName=="Helmet" || gp.objectList.get(curObjIndex).typeName=="Weapon" ) {
         			wantToPickUp = true;
     			}
 
@@ -245,7 +271,7 @@ public class Entity {
 			pickUpObject(curObjIndex);
 
 		}else if(wantToOpenDoor) {
-			openDoor(objIndex);
+			openDoor(doorIndex);
 
 		}else if(wantToMoveToItem) {
 			if(cannotMove==false) {
@@ -255,7 +281,6 @@ public class Entity {
 	
 		}else if(wantToMove) {
 			if(cannotMove==false) {
-				setAction();
 				
 				ArrayList<Point> detectableBlocks = detectArray(gp.entityList,gp.objectList);
 
@@ -278,8 +303,8 @@ public class Entity {
     	
 
     	BufferedImage image = null;
-    	int screenX = worldX - gp.player.worldX + gp.player.screenX;
-		int screenY = worldY - gp.player.worldY + gp.player.screenY;
+    	int screenX = worldX - gp.camera.worldX + gp.camera.screenX;
+		int screenY = worldY - gp.camera.worldY + gp.camera.screenY;
 		
         switch(direction) {
         case "up":
@@ -316,10 +341,10 @@ public class Entity {
         	break;
         }
 		
-		if(worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX &&
-		   worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX &&
-		   worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
-		   worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
+		if(worldX + gp.TILE_SIZE > gp.camera.worldX - gp.camera.screenX &&
+		   worldX - gp.TILE_SIZE < gp.camera.worldX + gp.camera.screenX &&
+		   worldY + gp.TILE_SIZE > gp.camera.worldY - gp.camera.screenY &&
+		   worldY - gp.TILE_SIZE < gp.camera.worldY + gp.camera.screenY) {
 			
 			g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, observer);
 			
@@ -327,8 +352,8 @@ public class Entity {
     }
     
 	public void drawEntityHP(Graphics2D g2) {
-		int screenX = worldX - gp.player.worldX + gp.player.screenX;
-		int screenY = worldY - gp.player.worldY + gp.player.screenY;
+		int screenX = worldX - gp.camera.worldX + gp.camera.screenX;
+		int screenY = worldY - gp.camera.worldY + gp.camera.screenY;
 		
 		g2.setColor(Color.black);
 		g2.fillRect(screenX-1, screenY-16, gp.TILE_SIZE+2, 6);
@@ -337,8 +362,6 @@ public class Entity {
 		g2.fillRect(screenX, screenY-15, (gp.TILE_SIZE/maxLife)*life, 4);
 		
 	}
-	
-	//BOOLEANS
 	
 	//check if new item is better than equipped
 	public boolean itemIsBetterThanCurrent(Entity pickedupItem) {
@@ -365,7 +388,7 @@ public class Entity {
 		
 		//if pickedupItem has bigger numbers in statistics, statDif will be less than 0, which means pickedupItem is better.
 		if(statDif<0) {
-			better = true;;
+			better = true;
 		}
 		return better;
 	}
@@ -378,7 +401,7 @@ public class Entity {
 			Random random = new Random(); 
 			int index = random.nextInt((5 - 1) + 1);
 			int evadeChance = acc-defender.eva;
-			if(evadeChance>0){
+			if(evadeChance<0){
 				min=1;
 			} else min=0;
 			
@@ -387,7 +410,26 @@ public class Entity {
 				isEvaded = true;
 			}
 			return isEvaded;
-		}
+	}
+	
+	//damage calculation
+	public int damage(Entity defender) {
+		int damage;
+		int min=0;
+		Random random = new Random(); 
+		int index = random.nextInt((5 - 1) + 1);
+		int biggerHitChance = str-defender.vit;
+		if(biggerHitChance>0){
+			min=1;
+		} else min=0;
+		
+
+		if(index<=min) {
+			damage = 2;
+		} else damage = 1;
+		return damage;
+		
+	}
 	
 	//gives back an ArrayList of close enemies
 	public ArrayList<Integer> isEnemyClose(ArrayList<Entity> entityList) {
@@ -454,21 +496,23 @@ public class Entity {
 		return closeEnemyArray;
 	}
 	
+	//gives back an ArrayList of close items
 	public ArrayList<Integer> isItemClose(ArrayList<Entity> objectList, ArrayList<Entity> entityList) {
 
-		ArrayList<Integer> closeKeyArray = new ArrayList<>();
+		ArrayList<Integer> closeItemArray = new ArrayList<>();
 		int x=0;
 		int y=0;
 		boolean isPossible = true;
 		//check x+gp.TILE_SIZE, x-gp.TILE_SIZE, y+gp.TILE_SIZE, y-gp.TILE_SIZE
 		
 		//check right
+		isPossible = true;
 		x = worldX + gp.TILE_SIZE;
 		y = worldY;
 		
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
-				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
+				if(objectList.get(i).typeName == "Chest" && faction!=objectList.get(i).faction || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet" || objectList.get(i).typeName == "Weapon") {
 					for(int j=0; j<entityList.size();j++) {
 						if(objectList.get(i).worldX == entityList.get(j).worldX && objectList.get(i).worldY == entityList.get(j).worldY) {
 							isPossible = false;
@@ -476,7 +520,7 @@ public class Entity {
 						}
 					}
 					if(isPossible) {
-						closeKeyArray.add(i);
+						closeItemArray.add(i);
 					}
 				}
 
@@ -484,63 +528,66 @@ public class Entity {
 		}
 		
 		//check left
+		isPossible = true;
 		x = worldX - gp.TILE_SIZE;
 		y = worldY;
 		
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
-				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
+				if(objectList.get(i).typeName == "Chest" && faction!=objectList.get(i).faction || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet" || objectList.get(i).typeName == "Weapon") {
 					for(int j=0; j<entityList.size();j++) {
 						if(objectList.get(i).worldX == entityList.get(j).worldX && objectList.get(i).worldY == entityList.get(j).worldY) {
 							isPossible = false;
 						}
 					}
 					if(isPossible) {
-						closeKeyArray.add(i);
+						closeItemArray.add(i);
 					}
 				}
 			}
 		}
 		
 		//check down
+		isPossible = true;
 		x = worldX;
 		y = worldY + gp.TILE_SIZE;
 		
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
-				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
+				if(objectList.get(i).typeName == "Chest" && faction!=objectList.get(i).faction || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet" || objectList.get(i).typeName == "Weapon") {
 					for(int j=0; j<entityList.size();j++) {
 						if(objectList.get(i).worldX == entityList.get(j).worldX && objectList.get(i).worldY == entityList.get(j).worldY) {
 							isPossible = false;
 						}
 					}
 					if(isPossible) {
-						closeKeyArray.add(i);
+						closeItemArray.add(i);
 					}
 				}
 			}
 		}
 		
 		//check up
+		isPossible = true;
 		x = worldX;
 		y = worldY - gp.TILE_SIZE;
 		
 		for(int i=0;i<objectList.size();i++) {
 			if(objectList.get(i).worldX == x && objectList.get(i).worldY == y) {
-				if(objectList.get(i).typeName == "Chest" || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet") {
+				if(objectList.get(i).typeName == "Chest" && faction!=objectList.get(i).faction || objectList.get(i).typeName == "Key" || objectList.get(i).typeName == "Armor" || objectList.get(i).typeName == "Helmet" || objectList.get(i).typeName == "Weapon") {
 					for(int j=0; j<entityList.size();j++) {
 						if(objectList.get(i).worldX == entityList.get(j).worldX && objectList.get(i).worldY == entityList.get(j).worldY) {
 							isPossible = false;
 						}
 					}
 					if(isPossible) {
-						closeKeyArray.add(i);
+						closeItemArray.add(i);
 					}
 				}
 			}
 		}
 		
-		return closeKeyArray;
+		return closeItemArray;
 	}
 	
 	//Attack decision
@@ -566,15 +613,16 @@ public class Entity {
 						
 			//check if attack is evaded before attack calculation
 			if(!isEvaded(entityList.get(targetIndex))) {
-				damageNumber = damage();
+				damageNumber = damage(entityList.get(targetIndex));
 				entityList.get(targetIndex).life-=damageNumber;
-				System.out.println("Attacked: " + entityList.get(targetIndex).worldX/48 + "," + entityList.get(targetIndex).worldY/48 + "!");
+				System.out.println("Attacked: " + damageNumber + ", " + entityList.get(targetIndex).worldX/48 + "," + entityList.get(targetIndex).worldY/48 + "!");
 			} else System.out.println("EVADED");
 			
 			
 		}
 	}
 	
+	//choose a close item and gives back a direction to move
 	public void moveToKeyBlock(ArrayList<Entity> objectList, ArrayList<Integer> keyIndex) {
 	
 		Random random = new Random();
@@ -590,7 +638,7 @@ public class Entity {
 				targetIndex = random.nextInt(keyIndex.size()-0)+0;
 				//what if there is a chest? choose the chest!
 				for(int i=0; i<keyIndex.size();i++) {
-					if(objectList.get(keyIndex.get(i)).typeName == "Chest") {
+					if(objectList.get(keyIndex.get(i)).typeName == "Chest" && faction!=objectList.get(keyIndex.get(i)).faction) {
 						targetIndex = keyIndex.get(i);
 						break;
 					}else if(objectList.get(keyIndex.get(i)).typeName == "Key") {
@@ -602,6 +650,9 @@ public class Entity {
 					}else if(objectList.get(keyIndex.get(i)).typeName == "Helmet") {
 						targetIndex = keyIndex.get(i);
 						break;	
+					}else if(objectList.get(keyIndex.get(i)).typeName == "Weapon") {
+						targetIndex = keyIndex.get(i);
+						break;	
 					}
 				}
 
@@ -611,16 +662,6 @@ public class Entity {
 			direction = directionFromCoordinates(new Point(objectList.get(targetIndex).worldX/48,objectList.get(targetIndex).worldY/48));
 			System.out.println("Moved to key: " + direction);
 		}
-	}
-	
-	public int damage() {
-		int damage=0;
-		damage = str/2;
-		if(damage<=0) {
-			damage = 1;
-		}
-		return damage;
-		
 	}
 	
 	//equip new item if itemIsBetterThanCurrent() is true
@@ -647,7 +688,7 @@ public class Entity {
 			}
 		}
 	
-	//Entity move
+	//Entity move and add a coordinate to hashMap
 	public void entityMove() {
 		if(collisionOn == false) {
 			
@@ -696,58 +737,25 @@ public class Entity {
 			}
 		}
 	}
-	
+
+	//save possible blocks to move
 	public void saveBlocks() {
 		
 		worldPos = new ArrayList<>();
 				
-		switch(direction) {
-		case "up":
-			//y+1
-			worldPos.add(new Point(worldX/48,worldY/48 - gp.TILE_SIZE/48 * 1));
-			//y-1
-			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * +1));
-			//x-1
-			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * -1,worldY/48));
-			//x+1
-			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * +1,worldY/48));
-			break;
-		case "down":
-			//y-1
-			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * +1));
-			//y+1
-			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * -1));
-			//x-1
-			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * -1,worldY/48));
-			//x+1
-			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * +1,worldY/48));
-			break;
-		case "right":
-			//x+1
-			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * 1, worldY/48));	
-			//y-1
-			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * +1));
-			//y+1
-			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * -1));
-			//x-1
-			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * -1,worldY/48));
-			break;
-		case "left":
-			//x-1
-			worldPos.add(new Point(worldX/48 - gp.TILE_SIZE/48 * 1, worldY/48));
-			//y-1
-			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * +1));
-			//y+1
-			worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * -1));
-			//x+1
-			worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * +1,worldY/48));
-			break;
-		}
+		//y+1
+		worldPos.add(new Point(worldX/48,worldY/48 - gp.TILE_SIZE/48 * 1));
+		//y-1
+		worldPos.add(new Point(worldX/48,worldY/48 + gp.TILE_SIZE/48 * +1));
+		//x-1
+		worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * -1,worldY/48));
+		//x+1
+		worldPos.add(new Point(worldX/48 + gp.TILE_SIZE/48 * +1,worldY/48));
 
 		//remove if not acceptable
 		
 		for(int i=worldPos.size()-1;i>=0;i--) {
-			if(gp.tileM.mapTileNum[worldPos.get(i).x][worldPos.get(i).y] != 2) {
+			if(gp.blockM.mapBlockNum[worldPos.get(i).x][worldPos.get(i).y] != 2) {
 				worldPos.remove(i);
 			}
 		}
@@ -785,6 +793,7 @@ public class Entity {
 		
 	}
 
+	//Check possible blocks which was save by saveBlocks and decide where to go by checking hashMap values.
 	public void possibleBlocks() {
 		var map = hashMap.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(
 			    Map.Entry::getKey, 
@@ -836,13 +845,14 @@ public class Entity {
 			if(possibleBlocks.size()!=0) {
 				int index = random.nextInt((possibleBlocks.size() - 0) + 0);
 				direction = directionFromCoordinates(possibleBlocks.get(index));
-				System.out.println("Skipped Turn");
 			} else cannotMove = true;
 			
 			
 		}
 	}
 	
+	
+	//gives back a direction from a goal coordinates
 	public String directionFromCoordinates(Point worldPos) {
 		String dir = "down";
 		int difx;
@@ -873,6 +883,8 @@ public class Entity {
 		return dir;
 	}
 	
+	
+	//detect objects in 4 blocks which cannot be move to in 1 move
 	public ArrayList<Point> detectArray(ArrayList<Entity> entityList, ArrayList<Entity> objectList) {
 
 		ArrayList<Point> detectableBlocks = new ArrayList<>();
@@ -897,7 +909,7 @@ public class Entity {
 				}			
 			}
 			if(!isRemoved) {
-				if(gp.tileM.mapTileNum[worldX/48][worldY/48 - 1]!=2) {						
+				if(gp.blockM.mapBlockNum[worldX/48][worldY/48 - 1]!=2) {						
 					isRemoved = true;
 				}			
 			}
@@ -925,7 +937,7 @@ public class Entity {
 				}			
 			}
 			if(!isRemoved) {
-				if(gp.tileM.mapTileNum[worldX/48][worldY/48 + 1]!=2) {						
+				if(gp.blockM.mapBlockNum[worldX/48][worldY/48 + 1]!=2) {						
 					isRemoved = true;
 				}			
 			}
@@ -952,7 +964,7 @@ public class Entity {
 				}			
 			}
 			if(!isRemoved) {
-				if(gp.tileM.mapTileNum[worldX/48 + 1][worldY/48]!=2) {						
+				if(gp.blockM.mapBlockNum[worldX/48 + 1][worldY/48]!=2) {						
 					isRemoved = true;
 				}			
 			}
@@ -980,7 +992,7 @@ public class Entity {
 				}			
 			}
 			if(!isRemoved) {
-				if(gp.tileM.mapTileNum[worldX/48 - 1][worldY/48]!=2) {						
+				if(gp.blockM.mapBlockNum[worldX/48 - 1][worldY/48]!=2) {						
 					isRemoved = true;
 				}			
 			}
@@ -996,6 +1008,8 @@ public class Entity {
 		return detectableBlocks;
 	}
 	
+	
+	//check if there is a new enemy in detected blocks
 	public boolean checkIfNewEnemy(ArrayList<Point> worldpos, ArrayList<Entity> entityList) {
 		
 		boolean isDetected = false;
@@ -1028,12 +1042,14 @@ public class Entity {
 		
 	}
 	
+	
+	//check if there is a new item in detected blocks
 	public boolean checkIfNewItem(ArrayList<Point> worldpos, ArrayList<Entity> objectList) {
 		
 		boolean isDetected = false;
 		for(int i=0; i<worldpos.size();i++){
 			for(int j=0; j<objectList.size(); j++) {
-				if(objectList.get(j).typeName == "Key" || objectList.get(j).typeName == "Chest" || objectList.get(j).typeName == "Armor" || objectList.get(j).typeName == "Helmet" || (objectList.get(j).typeName == "Door" && hasKey()==true)) {
+				if(objectList.get(j).typeName == "Key" || objectList.get(j).typeName == "Chest" || objectList.get(j).typeName == "Armor" || objectList.get(j).typeName == "Helmet" || objectList.get(j).typeName == "Weapon" || (objectList.get(j).typeName == "Door" && hasKey()==true)) {
 					if(worldpos.get(i).x == objectList.get(j).worldX/48 && worldpos.get(i).y == objectList.get(j).worldY/48) {
 						if(worldX - objectList.get(j).worldX == 0) {
 							if(worldY - objectList.get(j).worldY > 0) {

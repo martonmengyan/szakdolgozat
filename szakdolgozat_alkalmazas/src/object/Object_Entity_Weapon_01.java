@@ -1,6 +1,5 @@
 package object;
 
-import java.awt.Rectangle;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -23,12 +22,6 @@ public class Object_Entity_Weapon_01 extends Entity {
 		 }catch(IOException e) {
 			 e.printStackTrace();
 		 }
-		 solidArea = new Rectangle(10,
-					10,
-					28,
-					28);
-		 solidAreaDefaultX = 0;
-		 solidAreaDefaultY = 0;
 		 
 		 typeName = "Weapon";
 		 type=2;

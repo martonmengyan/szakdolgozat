@@ -1,6 +1,5 @@
 package object;
 
-import java.awt.Rectangle;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -24,12 +23,6 @@ public class Object_Key extends Entity {
 			 e.printStackTrace();
 		 }
 		 type=0;
-		 solidArea = new Rectangle(10,
-					10,
-					28,
-					28);
-		 solidAreaDefaultX = 0;
-		 solidAreaDefaultY = 0;
 		 typeName = "Key";
 	 }
 }

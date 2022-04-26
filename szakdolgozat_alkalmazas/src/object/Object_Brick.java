@@ -1,6 +1,5 @@
 package object;
 
-import java.awt.Rectangle;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -20,12 +19,6 @@ public class Object_Brick extends Entity {
 			 e.printStackTrace();
 		 }
 		 collision = true;
-		 solidArea = new Rectangle(10,
-					10,
-					28,
-					28);
-		 solidAreaDefaultX = 0;
-		 solidAreaDefaultY = 0;
 	 }
 }
 

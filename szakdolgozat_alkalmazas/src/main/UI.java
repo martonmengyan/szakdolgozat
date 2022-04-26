@@ -5,16 +5,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import entity.Entity;
-import entity.Entity_1;
+import entity.*;
 
 public class UI {
 
@@ -326,10 +323,9 @@ public class UI {
 	public void drawEndScreen() {
 		
 		g2.setFont(font_40);
-		if(gp.winnerFaction == "Red") {
+		if(gp.winnerFaction == 0) {
 			g2.setColor(Color.red);
-		}
-		g2.setColor(Color.blue);
+		}else g2.setColor(Color.blue);
 		
 		String text;
 		int x;

@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import javax.swing.*;
 
@@ -34,19 +32,18 @@ public class GamePanel extends JPanel implements Runnable {
 	public double drawInterval = 1000000000/3;
 	
 	KeyHandler keyH = new KeyHandler(this);
-	public BlockManager tileM = new BlockManager(this);
-	public CollisionChecker colChecker = new CollisionChecker(this);
+	public BlockManager blockM = new BlockManager(this);
+	public ItemDecider itemDecider = new ItemDecider(this);
 	public AssetSetter aSetter = new AssetSetter(this);
 	public UI ui = new UI(this);
-	public EventHandler eventH = new EventHandler(this);
 	Thread gameThread;
 	public int entityIndex = 0;
-	public Player player = new Player(this,keyH);
+	public Camera camera = new Camera(this,keyH);
 	public ArrayList<Entity> entityList = new ArrayList<>();
 	public ArrayList<Entity> objectList = new ArrayList<>();
 	
 	public String gameScreenNumber;
-	public String winnerFaction;
+	public int winnerFaction;
 	public boolean statIsVisible=false;
 	public boolean inventoryIsVisible=false;
 	public boolean isPaused = false;
@@ -108,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 		if(gameScreenNumber == "normal") {
 			
-			player.update();
+			camera.update();
 
 			for(int i=0; i<entityList.size();i++) {
 				if(!isPaused && entityList.size() != 0) {
@@ -162,7 +159,7 @@ public class GamePanel extends JPanel implements Runnable {
 				ui.draw(g2, entityList);
 				break;
 			case "normal":
-				tileM.draw(g2,this);
+				blockM.draw(g2,this);
 				for(int i=0; i<objectList.size(); i++) {
 					objectList.get(i).draw(g2,this);
 				}
@@ -187,7 +184,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 				//player for test
 		
-				player.draw(g2, this);
+				camera.draw(g2, this);
 		
 				ui.draw(g2, entityList);
 
