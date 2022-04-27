@@ -1,45 +1,129 @@
 \Chapter{Megvalósítás}
 
-Ez a fejezet mutatja be a megvalósítás lépéseit.
-Itt lehet az esetlegesen előforduló technikai nehézségeket említeni.
-Be lehet már mutatni a program elkészült részeit.
+Ebben a fejezetben a ágens heurisztikus mozgását és akcióit végrehajtó biztosító függvények bemutatása történik meg röviden.
 
-Meg lehet mutatni az elkészített programkód érdekesebb részeit.
-(Az érdekesebb részek bemutatására kellene szorítkozni.
-Többségében a szöveges leírásnak kellene benne lennie.
-Abból lehet kiindulni, hogy a forráskód a dolgozathoz elérhető, azt nem kell magába a dolgozatba bemásolni, elegendő csak behivatkozni.)
+\begin{java}
+    if(wantToAttack) {
+        attackAction(gp.entityList,isEnemyCloseIndexList);
+    }else if(wantToEquip) {			
+        equipBetterItem(inventoryList.get(inventoryList.size()
+        -1));
+    }else if(wantToPickUp) {
+        pickUpObject(curObjIndex);
+    }else if(wantToDeleteAnItem) {
+        System.out.println("Deleted item: "
+            + inventoryList.get(deleteIndex).name);
+        inventoryList.remove(deleteIndex);
+    }else if(wantToOpenDoor) {
+        openDoor(doorIndex);
+    }else if(wantToMoveToItem) {
+        if(cannotMove==false) {
+            moveToItemBlock(gp.objectList,
+            isItemCloseIndexList);
+            entityMove();
+        } else System.out.println("Skipped Turn");
 
-A dolgozatban szereplő forráskódrészletekhez külön vannak programnyelvenként stílusok.
-Python esetében például így néz ki egy formázott kódrészlet.
-\begin{python}
-import sys
+    }else if(wantToMove) {
+        if(cannotMove==false) {
+            
+            ArrayList<Point> detectableBlocks =
+                 detectArray(gp.entityList,gp.objectList);
 
-if __name__ == '__main__':
-    pass
-\end{python}
+            if(!checkIfNewEnemy(detectableBlocks,
+            gp.entityList)) {
+                if(!checkIfNewItem(detectableBlocks,
+                gp.objectList)) {
+                    possibleBlocks();
+                }
+                
+            }
+            
+            entityMove();
+        } else System.out.println("Skipped Turn");
 
-A stílusfájlok a \texttt{styles} jegyzékben találhatók.
-A stílusok között szerepel még C++, Java és Rust stílusfájl.
-Ezek használatához a \texttt{dolgozat.tex} fájl elején \texttt{usepackage} paranccsal hozzá kell adni a stílust, majd a stílusfájl nevével megegyező környezetet lehet használni.
-További példaként C++ forráskód esetében ez így szerepel.
-\begin{cpp}
-#include <iostream>
 
-class Sample : public Object
-{
-    // An empty class definition
-}
-\end{cpp}
-Stílusfájlokból elegendő csak annyit meghagyni, amennyire a dolgozatban szükség van.
-Más, C szintaktikájú nyelvekhez (mint például a JavaScript és C\#) a Java vagy C++ stílusfájlok átszerkesztésére van szükség.
-(Elegendő lehet csak a fájlnevet átírni, és a fájlban a környezet nevét.)
+    }
+\end{java}
 
-Nyers adatok, parancssori kimenetek megjelenítéséhez a \texttt{verbatim} környezetet lehet használni.
-\begin{verbatim}
-$ some commands with arguments
-1 2 3 4 5
-$ _
-\end{verbatim}
+\section{wantToAttack}
 
-A kutatás jellegű témáknál ez a fejezet gyakorlatilag kimaradhat.
-Helyette inkább a fő vizsgálati módszerek, kutatási irányok kaphatnak külön-külön fejezeteket.
+Boolean típusú változó, amely akkor igaz, ha közvetlen szomszédos blockokon létező
+ellenséges ágensek száma nagyobb, mint 0.
+
+Igaz érték esetén meghívódik az attackAction() függvény, amelynek paramétere az ágensekből álló lista és 
+az isEnemyCloseIndexList, amely a közeli blockon lévő ellenséges ágensek közül a legkevesebb
+HP-val rendelkező ágens indexét adja vissza az ágens listából.
+
+Az attackAction() függvény beállítja az adott ágens irányát, arra amelyik irányba hajta végre a támadását és 
+elvégzi a támadást.
+
+Támadás előtt először megvizsgálja betalált-e a találat, ha betalált, akkor meghívódik a damaga() függvény, amely
+kivonja az adott sebzést az adott ágenstől, amelyik elszenvedte a támadást.
+
+\section{wantToEquip}
+
+Boolean típusú változó, amely akkor igaz, ha az adott ágens inventoryjában az utoljára felvett tárgy hordható
+típusú és összességében több statisztikát ad, mint az ágens által jelenleg hordott azonos típusú tárgy.
+
+Az equipBetterItem() függvénynek egy paramétere van, amely egy Integer szám, ami az adott ágens inventoryjának utolsó
+használt slotja, amely a legutoljára felvett tárgy. Meghívásakor leszereli az eddig hordott tárgyat, és felszereli az újonnan felvett tárgyat.
+Statisztikák ablakon nyomon lehet követni ezt a változást.
+
+\section{wantToPickUp}
+
+Boolean típusú változó, amely akkor igaz, ha létezik valamilyen tárgy az ágens jelenlegi blockján.
+
+Ha igaz értéket ad vissza, akkor meghívódik a pickUpObject() függvény, amelynek paramétere az adott blockon lévő tárgy
+indexe a tárgyak listájában. Meghívásakor az adott tárgy bekerül az ágens első nem használt inventory slotjába.
+
+\section{wantToDeleteAnItem}
+
+Boolean típusú változó, amely akkor igaz, ha létezik valamilyen nem viselt tárgy az ágens inventoryjában.
+
+Igaz érték esetén megtörténik a deletedIndex által tárolt elsőnek talált nem használt tárgy indexének a törlése az inventoryjából, 
+amely nem az ágens által hordott és nem kulcs.
+
+\section{wantToOpenDoor}
+
+Boolean típusú változó, amely akkor igaz, ha létezik ajtó az ágens szomszédos blockjában és van az ágens inventoryjában legalább 1 kulcs.
+
+Az openDoor() függvénynek egy paramétere van, amely az ajtó indexe a tárgy listában. Meghívásakor
+az ajtó objektum eltűnik, és eltávolítja a felhasznált kulcsot az ágens inventoryjából.
+
+\section{wantToMoveToItem}
+
+Boolean típusú változó, amely akkor igaz, ha a közeli blockokon lévő tárgyak listája nagyobb, mint 0 és az ágens inventoryja nincs tele.
+
+Valódi ágens mozgás csak akkor jön létre, ha van olyan szomszédos block, amelyre képes lépni, ezt a CannotMove false értéke biztosítja.
+
+Majd meghívódik a moveToItemBlock(), amelynek két paramétere van, az objektum lista és a szomszédos közelében lévő tárgyak indexének a listája.
+Ez a függvény beállítja az ágens direction értéket.
+
+Majd meghívódik az entityMove() függvény, amely az ágens által választott irányba lép előre egyet és vagy felrakja a hashMap-re, vagy növeli az értékét.
+
+\section{wantToMove}
+
+Boolean típusú változó, amely mindig igaz, ha minden fentebb sorolt boolean változú hamis, ebben a pontban összefoglalt akció fog megtörténni.
+
+Valódi ágens mozgás csak akkor jön létre, ha van olyan szomszédos block, amelyre képes lépni, ezt a CannotMove false értéke biztosítja.
+
+A pontokat tároló listában a detectArray() függvény minden olyan x,y párost átad, amely az ágenstől vízszintes vagy függőlegesen 2 blocknyira van
+és tartalmaz valamilyen kívánt tárgyat. A detectArray két paramétere az ágensek listája és az objektum lista.
+
+A checkIfNewEnemy() függvény paramétere a pontokat tároló lista és az ágensek listája. Ha talál valamilyen ellenséges ágenst
+a vizsgálandó pontokon, akkor azt az irányt fogja beállítani az ágensnek, amely az ellenséges ágens felé néz.
+
+Utána meghívódik az entityMove() függvény, amely a kiválasztott irányba lép egyet és vagy felrakja a hashMap-re, vagy növeli az értékét.
+
+Ha a checkIfNewEnemy() hamis értéket ad vissza, akkor megvizsgálja a checkIfNewItem() függvényt, amelynek két paramétere van, a
+vizsgálandó pontokat tároló lista és az objektumok listája.
+
+Ha talál valamilyen számára érdekes tárgyat a vizsgálandó pontokon, akkor azt az irányt fogja beállítani az ágensnek, amely a kívánt tárgy felé néz.
+
+Ha a checkIfNewItem() függvény is hamis értéket ad vissza, akkor meghívódik a possibleBlocks() függvény, amely felel a map felfedezéséért.
+
+A függvény megvizsgálja a lehetséges lépéseket, hogy van-e köztük olyan block, amelyen még egyszer sem járt az ágens. Ha több ilyen van, akkor
+véletlenszerűen választ egyet azok közül.
+
+Ha már minden lehetséges blockon járt legalább egyszer, akkor a lehetséges lépések közül a legkevesebbszer bejárt blockot választja. Ha 
+több ilyen block is van, amin ugyanannyiszor volt, akkor véletlenszerűen választ közülük egyet.
