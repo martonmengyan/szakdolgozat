@@ -180,7 +180,8 @@ public class Entity {
     		switch(objectName) {
     		case "Door":
     			direction = directionFromCoordinates(new Point(gp.objectList.get(i).worldX/48,gp.objectList.get(i).worldY/48));
-    			gp.objectList.remove(i);  			
+    			gp.objectList.remove(i);  
+    			System.out.println("Opened a door!");
     			for(int j=0;j<inventoryList.size();j++) {
     				if(inventoryList.get(j).typeName == "Key") {
     					inventoryList.remove(j);		
@@ -231,7 +232,7 @@ public class Entity {
     	}
 		
     	if(curObjIndex != 999) {
-    		if(gp.objectList.get(curObjIndex) != null) {
+    		if(gp.objectList.get(curObjIndex) != null && inventoryList.size()!=inventorySize) {
     			if(gp.objectList.get(curObjIndex).typeName=="Chest" && faction!=gp.objectList.get(curObjIndex).faction || gp.objectList.get(curObjIndex).typeName=="Key" || gp.objectList.get(curObjIndex).typeName=="Armor" || gp.objectList.get(curObjIndex).typeName=="Helmet" || gp.objectList.get(curObjIndex).typeName=="Weapon" ) {
         			wantToPickUp = true;
     			}
@@ -247,7 +248,7 @@ public class Entity {
 			wantToAttack = true;
 		}
 		
-		if(isItemCloseIndexList.size()>0) {
+		if(isItemCloseIndexList.size()>0 && inventoryList.size()!=inventorySize ) {
 			wantToMoveToItem = true;
 		}
 		
@@ -272,7 +273,7 @@ public class Entity {
 
 		}else if(wantToMoveToItem) {
 			if(cannotMove==false) {
-				moveToKeyBlock(gp.objectList,isItemCloseIndexList);
+				moveToItemBlock(gp.objectList,isItemCloseIndexList);
 				entityMove();
 			} else System.out.println("Skipped Turn");
 	
@@ -484,12 +485,6 @@ public class Entity {
 			}
 		}
 		
-		for(int i=0;i<closeEnemyArray.size();i++) {
-			
-			System.out.println(i+1 + ". index: " +closeEnemyArray.get(i));
-			
-		}
-		
 		return closeEnemyArray;
 	}
 	
@@ -620,7 +615,7 @@ public class Entity {
 	}
 	
 	//choose a close item and gives back a direction to move
-	public void moveToKeyBlock(ArrayList<Entity> objectList, ArrayList<Integer> keyIndex) {
+	public void moveToItemBlock(ArrayList<Entity> objectList, ArrayList<Integer> keyIndex) {
 	
 		Random random = new Random();
 		int targetIndex;
@@ -657,7 +652,7 @@ public class Entity {
 			
 			//rotate to enemy coordinates
 			direction = directionFromCoordinates(new Point(objectList.get(targetIndex).worldX/48,objectList.get(targetIndex).worldY/48));
-			System.out.println("Moved to key: " + direction);
+			System.out.println("moved to: " + objectList.get(targetIndex).name + " (" + direction + ")");
 		}
 	}
 	
@@ -899,7 +894,7 @@ public class Entity {
 			}
 			if(!isRemoved) {				
 				for(int j=0; j<objectList.size(); j++){
-					if(worldX/48 == objectList.get(j).worldX/48 && worldY/48 -1 == objectList.get(j).worldY/48 && objectList.get(j).collision == true){						
+					if(worldX/48 == objectList.get(j).worldX/48 && worldY/48 -1 == objectList.get(j).worldY/48 && objectList.get(j).name != "Brick"){						
 						isRemoved = true;
 						break;						
 					}

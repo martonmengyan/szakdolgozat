@@ -27,7 +27,9 @@ public class AssetSetter {
 		createEntity(3,4,2,new Object_Entity_Helmet_02(gp), gp.objectList);
 		createEntity(3,4,3,new Object_Entity_Weapon_02(gp), gp.objectList);
 		createEntity(3,4,1,new Object_Entity_Armor_02(gp), gp.objectList);
-		
+		createEntity(3,5,2,new Object_Entity_Helmet_02(gp), gp.objectList);
+		createEntity(3,5,3,new Object_Entity_Weapon_02(gp), gp.objectList);
+		createEntity(3,5,1,new Object_Entity_Armor_02(gp), gp.objectList);
 		//Chest
 		//createEntity(2,3,2,new Object_Chest_1(gp), gp.objectList);
 		//createEntity(2,3,5,new Object_Chest_2(gp), gp.objectList);
