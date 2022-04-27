@@ -213,10 +213,12 @@ public class Entity {
 		boolean wantToPickUp = false;
 		boolean wantToOpenDoor = false;
 		boolean wantToMoveToItem = false;
+		boolean wantToDeleteAnItem = false;
 		cannotMove = false;
 		
     	int doorIndex;
     	int curObjIndex;
+    	int deleteIndex = 10;
     	
     	saveBlocks();
     	curObjIndex = gp.itemDecider.checkCurrentBlock(this);
@@ -240,6 +242,14 @@ public class Entity {
     		}
     		
     	}
+    	
+    	for(int i=0; i<inventoryList.size(); i++) {
+    		if(inventoryList.get(i).isEquipped == false && inventoryList.get(i).name != "Key") {
+    			wantToDeleteAnItem = true;
+    			deleteIndex = i;
+    			break;
+    		}
+    	}
 
     	ArrayList<Integer> isEnemyCloseIndexList = isEnemyClose(gp.entityList);
     	ArrayList<Integer> isItemCloseIndexList = isItemClose(gp.objectList,gp.entityList);
@@ -261,16 +271,15 @@ public class Entity {
 
 		if(wantToAttack) {
 			attackAction(gp.entityList,isEnemyCloseIndexList);
-
 		}else if(wantToEquip) {			
-			equipBetterItem(inventoryList.get(inventoryList.size()-1));	
-			
+			equipBetterItem(inventoryList.get(inventoryList.size()-1));			
 		}else if(wantToPickUp) {
 			pickUpObject(curObjIndex);
-
+		}else if(wantToDeleteAnItem) {
+			System.out.println("Deleted item: " + inventoryList.get(deleteIndex).name);
+			inventoryList.remove(deleteIndex);
 		}else if(wantToOpenDoor) {
 			openDoor(doorIndex);
-
 		}else if(wantToMoveToItem) {
 			if(cannotMove==false) {
 				moveToItemBlock(gp.objectList,isItemCloseIndexList);
@@ -1041,7 +1050,7 @@ public class Entity {
 		boolean isDetected = false;
 		for(int i=0; i<worldpos.size();i++){
 			for(int j=0; j<objectList.size(); j++) {
-				if(objectList.get(j).typeName == "Key" || objectList.get(j).typeName == "Chest" || objectList.get(j).typeName == "Armor" || objectList.get(j).typeName == "Helmet" || objectList.get(j).typeName == "Weapon" || (objectList.get(j).typeName == "Door" && hasKey()==true)) {
+				if((objectList.get(j).typeName == "Key" && inventoryList.size()!=inventorySize) || objectList.get(j).typeName == "Chest" || (objectList.get(j).typeName == "Armor" && inventoryList.size()!=inventorySize) || (objectList.get(j).typeName == "Helmet" && inventoryList.size()!=inventorySize) || (objectList.get(j).typeName == "Weapon" && inventoryList.size()!=inventorySize) || (objectList.get(j).typeName == "Door" && hasKey()==true)) {
 					if(worldpos.get(i).x == objectList.get(j).worldX/48 && worldpos.get(i).y == objectList.get(j).worldY/48) {
 						if(worldX - objectList.get(j).worldX == 0) {
 							if(worldY - objectList.get(j).worldY > 0) {
