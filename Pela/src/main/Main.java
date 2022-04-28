@@ -6,7 +6,7 @@ public class Main {
 	
 	 private static void initWindow() {
 
-	        JFrame window = new JFrame("Szimuláció");
+	        JFrame window = new JFrame("Pela");
 
 	        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

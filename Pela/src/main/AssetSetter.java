@@ -1,13 +1,12 @@
 package main;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import entity.*;
-import object.*;
+import object.Object;
 
 public class AssetSetter {
 
@@ -18,28 +17,55 @@ public class AssetSetter {
 	}
 	
 	public void setObject() {
-		
-		//Keys
-		createEntity(0,1,1,new Object_Key(gp), gp.objectList);
-		
-		//Doors
-		createEntity(1,7,2,new Object_Door(gp), gp.objectList);
-		createEntity(5,3,7,new Object_Door(gp), gp.objectList);
-		createEntity(9,11,2,new Object_Door(gp), gp.objectList);
-		
+
 		//Equipable Items
-		createEntity(3,4,2,new Object_Entity_Helmet_02(gp), gp.objectList);
-		createEntity(3,4,3,new Object_Entity_Weapon_02(gp), gp.objectList);
-		createEntity(3,4,1,new Object_Entity_Armor_02(gp), gp.objectList);
-		createEntity(3,5,2,new Object_Entity_Helmet_02(gp), gp.objectList);
-		createEntity(3,5,3,new Object_Entity_Weapon_02(gp), gp.objectList);
-		createEntity(3,5,1,new Object_Entity_Armor_02(gp), gp.objectList);
-		//Chest
-		//createEntity(2,3,2,new Object_Chest_1(gp), gp.objectList);
-		//createEntity(2,3,5,new Object_Chest_2(gp), gp.objectList);
-	
+		
+		createObject(2,1,2,2, "Armor", "Entity_Armor_01", "/objects/Entity_Armor_01.png", new Object(gp), gp.objectList);
+		createObject(2,1,2,2, "Armor", "Entity_Armor_02", "/objects/Entity_Armor_02.png", new Object(gp), gp.objectList);
+		
+		createObject(2,1,2,2, "Weapon", "Entity_Weapon_01", "/objects/Entity_Weapon_01.png", new Object(gp), gp.objectList);
+		createObject(2,1,2,2, "Weapon", "Entity_Weapon_02", "/objects/Entity_Weapon_02.png", new Object(gp), gp.objectList);
+		
+		createObject(2,1,2,2, "Helmet", "Entity_Helmet_01", "/objects/Entity_Helmet_01.png", new Object(gp), gp.objectList);
+		createObject(2,1,2,2, "Helmet", "Entity_Helmet_02", "/objects/Entity_Helmet_02.png", new Object(gp), gp.objectList);
+		
+		//Chest_Red
+		//createObject(3,4,0,1,"Chest", "Chest_Blue", "/objects/chest_1.png", new Object(gp), gp.objectList);
+		
+		//Chest_Blue
+		//createObject(2,4,0,0,"Chest", "Chest_Red", "/objects/chest_0.png", new Object(gp), gp.objectList);
+		
 		//Bricks
-		createEntity(4,3,3,new Object_Brick(gp), gp.objectList);	
+		createObject(3,3,0,2,"Brick", "Brick", "/objects/object_brick.png", new Object(gp), gp.objectList);
+		
+		//Door
+		createObject(7,2,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(3,7,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(8,11,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(4,17,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(10,23,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(7,34,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(23,23,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(15,30,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(18,9,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(21,36,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(21,14,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(23,40,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(17,42,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(16,48,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(26,29,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(35,44,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(39,28,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(43,34,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(47,22,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(39,16,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(48,10,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(37,1,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		createObject(22,3,0,2,"Door", "Door", "/objects/door.png", new Object(gp), gp.objectList);
+		
+		//Key
+		createObject(2,2,0,2,"Key", "Key", "/objects/key.png", new Object(gp), gp.objectList);
+
 	}
 	
 	public void SetEntity() {
@@ -49,13 +75,13 @@ public class AssetSetter {
 		//createEntity(1,1,3,new Entity_Faction0(gp), gp.entityList);
 		
 		//Faction1
-		createEntity(2,2,1,new Entity_Faction1(gp), gp.entityList);
-		//createEntity(3,1,4,new Entity_Faction1(gp), gp.entityList);
+		createEntity(2,1,new Entity_Faction1(gp), gp.entityList);
+		createEntity(1,3,new Entity_Faction0(gp), gp.entityList);
 		
 	}
 	
 	
-	public void createEntity(int objID, int x, int y, Entity object, ArrayList<Entity> ArrayList){
+	public void createEntity(int x, int y, Entity object, ArrayList<Entity> ArrayList){
         ArrayList.add(object);
         ArrayList.get(ArrayList.size()-1).worldX=x*gp.TILE_SIZE;
         ArrayList.get(ArrayList.size()-1).worldY=y*gp.TILE_SIZE;
