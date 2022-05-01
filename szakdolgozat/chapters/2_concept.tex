@@ -7,19 +7,10 @@ nevű játékokból ismerhető szoba és folyosó kapcsolat. Ahol minden szobát
 A Darkest Dungeon-hoz képest a játékmenet rugalmasabb, mivel a szobák bármikor elhagyhatóak és megközelíthetőek, ha engedi azt a pálya jelenlegi belső felépítése.
 Azaz, ha nincs útban valami, ami megakadályozza.
 
-Illetve inspirációt vesz még továbbá a For The King nevezetű játékból, ahol a fegyverek adott karakter statiszkákból "scalelődnek", azaz a birtokolt statiszkák függvényében
-számolódnak ki az adott értékek figyelembe véve a célpont általt birtokolt statisztikákat is.
+A fent említett két játék mind körökre osztott, ahogyan a szimulációs környezetünk is az lesz.
 
-A fent említett három játék mind körökre osztott, ahogyan a szimulációs környezetünk is az lesz.
-
-A szimulációs környezetünk viszont egyedi lesz abból a szempontból, hogy az ágensek csoportokra vannak osztva és közös céllal rendelkezve próbálják legyőzni egymást és a ágenst.
-Illetve hogy nem csak a ágensnek létezik 'win condition'-je, hanem az ágenseknek is, mindkét frakciónak különböző.
-
-\iffalse
-A hivatkozások jelentős része ehhez a fejezethez szokott kötődni.
-(Egy hivatkozás például így néz ki \cite{coombs1987markup}.)
-Itt lehet bemutatni a hasonló alkalmazásokat.
-\fi
+A szimulációs környezetünk viszont egyedi lesz abból a szempontból, hogy az ágensek csoportokra vannak osztva és közös céllal
+rendelkezve próbálják legyőzni egymást és az ellenséges ágenseket.
 
 \Section{Felhasznált technológiák}
 
@@ -27,48 +18,30 @@ Itt lehet bemutatni a hasonló alkalmazásokat.
 
 \begin{itemize}
     \item Körökre osztott tevékenységkör.
-    \item Ahogyan a referenciaként szolgáló játékképeken látszódik, a játék szobák és folyosók véges kombinációjából épül fel.
+    \item A játék szobák és folyosók véges kombinációjából épül fel.
     \item A játéktér teljes része négyzet cellákból épül fel, amelyek összességét.
     \item A cellák tartalmazhatnak objektumokat és ágenseket, illetve tárgyakat.
-    \item Illetve létezik a szint fogalma, de csak a játékot irányító számára.
     \item Tárgyak használata.
-    \item Randomizált map kialakítás.
-\end{itemize}
-
-\noindent For The King
-
-\begin{itemize}
-    \item Körökre osztott, a jövőbeli köröket láthatjuk dinamikusan a képernyőn a combat phase-ban.
-    \item Statisztikák által behatárolt számolások.
-    \item Tárgyak használata.
-    \item Illetve létezik a szint fogalma, de csak a játékot irányító számára.
-    \item Egyszerre több karakter irányítása.
-    \item Részben tartalmaz szobákat, de azok egyirányúak.
-    \item A játéktér bizonyos részei hexagon cellákból épül fel.
 \end{itemize}
 
 \noindent Darkest Dungeon
 
 \begin{itemize}
     \item Szobák és folyosók összessége, de több kisebb mapból épül fel.
-    \item Randomizált map kialakítás.
     \item Tárgyak használata.
     \item Egyszerre több karakter irányítása.
-    \item Körökre osztott, de nem láthatjuk a képernyőn a sorrendet.
-    \item Illetve létezik a szint fogalma, de csak a játékot irányító számára.
+    \item Körökre osztott.
 \end{itemize}
 
 \noindent A szimulációs környezet tartalmazni fogja a:
 
 \begin{itemize}
     \item Szobák és folyosók által felépített map struktúráját.
-    \item A körök dinamikus kiszámolását és megjelenlítését a szimulációban.
-    \item Négyzet cellákból felépített szimulációstér.
+    \item A körökre osztottság.
+    \item Négyzet alakú cellákból felépített szimulációstér.
     \item Tárgyakat és azok használatát.
-    \item Szint fogalmát, de minden ágens hozzáfér.
     \item Egyszerre több karakter irányítását azonos célok által vezérelve.
     \item Statisztikák által meghatározott számolásokat.
-    \item Randomizált mapokat.
 \end{itemize}
 
 \Section{Menü}
@@ -107,7 +80,6 @@ A szimuláció megállítása esetén.
         \item Inventory: Az I billentyű megnyomására megjelenik az az adott Ágens Inventory oldala.
     \end{itemize}
 
-
     \item Statistics
     
     \begin{itemize}
@@ -141,6 +113,12 @@ A szimuláció megállítása esetén.
         \item A fehér üres négyzet, jelöli azt a helyet az Inventoryban, amelyet éppen szemügyre vesz a felhasználó.
         \item Ha felszerelés típusú az adott tárgy, akkor a nevét és a 4 alapstatisztika értékét írja ki.
         \item Ha nem felszerelés típusú az adott tárgy, akkor pedig a nevét írja ki.
+    \end{itemize}
+
+    \item Életcsík
+    
+    \begin{itemize}
+        \item Minden ágens fölött az aktuális életcsíkja jelenik meg automatikusan.
     \end{itemize}
 
 
@@ -182,24 +160,33 @@ Szimuláció kezdetekor megtörténik a map beolvasása:
         \item EntityFaction0: 0-es számú csapatban lévő Ágens.
         \item EntityFaction1: 1-es számú csapatban lévő Ágens.
     \end{itemize}
+    
+    \item A szimulációs környezet a következőkből épül fel:
+    
+    \begin{itemize}
+        \item 18 szoba, 
+        \item 25 ajtó,
+        \item 29 kulcs,
+        \item 4 ágens,
+        \item 9 felvehető tárgy,
+        \item 2 chest,
+        \item 12 brick.
+    \end{itemize}
 
 \end{itemize}
 
 \subsection{Szobák és folyosók}
 
 A szobákat több szomszédos cellák alkotják, ezeket a szobákat folyosók kötik össze, amelyeket pontosan kettő cellával szomszédos cellák alkotnak.
-Minden szomszédos szobát és folyósót egy ajtó választ el egymástól.
+Minden szomszédos szobát egy ajtó választ el egymástól.
 Celláin korlátozottan helyezkedhetnek el térbeli objektumok(Lásd: oszlop), amely a cellát nem bejárható cellává alakít és korlátozza a látást.
+Minden szoba tartalmaz legalább 1 kulcsot, amely elősegíti a map bejárhatóságát az ágensek által.
 
 \subsection{Map}
 
 A map szobák és folyosók összesége, ahol a szobák alakjánál törekszünk a négyzet alakú szobák elkerülésére. A folyosók általában rövidek és egy szóbából akár több is nyílik egy adott szobára.
-Minden maphoz tartoznak adatok.
-
-Ezek az adatok a blockok típusát fejezi ki, amelyek ]0,2[ nyílt intervallumon belüli számok jelölnek.
+A map blockok épül fel. Blockok típusát egy ]0,2[ nyílt intervallumon belüli számok jelölik.
 Ezek az adatok a szimuláció kezdetekor kerülnek beolvasásra a world.txt-ből.
-
-\noindent A mapon bejárható területeken szobák és folyosók összesége, ahol minden szobának és folyosóhoz tartozik adat, ez az adat a szobaID és folyosóID.
 
 A szobákban és a folyosókban bejárható terület egy mátrixhoz hasonló, ahol a celláit blokkoknak nevezzük.
 Minden blokkhoz tartoznak adatok.
@@ -265,76 +252,72 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
 
 \Section{Tárgy nevek}
 
-\subsection{Entity Helmet 1}
+\subsection{Entity Helmet 01}
 
-Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
-Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: ]2,4[
-    \item Kitérés: ]-2,-4[
-    \item Kitartás: ]2,4[
-    \item Pontosság: ]-2,-4[
+    \item Erő(str): ]1,3]
+    \item Kitartás(vit): ]1,3]
+    \item Kitérés(eva): ]1,3]
+    \item Pontosság(acc): ]1,3]
 \end{itemize}
 
-\subsection{Entity Helmet 2}
+\subsection{Entity Helmet 02}
 
-Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
-Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+
+Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: ]-2,-4[
-    \item Kitérés: ]2,4[
-    \item Kitartás: ]-2,-4[
-    \item Pontosság: ]2,4[
+    \item Erő(str): ]0,4]
+    \item Kitartás(vit): ]0,4]
+    \item Kitérés(eva): ]0,4]
+    \item Pontosság(acc): ]0,4]
 \end{itemize}
 
-\subsection{Entity Armor 1}
+\subsection{Entity Armor 01}
 
-Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
-Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: ]2,4[
-    \item Kitérés: ]-2,-4[
-    \item Kitartás: ]2,4[
-    \item Pontosság: ]-2,-4[
+    \item Erő(str): ]1,3]
+    \item Kitartás(vit): ]1,3]
+    \item Kitérés(eva): ]1,3]
+    \item Pontosság(acc): ]1,3]
 \end{itemize}
 
-\subsection{Entity Armor 2}
+\subsection{Entity Armor 02}
 
-Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
-Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+
+Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: ]-2,-4[
-    \item Kitérés: ]2,4[
-    \item Kitartás: ]-2,-4[
-    \item Pontosság: ]2,4[
+    \item Erő(str): ]0,4]
+    \item Kitartás(vit): ]0,4]
+    \item Kitérés(eva): ]0,4]
+    \item Pontosság(acc): ]0,4]
 \end{itemize}
 
 \subsection{Entity Weapon 1}
 
-Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
-Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: ]1,5[
-    \item Kitérés: ]-1,-3[
-    \item Kitartás: ]0,-1[
-    \item Pontosság: ]-1,2[
+    \item Erő(str): ]1,3]
+    \item Kitartás(vit): ]1,3]
+    \item Kitérés(eva): ]1,3]
+    \item Pontosság(acc): ]1,3]
 \end{itemize}
 
 \subsection{Entity Weapon 2}
 
-Ágens elpusztulásakor az adott cellán hagyja hátra, ha van az Inventory-jában. Ládában is található.
-Ágens által használható felszerelési tárgy, amely pozitív és negatív statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
+Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
 \begin{itemize}
-    \item Erő: ]-1,2[
-    \item Kitérés: ]1,3[
-    \item Kitartás: 0
-    \item Pontosság: ]1,5[
+    \item Erő(str): ]0,4]
+    \item Kitartás(vit): ]0,4]
+    \item Kitérés(eva): ]0,4]
+    \item Pontosság(acc): ]0,4]
 \end{itemize}
 
 \subsection{Kulcs}
@@ -357,32 +340,19 @@ Kulcsot tartalmazó ágens, elpusztulásakor a legutolsó helyén hagyja a kulcs
 
 \noindent Kezdő statisztika:
 \begin{itemize}
-    \item Erő(str): ]0,1[
-    \item Kitartás(vit): ]0,1[
-    \item Kitérés(eva): ]0,1[
-    \item Pontosság(acc): ]0,1[
+    \item Erő(str): 1
+    \item Kitartás(vit): 1
+    \item Kitérés(eva): 1
+    \item Pontosság(acc): 1
 \end{itemize}
 
 \noindent A következő tárgyakkal kezd a szimulációban:
 
 \begin{itemize}
-    \item Entity Helm no.1,
-    \item Entity Armor no.1,
-    \item Entity Weapon no.1.
+    \item Entity Helm 01,
+    \item Entity Armor 01,
+    \item Entity Weapon 01.
 \end{itemize}
-
-\subsection{Statisztikák jelentőssége}
-
-Statisztikák jelentőssége két különböző faction változóval rendelkező ágens összetalálkozásánál látszódik meg.
-Két fontosabb dologban játszik szerepet, az ágens statisztikája a fent említett találkozásnál.
-
-Egy ágens, egy másik ágensre mért csapásának sikeressége függ attól hogy nagyobb-e a támadó ágens acc értéke, mint a támadást elszenvedő fél eva értéke.
-Ha nagyobb a támadó ágens acc értéke, mint a támadott eva értéke, akkor 100\%-osan betalál a sebzése.
-Ha nem nagyobb, akkor 20\% esélye van arra a támadott félnek, hogy ne kapjon semmilyen sebzést.
-
-Egy ágens, egy másik ágensre mért csapásának a sebzése függ attól hogy nagyobb-e a támadó ágens str értéke, mint a támadást elszenvedő fél vit értéke.
-Ha nagyobb a támadó ágens str értéke, mint a támadott vit értéke, akkor 20\% esélye van arra a támadó félnek, hogy dupla sebzést mérjen be.
-Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása.
 
 \subsection{Sebzés számlálás}
 
@@ -398,6 +368,19 @@ A támadásnak két végkimenetele lehet:
 \noindent Találat esetén, kiszámolódik a sebzés mértéke. 
 
 \noindent Eltévesztés esetén nem történik meg a sebzés. 
+
+\subsection{Statisztikák jelentőssége}
+
+Statisztikák jelentőssége két különböző faction változóval rendelkező ágens összetalálkozásánál látszódik meg.
+Két fontosabb dologban játszik szerepet, az ágens statisztikája a fent említett találkozásnál.
+
+Egy ágens, egy másik ágensre mért csapásának sikeressége függ attól hogy nagyobb-e a támadó ágens acc értéke, mint a támadást elszenvedő fél eva értéke.
+Ha nagyobb a támadó ágens acc értéke, mint a támadott eva értéke, akkor 100\%-osan betalál a sebzése, azaz támadás betalálása következik be.
+Ha nem nagyobb, akkor 20\% esélye van arra a támadott félnek, hogy ne kapjon semmilyen sebzést, azaz támadás eltévesztése következik be.
+
+Egy ágens, egy másik ágensre mért csapásának a sebzése függ attól hogy nagyobb-e a támadó ágens str értéke, mint a támadást elszenvedő fél vit értéke.
+Ha nagyobb a támadó ágens str értéke, mint a támadott vit értéke, akkor 20\% esélye van arra a támadó félnek, hogy dupla sebzést mérjen be, ekkor a támadás nagysága nagy.
+Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagysága normál.
 
 \Section{Ágens főbb tulajdonságai}
 
@@ -438,7 +421,7 @@ A támadásnak két végkimenetele lehet:
 Ágensek bemenete, információ szerzése:
 \begin{itemize}
     \item A hozzájuk szomszédos blockokat vizsgálják, ha nem találnak semmit megvizsgálják az általuk által érzékelhető blockokat.
-    \item A balra, jobbra, felfelé és lefelé irányban érzékelnek 2 blocknyi távolságra.
+    \item A balra, jobbra, felfelé és lefelé irányban érzékelnek 2 blocknyi távolságra, ha nem gátolja meg valami az útjukat.
 \end{itemize}
 
 \noindent Ágensek belső memóriája a következőket tartalmazza:
@@ -551,7 +534,7 @@ A támadásnak két végkimenetele lehet:
 
 \subsection{Ágens függvény}
 
-A következő ábrán látható az ágens cselekvésének meghatározására szolgáló ciklus, amely a szimuláció kezdetétől működik. ~\ref{fig:agentfunction}
+A következő ábrán látható az ágens cselekvésének meghatározására szolgáló ciklus, amely a szimuláció kezdetétől működik. ~\ref{fig:Priority}
 
 \noindent A csomópontok kifejtése:
 
@@ -621,7 +604,7 @@ A következő ábrán látható az ágens cselekvésének meghatározására szo
 
 \Section{Cél Tárgy}
 
-Map teljesítéséhez szükséges tárgy, amely egy Chest. A Kék faction-nek a kék chestet, a piros faction-nek a piros chestet kell elérnie.
+Map teljesítéséhez szükséges tárgy, amely egy Chest. A Kék faction-nek a piros chestet, a piros faction-nek a kék chestet kell elérnie.
 A mapon egy szobában helyezkedik el.
 
 \Section{Combat}
@@ -672,14 +655,14 @@ A szimulációban 1-es faction változójú Ágens és 2-es faction változójú
 
 \subsection{Brick}
 
-Az Brick egy oszlop, amely a map generáláskor kerülnek bizonyos cellákra.
+Az Brick egy oszlop, amely a map beolvasása után kerülnek bizonyos cellákra.
 Oszlopoknak semmilyen különleges funkciója nincs azonkívül, hogy map komplexitását kívánja növelni azzal,
 hogy mozgást és látást korlátozó szerepet lát el.
 
 \subsection{Zárt ajtó}
 
-Az ajtók map generáláskor kerülnek csak olyan cellákra, ahol egy szobából egy folyosón lehetséges elhagyni a szobát.
-Mindig zárt alakban kerül az adott cellákra, kinyitásához nem szükséges semmilyen különleges tárgy. Ha bármely karakter egy ajtót tartalmazó cellára lép, az ajtó kinyílik amíg Entityt tartalmaz az adott cella.
+Az ajtók a map beolvasása után kerülnek bizonyos cellákra.
+Az ajtók mozgást korlátozó szerepet töltenek be, ha nincs az ágensnél kulcs. Ha van, akkor szomszédos blockból kinyithatja az ajtókat.
 Ahogyan az Oszlopok, a zárt ajtók is map komplexitását kívánja növelni azzal,hogy látást korlátozó szerepet lát el.
 
 \Section{Idő}
@@ -704,6 +687,7 @@ Szimulációban használható irányítás:
     \item Adott Ágens statisztika oldalhoz Inventory megnyitása/bezárása: I
 \end{itemize}
 
+\Section{Látványterv képek, használt képek és diagramok}
 
 \begin{figure}[!ht]
 	\centering
