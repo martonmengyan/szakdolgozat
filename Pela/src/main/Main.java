@@ -1,5 +1,9 @@
 package main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 import javax.swing.*;
 
 public class Main {
@@ -25,8 +29,10 @@ public class Main {
 
 	    }
 
-	    public static void main(String[] args) {
-	    	
+	    public static void main(String[] args) throws FileNotFoundException {
+	    	PrintStream o = new PrintStream(new File("test.txt"));
+			System.setOut(o);
+			
 	        SwingUtilities.invokeLater(new Runnable() {
 	            public void run() {
 	                initWindow();

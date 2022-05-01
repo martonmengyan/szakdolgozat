@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public int entityIndex = 0;
 	public Camera camera = new Camera(this,keyH);
 	public ArrayList<Entity> entityList = new ArrayList<>();
-	public ArrayList<Entity> objectList = new ArrayList<>();
+	public ArrayList<object.Object> objectList = new ArrayList<>();
 	
 	public String gameScreenNumber;
 	public int winnerFaction;

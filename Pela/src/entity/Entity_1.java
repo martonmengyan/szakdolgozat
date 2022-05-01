@@ -24,11 +24,9 @@ public class Entity_1 extends Entity {
 		equipStats(currentWeapon);
     	equipStats(currentArmor);
     	equipStats(currentHelmet);
-    	
 	}
 	
 	public void setDefaultValues() {
-		type=2;
 		direction = "right";
 		speed = gp.TILE_SIZE;
 		str=1;
@@ -39,13 +37,13 @@ public class Entity_1 extends Entity {
 		maxLife=12;
     	life = maxLife;
     	
-    	currentWeapon = new Object(gp);
-    	currentArmor = new Object(gp);
-    	currentHelmet = new Object(gp);
+    	currentWeapon = new Object(gp,2, "Weapon", "Entity_Weapon_01");
+    	currentArmor = new Object(gp,2, "Armor", "Entity_Armor_01");
+    	currentHelmet = new Object(gp,2, "Helmet", "Entity_Helmet_01");
     	
-    	setItemStat(currentWeapon, 2, "Weapon", "Entity_Weapon_01", "/objects/Entity_Weapon_01.png");
-    	setItemStat(currentArmor, 2, "Armor", "Entity_Armor_01", "/objects/Entity_Armor_01.png");
-    	setItemStat(currentHelmet, 2, "Helmet", "Entity_Helmet_01", "/objects/Entity_Helmet_01.png");
+    	setItemStat(currentWeapon,  "/objects/Entity_Weapon_01.png");
+    	setItemStat(currentArmor,  "/objects/Entity_Armor_01.png");
+    	setItemStat(currentHelmet,  "/objects/Entity_Helmet_01.png");
     	
 
 	}
@@ -54,18 +52,14 @@ public class Entity_1 extends Entity {
 		inventoryList.add(currentWeapon);
 		inventoryList.add(currentArmor);
 		inventoryList.add(currentHelmet);
-		//inventory.add(key);
 	}
 	
-	public void setItemStat(Object entity, int type, String typeName, String name, String imagePath) {
+	public void setItemStat(object.Object entity, String imagePath) {
 		Random random = new Random();
-		entity.str=random.nextInt(3 + 2) - 2;
-		entity.vit=random.nextInt(3 + 2) - 2;
-		entity.eva=random.nextInt(3 + 2) - 2;
-		entity.acc=random.nextInt(3 + 2) - 2;
-		entity.type = type;
-		entity.typeName = typeName;
-		entity.name = name;
+		entity.str=random.nextInt(3 - 1) + 1;
+		entity.vit=random.nextInt(3 - 1) + 1;
+		entity.eva=random.nextInt(3 - 1) + 1;
+		entity.acc=random.nextInt(3 - 1) + 1;
 		try {
 			entity.down1=ImageIO.read(getClass().getResourceAsStream(imagePath));
 		} catch (IOException e) {
@@ -81,6 +75,5 @@ public class Entity_1 extends Entity {
 		acc += entity.acc; 
 		entity.isEquipped=true;
 	}
-    
-	    
+     
 }

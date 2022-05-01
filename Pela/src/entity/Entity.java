@@ -39,9 +39,7 @@ public class Entity {
     
     public int faction;
     
-    public int type;
-    public String typeName;
-    public String name;
+
 
     public int maxLife;
     public int life;
@@ -50,7 +48,7 @@ public class Entity {
     public int acc;
     public int eva;
     
-    public ArrayList<Entity> inventoryList = new ArrayList<>();
+    public ArrayList<object.Object> inventoryList = new ArrayList<>();
     public final int inventorySize = 8;
     
     public Entity(GamePanel gp) {
@@ -75,10 +73,10 @@ public class Entity {
     				inventoryList.add(gp.objectList.get(i));
     				gp.objectList.remove(i);
     				Random random = new Random();
-    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(4 + 0) - 0;
-    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(4 + 0) - 0;
-    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(4 + 0) - 0;
-    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(2 - 1) + 1;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(2 - 1) + 1;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(2 - 1) + 1;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(2 - 1) + 1;
     			}    			
     			break;
     		case "Entity_Helmet_01":
@@ -86,10 +84,10 @@ public class Entity {
     				inventoryList.add(gp.objectList.get(i));
     				gp.objectList.remove(i);
     				Random random = new Random();
-    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(4 + 0) - 0;
-    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(4 + 0) - 0;
-    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(4 + 0) - 0;
-    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(2 - 1) + 1;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(2 - 1) + 1;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(2 - 1) + 1;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(2 - 1) + 1;
     			}    			
     			break;
     		case "Entity_Weapon_01":
@@ -97,10 +95,10 @@ public class Entity {
     				inventoryList.add(gp.objectList.get(i));
     				gp.objectList.remove(i);
     				Random random = new Random();
-    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(4 + 0) - 0;
-    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(4 + 0) - 0;
-    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(4 + 0) - 0;
-    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 + 0) - 0;
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(2 - 1) + 1;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(2 - 1) + 1;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(2 - 1) + 1;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(2 - 1) + 1;
     			}    			
     			break;
     		case "Entity_Armor_02":
@@ -108,10 +106,10 @@ public class Entity {
     				inventoryList.add(gp.objectList.get(i));
     				gp.objectList.remove(i);
     				Random random = new Random();
-    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(6 + 2) - 2;
-    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(6 + 2) - 2;
-    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(6 + 2) - 2;
-    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(4 - 0) + 0;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(4 - 0) + 0;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(4 - 0) + 0;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 - 0) + 0;
     			}    			
     			break;
     		case "Entity_Helmet_02":
@@ -119,10 +117,10 @@ public class Entity {
     				inventoryList.add(gp.objectList.get(i));
     				gp.objectList.remove(i);
     				Random random = new Random();
-    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(6 + 2) - 2;
-    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(6 + 2) - 2;
-    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(6 + 2) - 2;
-    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(4 - 0) + 0;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(4 - 0) + 0;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(4 - 0) + 0;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 - 0) + 0;
     			}    			
     			break;
     		case "Entity_Weapon_02":
@@ -130,10 +128,10 @@ public class Entity {
     				inventoryList.add(gp.objectList.get(i));
     				gp.objectList.remove(i);
     				Random random = new Random();
-    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(6 + 2) - 2;
-    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(6 + 2) - 2;
-    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(6 + 2) - 2;
-    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(6 + 2) - 2;
+    				inventoryList.get(inventoryList.size()-1).str=random.nextInt(4 - 0) + 0;
+    				inventoryList.get(inventoryList.size()-1).vit=random.nextInt(4 - 0) + 0;
+    				inventoryList.get(inventoryList.size()-1).eva=random.nextInt(4 - 0) + 0;
+    				inventoryList.get(inventoryList.size()-1).acc=random.nextInt(4 - 0) + 0;
     			}    			
     			break;
     		case "Chest_Red":
@@ -346,7 +344,7 @@ public class Entity {
 	}
 	
 	//check if new item is better than equipped
-	public boolean itemIsBetterThanCurrent(Entity pickedupItem) {
+	public boolean itemIsBetterThanCurrent(object.Object pickedupItem) {
 		boolean better = false;
 				
 		int strDif;
@@ -473,7 +471,7 @@ public class Entity {
 	}
 	
 	//gives back an ArrayList of close items
-	public ArrayList<Integer> isItemClose(ArrayList<Entity> objectList, ArrayList<Entity> entityList) {
+	public ArrayList<Integer> isItemClose(ArrayList<object.Object > objectList, ArrayList<Entity> entityList) {
 
 		ArrayList<Integer> closeItemArray = new ArrayList<>();
 		int x=0;
@@ -609,7 +607,7 @@ public class Entity {
 	}
 	
 	//choose a close item and gives back a direction to move
-	public void moveToItemBlock(ArrayList<Entity> objectList, ArrayList<Integer> keyIndex) {
+	public void moveToItemBlock(ArrayList<object.Object > objectList, ArrayList<Integer> keyIndex) {
 	
 		Random random = new Random();
 		int targetIndex;
@@ -651,7 +649,7 @@ public class Entity {
 	}
 	
 	//equip new item if itemIsBetterThanCurrent() is true
-	public void equipBetterItem(Entity pickedupItem) {
+	public void equipBetterItem(object.Object  pickedupItem) {
 			
 			String pickedupItemTypeName = pickedupItem.typeName;
 			
@@ -698,13 +696,12 @@ public class Entity {
 		
 		hashMap.put(new Point(worldX/48,worldY/48), hashMap.get(new Point(worldX/48,worldY/48))==null?1: hashMap.get(new Point(worldX/48,worldY/48)) +1);
 	
-		/*
 		//hashMap kiiratása
 		 
+		System.out.println(str + vit + acc + eva);
 		for(Point p:hashMap.keySet()) {
 			System.out.println(p.x + "," + p.y + "," + hashMap.get(p));
 		}
-		*/
 		
 		spriteCounter++;
 		if(spriteCounter >= 1) {
@@ -803,7 +800,6 @@ public class Entity {
 				for(int i=0; i<worldPos.size();i++) {
 					if(p.x == worldPos.get(i).x && p.y == worldPos.get(i).y) {						
 						minHash = map.get(p);
-						System.out.println("min:" + minHash);
 						isHashFound = true;
 						break;					
 					}					
@@ -816,7 +812,6 @@ public class Entity {
 			possibleBlocks = new ArrayList<>();
 			
 			for(Point p:map.keySet()) {
-				System.out.println("x:" + p.x + ",y: " + p.y + ",hash:" + map.get(p));
 				for(int i=0; i<worldPos.size();i++) {					
 					if(p.x == worldPos.get(i).x && p.y == worldPos.get(i).y && minHash == map.get(p)) {
 						possibleBlocks.add(p);
@@ -866,7 +861,7 @@ public class Entity {
 	
 	
 	//detect objects in 4 blocks which cannot be move to in 1 move
-	public ArrayList<Point> detectArray(ArrayList<Entity> entityList, ArrayList<Entity> objectList) {
+	public ArrayList<Point> detectArray(ArrayList<Entity> entityList, ArrayList<object.Object > objectList) {
 
 		ArrayList<Point> detectableBlocks = new ArrayList<>();
 		
@@ -1025,7 +1020,7 @@ public class Entity {
 	
 	
 	//check if there is a new item in detected blocks
-	public boolean checkIfNewItem(ArrayList<Point> worldpos, ArrayList<Entity> objectList) {
+	public boolean checkIfNewItem(ArrayList<Point> worldpos, ArrayList<object.Object > objectList) {
 		
 		boolean isDetected = false;
 		for(int i=0; i<worldpos.size();i++){

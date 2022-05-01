@@ -14,7 +14,6 @@ public class Entity_Faction0 extends Entity_1 {
 		faction = 0;
 		loadImage();
 	}
-
 	
     public void loadImage() {
         try {

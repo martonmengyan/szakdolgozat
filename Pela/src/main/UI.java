@@ -154,7 +154,7 @@ public class UI {
 		
 	}
 	
-	public void drawItemStatistics(int x, int y, Entity entity) {
+	public void drawItemStatistics(int x, int y, object.Object entity) {
 		
 		int startFromX = x - 10;
 		int startFromY = y + (gp.TILE_SIZE*(maxSlotRow+1)-20);
