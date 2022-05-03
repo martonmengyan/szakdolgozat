@@ -51,7 +51,7 @@ A szimuláció indítása előtti ablak.
 
 \begin{itemize}
     \item Közép fent a Main Menu kiírását láhatjuk, allatta pedig 2 opcióból választhatunk:
-    \item (1) Start Game, a kiválasztása esetén elindul a szimuláció.
+    \item (1) Start, a kiválasztása esetén elindul a szimuláció.
     \item (2) Quit, a szimulációs ablak bezárása.
     \item A fenn említet két menü pont között a W(fel) és S(le) billentyűk lenyomásával navigálhatunk.
     \item Aláhúzva jelzi a felhasználónak, hogy mely menüpont van éppen kiválasztva.
@@ -206,7 +206,6 @@ Minden blokkhoz tartoznak adatok.
     \item Ajtó csak szoba és a folyosó, vagy szoba és a szoba között létezzen.
     \item Folyosóból ne nyíljon ajtó folyosóra.
     \item Két különböző folyósó ne érjen össze.
-    \item A map bármelyik részéből elérhető legyen a map bármelyik tetszőleges helye.
     \item Nem lehet olyan cellára mozgást kizáró objektumokot letenni, amely lehetetlenné teszi a map egy tetszőleges pontjáról a map egy másik tetszőleges pontjára való eljutását.
 \end{itemize}
 
@@ -389,19 +388,19 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
     
     \item str(Integer)
     
-    Az ágens létrejöttekor kerül definiálásra általunk.
+    Az ágens létrejöttekor kerül megadásra általunk.
     \item vit(Integer)
     
-    Az ágens létrejöttekor kerül definiálásra általunk.
+    Az ágens létrejöttekor kerül megadásra általunk.
     \item eva(Integer)
     
-    Az ágens létrejöttekor kerül definiálásra általunk.
+    Az ágens létrejöttekor kerül megadásra általunk.
     \item acc(Integer)
     
-    Az ágens létrejöttekor kerül definiálásra általunk.
+    Az ágens létrejöttekor kerül megadásra általunk.
     \item maxLife(Integer)
     
-    Az ágens létrejöttekor kerül definiálásra általunk.
+    Az ágens létrejöttekor kerül megadásra általunk.
     \item faction: (Integer)
     
     Lehet 0,1. Fontos változó a combat létrejöttéhez.
@@ -446,7 +445,7 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
     \item Aktuális HP mennyisége. 5 Körönként 1 HP visszatöltés.(Lásd: Idő)
     \item Az adott körben lehetséges lépesek hashMap értékei, amelyek az adott block koordinátáit tárolják és azt, hogy az adott ágens hányszor lépett rá az adott blockra. (Szükséges azért, hogy idővel biztosan felfedezze az egész mapot)
     \item Észlelt Objektumok helyzete, típusa. Ezekből az információkból eldönti a prioritást és maghatározza, hogy mely irányba fog végül haladni.
-    \item A nem használt tárgyak eldobása, ha nem jobb a jelenleg hordottnál, ezáltál biztosítva, hogy ne teljen meg az inventory.
+    \item A nem használt tárgyak törlése, ha nem jobb a jelenleg hordottnál, ezáltál biztosítva, hogy ne teljen meg az inventory.
     \item Ágens grafikai megjelenéséből leszűrt információk számításba vétele. (ellenség-e)
     \item Támadható ágensek közül a legkisebb HP-val rendelkező ágens támadását kezdeményezi.
 \end{itemize}
@@ -468,15 +467,15 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
     
     \begin{itemize}
         \item Szükséges az Inventoryban egy Key nevű tárgy, amely a kulcs.
-        \item Ha az ágens közvetlen közelében létezik a láda, a nyitás akkor lehetséges.
+        \item Ha az ágens közvetlen közelében létezik ajtó, a nyitás akkor lehetséges.
         \item Nyitása után eltűnik az ajtó, és a kulcs az Inventoryból.
         \item Ez az akció az ágens körének felhasználást igényli, ahhoz hogy végrehajtsa azt.
     \end{itemize}
 
-    \item Láda nyitás. 
+    \item Chest nyitás. 
     
     \begin{itemize}
-        \item Ha az ágens celláján létezik a láda, a nyitás akkor lehetséges.
+        \item Ha az ágens celláján létezik az ellenkező faction chest-je, akkor a nyitás lehetséges.
         \item Kinyitása, ha nincs támadható ágens, után győzelem.
         \item Ez az akció az ágens körének felhasználást igényli, ahhoz hogy végrehajtsa azt.
     \end{itemize}
@@ -519,7 +518,7 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
 \subsection{Ágens fő céljai}
 
 \begin{itemize}
-    \item Megtalálni az ellenséges Chestet.
+    \item Megtalálni az ellenséges chestet.
     \item Elpusztítani az ellenséges ágenseket.
 \end{itemize}
 
@@ -580,14 +579,14 @@ A következő ábrán látható az ágens cselekvésének meghatározására szo
     \item newEnemy?
 
     \begin{itemize}
-        \item Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az Ágens és lát a detectableBlocks-on belül olyan blockot,
-            amely egy ellenséges Ágenst tartalmaz, ilyenkor a hozzá közeli blockot választja ki következő lépésének.
+        \item Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az ágens és lát a detectableBlocks-on belül olyan blockot,
+            amely egy ellenséges ágenst tartalmaz, ilyenkor a hozzá közeli blockot választja ki következő lépésének.
     \end{itemize}
 
     \item newItem?
 
     \begin{itemize}
-        \item Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az Ágens és lát a detectableBlocks-on belül olyan blockot,
+        \item Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az ágens és lát a detectableBlocks-on belül olyan blockot,
         amely egy kívánt tárgyat tartalmaz, ilyenkor a hozzá közeli blockot választja ki következő lépésének.
     \end{itemize}
 
@@ -605,7 +604,7 @@ A következő ábrán látható az ágens cselekvésének meghatározására szo
 
 \Section{Cél Tárgy}
 
-Map teljesítéséhez szükséges tárgy, amely egy Chest. A Kék faction-nek a piros chestet, a piros faction-nek a kék chestet kell elérnie.
+Map teljesítéséhez szükséges tárgy, amely egy chest. A Kék faction-nek a piros chestet, a piros faction-nek a kék chestet kell elérnie.
 A mapon egy szobában helyezkedik el.
 
 \Section{Combat}
