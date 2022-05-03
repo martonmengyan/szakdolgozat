@@ -2,7 +2,7 @@
 
 \Section{A fejezet célja}
 
-A szimulációs környezet inspirációt vesz már elkészített szimulációokból, mint például a Pixel Dungeon \cite{pixeldungeon} és Darkest Dungeon \cite{darkestdungeon} 
+A szimulációs környezet inspirációt vesz már elkészített videójátékokból, mint például a Pixel Dungeon \cite{pixeldungeon} és Darkest Dungeon \cite{darkestdungeon} 
 nevű játékokból ismerhető szoba és folyosó kapcsolat. Ahol minden szobát egy folyosó köt össze egy másik tetszőleges szobával.
 A Darkest Dungeon-hoz képest a játékmenet rugalmasabb, mivel a szobák bármikor elhagyhatóak és megközelíthetőek, ha engedi azt a pálya jelenlegi belső felépítése.
 Azaz, ha nincs útban valami, ami megakadályozza.
@@ -15,6 +15,7 @@ rendelkezve próbálják legyőzni egymást és az ellenséges ágenseket.
 \Section{Felhasznált technológiák}
 
 \noindent Pixel Dungeon:
+
 
 \begin{itemize}
     \item Körökre osztott tevékenységkör.
@@ -77,7 +78,7 @@ A szimuláció megállítása esetén.
     \begin{itemize}
         \item A szimuláció kezdete után a képernyőn megjeleníthető ablakok a következők:
         \item Statistics: A C billentyű megnyomására megjelenik az első számú ágens Statistics ablaka.
-        \item Inventory: Az I billentyű megnyomására megjelenik az az adott Ágens Inventory oldala.
+        \item Inventory: Az I billentyű megnyomására megjelenik az az adott ágens Inventory oldala.
     \end{itemize}
 
     \item Statistics
@@ -86,8 +87,8 @@ A szimuláció megállítása esetén.
         \item Egy adott ágens adatának a kiolvasásának az eredményeit megjelenítő UI ablak.
         \item A szimulációban, megállítástól függetlenül a C billentyű megnyomására jelenik meg, és újonnan megnyomására tűnik el.
         \item Megnyitásakor mindig a még szimulációban létező ágensek közül az első számú ágens adait fogja visszaadni.
-        \item A vizsgálandó Ágens elpusztulásakor a még létező ágensek közül az új első számú ágens adatait fogja visszadni.
-        \item Ezen az ablakon a következő Ágens adatokat írja ki:
+        \item A vizsgálandó ágens elpusztulásakor a még létező ágensek közül az új első számú ágens adatait fogja visszadni.
+        \item Ezen az ablakon a következő ágens adatokat írja ki:
         \item Sorszám: Az ágens sorszámát adja vissza.
         \item HP: Az ágens aktuális életerejét adja vissza.
         \item Str: Az ágens aktuális str értékét adja vissza.
@@ -143,22 +144,22 @@ Szimuláció kezdetekor megtörténik a map beolvasása:
     
     \begin{itemize}
         \item Brick: Egy mozgást korlátozó objektum. Nincs különösebb szerepe.
-        \item Key: Mozgást nem korlátozó tárgy, amelyet az Ágensek képesek felvenni az Inventoryjukba.
-        \item EntityArmor01: Mozgást nem korlátozó tárgy, amelyet az Ágensek képesek felvenni az Inventoryjukba.
-        \item EntityWeapon01: Mozgást nem korlátozó tárgy, amelyet az Ágensek képesek felvenni az Inventoryjukba.
-        \item EntityHelmet01: Mozgást nem korlátozó tárgy, amelyet az Ágensek képesek felvenni az Inventoryjukba.
-        \item EntityArmor02: Mozgást nem korlátozó tárgy, amelyet az Ágensek képesek felvenni az Inventoryjukba.
-        \item EntityWeapon02: Mozgást nem korlátozó tárgy, amelyet az Ágensek képesek felvenni az Inventoryjukba.
-        \item EntityHelmet02: Mozgást nem korlátozó tárgy, amelyet az Ágensek képesek felvenni az Inventoryjukba.
+        \item Key: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventoryjukba.
+        \item EntityArmor01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventoryjukba.
+        \item EntityWeapon01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventoryjukba.
+        \item EntityHelmet01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventoryjukba.
+        \item EntityArmor02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventoryjukba.
+        \item EntityWeapon02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventoryjukba.
+        \item EntityHelmet02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventoryjukba.
         \item Chest: End screent előidéző tárgy.
-        \item Door: Egy mozgást korlátozó objektum. Kulccsal kinyitható az Ágensek által.
+        \item Door: Egy mozgást korlátozó objektum. Kulccsal kinyitható az ágensek által.
     \end{itemize}
 
     \item Az 50x50es mátrixon minden 2-es típusú blockra helyezhetünk el egy ágenst.
     
     \begin{itemize}
-        \item EntityFaction0: 0-es számú csapatban lévő Ágens.
-        \item EntityFaction1: 1-es számú csapatban lévő Ágens.
+        \item EntityFaction0: 0-es számú csapatban lévő ágens.
+        \item EntityFaction1: 1-es számú csapatban lévő ágens.
     \end{itemize}
     
     \item A szimulációs környezet a következőkből épül fel:
@@ -185,7 +186,7 @@ Minden szoba tartalmaz legalább 1 kulcsot, amely elősegíti a map bejárhatós
 \subsection{Map}
 
 A map szobák és folyosók összesége, ahol a szobák alakjánál törekszünk a négyzet alakú szobák elkerülésére. A folyosók általában rövidek és egy szóbából akár több is nyílik egy adott szobára.
-A map blockok épül fel. Blockok típusát egy ]0,2[ nyílt intervallumon belüli számok jelölik.
+A map blockokból épül fel. Blockok típusát egy ]0,2[ nyílt intervallumon belüli számok jelölik.
 Ezek az adatok a szimuláció kezdetekor kerülnek beolvasásra a world.txt-ből.
 
 A szobákban és a folyosókban bejárható terület egy mátrixhoz hasonló, ahol a celláit blokkoknak nevezzük.
@@ -322,7 +323,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
 
 \subsection{Kulcs}
 
-Vagy Ágensektől, vagy celláról szerezhetőek meg.
+Vagy ágensektől, vagy celláról szerezhetőek meg.
 Szerepük az ajtók kinyitása az ágens által.
 Kulcsot tartalmazó ágens, elpusztulásakor a legutolsó helyén hagyja a kulcsot.
 
@@ -432,8 +433,8 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
     \item A blockok hashMap értékei. (hányszor volt az adott blockokon, segít felderíteni a teljes mapot.)
     \item Észlelt Objektumok helyzete, típusa.
     \item Inventoryban tárolt itemek.
-    \item Észlelt Ágens kinézete. (ellenséges, vagy nem)
-    \item Észlelt Ágens helyzete. (X,Y koordináta)
+    \item Észlelt ágens kinézete. (ellenséges, vagy nem)
+    \item Észlelt ágens helyzete. (X,Y koordináta)
 \end{itemize}
 
 \subsection{Megfigyelési akcióik}
@@ -447,7 +448,7 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
     \item Észlelt Objektumok helyzete, típusa. Ezekből az információkból eldönti a prioritást és maghatározza, hogy mely irányba fog végül haladni.
     \item A nem használt tárgyak eldobása, ha nem jobb a jelenleg hordottnál, ezáltál biztosítva, hogy ne teljen meg az inventory.
     \item Ágens grafikai megjelenéséből leszűrt információk számításba vétele. (ellenség-e)
-    \item Támadható Ágensek közül a legkisebb HP-val rendelkező Ágens támadását kezdeményezi.
+    \item Támadható ágensek közül a legkisebb HP-val rendelkező ágens támadását kezdeményezi.
 \end{itemize}
 
 \subsection{Ágens tevékenységeinek a köre}
