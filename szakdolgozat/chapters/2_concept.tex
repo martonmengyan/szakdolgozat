@@ -14,36 +14,14 @@ rendelkezve próbálják legyőzni egymást és az ellenséges ágenseket.
 
 \Section{Felhasznált technológiák}
 
-\noindent Pixel Dungeon:
+\subsection{Java}
 
+A Java általános célú, objektumorientált programozási nyelv, amelyet a Sun Microsystems fejlesztett a 90-es évek elejétől kezdve egészen 2009-ig, amikor a céget felvásárolta az Oracle.
 
-\begin{itemize}
-    \item Körökre osztott tevékenységkör.
-    \item A játék szobák és folyosók véges kombinációjából épül fel.
-    \item A játéktér teljes része négyzet cellákból épül fel, amelyek összességét.
-    \item A cellák tartalmazhatnak objektumokat és ágenseket, illetve tárgyakat.
-    \item Tárgyak használata.
-\end{itemize}
+\subsection{Java Swing}
 
-\noindent Darkest Dungeon
-
-\begin{itemize}
-    \item Szobák és folyosók összessége, de több kisebb mapból épül fel.
-    \item Tárgyak használata.
-    \item Egyszerre több karakter irányítása.
-    \item Körökre osztott.
-\end{itemize}
-
-\noindent A szimulációs környezet tartalmazni fogja a:
-
-\begin{itemize}
-    \item Szobák és folyosók által felépített map struktúráját.
-    \item A körökre osztottság.
-    \item Négyzet alakú cellákból felépített szimulációstér.
-    \item Tárgyakat és azok használatát.
-    \item Egyszerre több karakter irányítását azonos célok által vezérelve.
-    \item Statisztikák által meghatározott számolásokat.
-\end{itemize}
+A Swing osztályok kiküszöbölik a Java legnagyobb gyengeségét, a viszonylag primitív felhasználói felület eszközkészletét. A Java Swing segít a Swing osztályok teljes előnyeinek kihasználásában,
+részletes leírást adva minden osztályról és felületről a kulcsfontosságú Swing csomagokban.
 
 \Section{Menü}
 
@@ -53,7 +31,7 @@ A szimuláció indítása előtti ablak.
     \item Közép fent a Main Menu kiírását láhatjuk, allatta pedig 2 opcióból választhatunk:
     \item (1) Start, a kiválasztása esetén elindul a szimuláció.
     \item (2) Quit, a szimulációs ablak bezárása.
-    \item A fenn említet két menü pont között a W(fel) és S(le) billentyűk lenyomásával navigálhatunk.
+    \item A fenn említet két menü pont között a W (fel) és S (le) billentyűk lenyomásával navigálhatunk.
     \item Aláhúzva jelzi a felhasználónak, hogy mely menüpont van éppen kiválasztva.
 \end{itemize}
 
@@ -298,7 +276,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
     \item Pontosság(acc): ]0,4]
 \end{itemize}
 
-\subsection{Entity Weapon 1}
+\subsection{Entity Weapon 01}
 
 Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
@@ -309,7 +287,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
     \item Pontosság(acc): ]1,3]
 \end{itemize}
 
-\subsection{Entity Weapon 2}
+\subsection{Entity Weapon 02}
 
 Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
@@ -336,9 +314,7 @@ Kulcsot tartalmazó ágens, elpusztulásakor a legutolsó helyén hagyja a kulcs
     \item Az ágensek kezdő statisztikája az adott nyílt intervallumon kerül kisorsolásra.
 \end{itemize}
 
-\subsection{Statisztikák}
-
-\noindent Kezdő statisztika:
+\noindent Kezdő értékek:
 \begin{itemize}
     \item Erő(str): 1
     \item Kitartás(vit): 1
@@ -432,7 +408,7 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
     \item A blockok hashMap értékei. (hányszor volt az adott blockokon, segít felderíteni a teljes mapot.)
     \item Észlelt Objektumok helyzete, típusa.
     \item Inventoryban tárolt itemek.
-    \item Észlelt ágens kinézete. (ellenséges, vagy nem)
+    \item Észlelt ágens értékei. (ellenséges, vagy nem)
     \item Észlelt ágens helyzete. (X,Y koordináta)
 \end{itemize}
 
@@ -446,7 +422,7 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
     \item Az adott körben lehetséges lépesek hashMap értékei, amelyek az adott block koordinátáit tárolják és azt, hogy az adott ágens hányszor lépett rá az adott blockra. (Szükséges azért, hogy idővel biztosan felfedezze az egész mapot)
     \item Észlelt Objektumok helyzete, típusa. Ezekből az információkból eldönti a prioritást és maghatározza, hogy mely irányba fog végül haladni.
     \item A nem használt tárgyak törlése, ha nem jobb a jelenleg hordottnál, ezáltál biztosítva, hogy ne teljen meg az inventory.
-    \item Ágens grafikai megjelenéséből leszűrt információk számításba vétele. (ellenség-e)
+    \item Ágens értékeiből leszűrt információk számításba vétele. (ellenség-e)
     \item Támadható ágensek közül a legkisebb HP-val rendelkező ágens támadását kezdeményezi.
 \end{itemize}
 
