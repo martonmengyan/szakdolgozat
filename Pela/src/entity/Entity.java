@@ -379,16 +379,17 @@ public class Entity {
 			boolean isEvaded = false;
 			int min=0;
 			Random random = new Random(); 
-			int index = random.nextInt((5 - 1) + 1);
+			int index = random.nextInt((6 - 1) + 1);
 			int evadeChance = acc-defender.eva;
 			if(evadeChance<0){
 				min=1;
 			} else min=0;
 			
 
-			if(index<=min) {
+			if(index==min) {
 				isEvaded = true;
 			}
+			
 			return isEvaded;
 	}
 	
@@ -397,14 +398,14 @@ public class Entity {
 		int damage;
 		int min=0;
 		Random random = new Random(); 
-		int index = random.nextInt((5 - 1) + 1);
+		int index = random.nextInt((6 - 1) + 1);
 		int biggerHitChance = str-defender.vit;
 		if(biggerHitChance>0){
 			min=1;
 		} else min=0;
 		
 
-		if(index<=min) {
+		if(index==min) {
 			damage = 2;
 		} else damage = 1;
 		return damage;
