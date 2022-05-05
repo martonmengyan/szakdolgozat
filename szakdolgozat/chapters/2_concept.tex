@@ -2,7 +2,7 @@
 
 \Section{A fejezet célja}
 
-A szimulációs környezet inspirációt vesz már elkészített videójátékokból, mint például a Pixel Dungeon \cite{pixeldungeon} és Darkest Dungeon \cite{darkestdungeon} 
+A szimulációs környezet inspirációt vesz már elkészített videójátékokból, mint például a \textit{Pixel Dungeon} \cite{pixeldungeon} és \textit{Darkest Dungeon} \cite{darkestdungeon} 
 nevű játékokból ismerhető szoba és folyosó kapcsolat. Ahol minden szobát egy folyosó köt össze egy másik tetszőleges szobával.
 A Darkest Dungeon-hoz képest a játékmenet rugalmasabb, mivel a szobák bármikor elhagyhatóak és megközelíthetőek, ha engedi azt a pálya jelenlegi belső felépítése.
 Azaz, ha nincs útban valami, ami megakadályozza.
@@ -12,199 +12,210 @@ A fent említett két játék mind körökre osztott, ahogyan a szimulációs k�
 A szimulációs környezetünk viszont egyedi lesz abból a szempontból, hogy az ágensek csoportokra vannak osztva és közös céllal
 rendelkezve próbálják legyőzni egymást és az ellenséges ágenseket.
 
-Az alkalmazás a Pela fantázia nevet kapta.
+Az alkalmazás a \textit{Pela} fantázia nevet kapta.
 
 \Section{Felhasznált technológiák}
 
 \subsection{Java}
 
-A Java általános célú, objektumorientált programozási nyelv, amelyet a Sun Microsystems fejlesztett a 90-es évek elejétől kezdve egészen 2009-ig, amikor a céget felvásárolta az Oracle.
+A Java általános célú, objektumorientált programozási nyelv, amelyet a Sun Microsystems fejlesztett a 90-es évek elejétől kezdve egészen 2009-ig, amikor a céget felvásárolta az Oracle \cite{arnold2005java}.
 
 \subsection{Java Swing}
 
 A Swing osztályok kiküszöbölik a Java legnagyobb gyengeségét, a viszonylag primitív felhasználói felület eszközkészletét. A Java Swing segít a Swing osztályok teljes előnyeinek kihasználásában,
-részletes leírást adva minden osztályról és felületről a kulcsfontosságú Swing csomagokban.
+részletes leírást adva minden osztályról és felületről a kulcsfontosságú Swing csomagokban \cite{10.5555/291162}.
 
-\Section{Menü}
+\Section{Az ágens szimulációs felület elemei}
 
-A szimuláció indítása előtti ablak:
+Az ágensek és környezetük szimulációjához, a rajtuk elvégzendő mérésekhez célszerű összerakni egy grafikus felületet. A következő szakaszokban ezeknek a két fő elemét, a menüt és az UI-t mutatja be a dolgozat.
 
+\SubSection{Menü}
+
+A szimulációs környezethez tartozik egy menü ablak. Ennek elemei az alábbiak.
+
+\medskip
+
+\noindent Szimuláció indítása előtt:
 \begin{itemize}
-    \item Közép fent a Main Menu kiírását láhatjuk, allatta pedig 2 opcióból választhatunk: \ref{fig:MainMenu}
-    \item (1) Start, a kiválasztása esetén elindul a szimuláció.
-    \item (2) Quit, a szimulációs ablak bezárása.
-    \item A fenn említet két menü pont között a W (fel) és S (le) billentyűk lenyomásával navigálhatunk.
+    \item Középen felül a \textit{Main Menu} kiírását láhatjuk, alatta pedig 2 opcióból választhatunk (\ref{fig:MainMenu}. ábra):
+    \begin{itemize}
+    \item[(1)] \textit{Start}, a kiválasztása esetén elindul a szimuláció,
+    \item[(2)] \textit{Quit}, a szimulációs ablak bezárása.
+    \end{itemize}
+    \item A fenn említett két menüpont között a \texttt{W} (fel) és \texttt{S} (le) billentyűk lenyomásával navigálhatunk.
     \item Aláhúzva jelzi a felhasználónak, hogy mely menüpont van éppen kiválasztva.
-    \item A különböző ablakok és UI elemek egy egyedi fontot használnak. \cite{yosterislandfont}
+    \item A különböző ablakok és UI elemek egy egyedi fontot használnak \cite{yosterislandfont}.
 \end{itemize}
 
 \noindent A szimuláció megállítása esetén:
 
 \begin{itemize}
-    \item A szimulációban a P billentyű lenyomásával képes a felhasználó megállítani a szimuláció menetét. 
-    \item A megállítást a bal felső sarokban kiírt fehér Paused kiírás jelzi a felhasználó számára. \ref{fig:Paused}
+    \item A szimulációban a \texttt{P} billentyű lenyomásával képes a felhasználó megállítani a szimuláció menetét.
+    \item A megállítást a bal felső sarokban kiírt fehér \textit{Paused} kiírás jelzi a felhasználó számára (\ref{fig:Paused}. ábra).
     \item Ilyenkor az ágensek nem kapnak lehetőséget a lépésre, de a felhasználó képes a kamera mozgatására a nyilak segítségével.
-    \item A felhasználó szintén képes az ágensek Statistics ablakát megnyitni/bezárni a C billentyű megnyomásával, és előre/hátra lapozni az ágensek között a Q(balra) és E(jobbra) billentyűk megnyomásával, ha több van a szimulációban, mint 1.
-    \item Ugyanígy képes megnyitni/bezárni az adott ágenshez tartozó Inventory ablakot az I billentyű megnyomásával, ha látszódik az ágens statisztikája ablak.
-    \item A P billentyű újonnan megnyomásával ott folytatódik a szimuláció, ahol abbamaradt. \ref{fig:nonPaused}
+    \item A felhasználó szintén képes az ágensek \textit{Statistics} ablakát megnyitni/bezárni a \texttt{C} billentyű megnyomásával, és előre/hátra lapozni az ágensek között a \texttt{Q} (balra) és \texttt{E} (jobbra) billentyűk megnyomásával, ha több van a szimulációban, mint 1.
+    \item Ugyanígy képes megnyitni/bezárni az adott ágenshez tartozó \textit{Inventory} ablakot az \texttt{I} billentyű megnyomásával, ha látszódik az ágens statisztikája ablak.
+    \item A \texttt{P} billentyű újonnan megnyomásával ott folytatódik a szimuláció, ahol abbamaradt (\ref{fig:nonPaused}. ábra).
 \end{itemize}
 
 \Section{UI}
-
 \label{UI}
 
+A UI (\textit{User Interface}) foglalja magába az ágens szimulátor fő elemeit. A következőkben ennek az elemei, azok funkciói kerülnek felsorolásra.
+
+\medskip
+
+\noindent A szimuláció figyelésére szolgáló UI ablakok, amelyek a szimuláció kezdete után a képernyőn jelennek meg, a következők:
+
 \begin{itemize}
-    \item A szimuláció figyelésére szolgáló UI ablakok:
-    
-    \begin{itemize}
-        \item A szimuláció kezdete után a képernyőn megjeleníthető ablakok a következők:
-        \item Statistics: A C billentyű megnyomására megjelenik az első számú ágens Statistics ablaka. \ref{fig:Statistics}
-        \item Inventory: Az I billentyű megnyomására megjelenik az az adott ágens Inventory oldala. \ref{fig:Inventory}
-    \end{itemize}
-
-    \item Statistics
-    
-    \begin{itemize}
-        \item Egy adott ágens adatának a kiolvasásának az eredményeit megjelenítő UI ablak. 
-        \item A szimulációban megállítástól függetlenül a C billentyű megnyomására jelenik meg és tűnik el.
-        \item Megnyitásakor mindig a még szimulációban létező ágensek közül az első számú ágens adait fogja visszaadni.
-        \item A vizsgálandó ágens elpusztulásakor a még létező ágensek közül az új első számú ágens adatait fogja visszadni.
-        \item Ezen az ablakon a következő ágens adatokat írja ki:
-        \item Sorszám: Az ágens sorszámát adja vissza.
-        \item HP (életerő): Az ágens aktuális életerejét adja vissza.
-        \item Erő (str) Az ágens aktuális str értékét adja vissza.
-        \item Kitartás (vit): Az ágens aktuális vit értékétadja vissza.
-        \item Kitérés (eva): Az ágens aktuális eva értékét adja vissza.
-        \item Pontosság (acc): Az ágens aktuális acc értékét adja vissza.
-        \item Ezek a számok változhatnak az alapján, hogy milyen felszerelést hord az adott ágens.
-        \item Új tárgy felvételénél, ha úgy ítéli, hogy jobb mint az általa hordott azonos típusú tárgy, akkor lecseréli, és ennek megfelelően frissülnek a statisztikái.
-    \end{itemize}
-
-    \item Inventory
-    
-    \begin{itemize}
-        \item Nem nyitható meg, ha nincs még megnyitva egy tetszőleges ágens Statistics ablaka. \ref{fig:Inventory}
-        \item Megnyitásakor annak az ágensnek az Inventory-ja lesz látható, amelyiknek a Statistics oldala nyitva van.
-        \item A Statistics oldalon az előre/hátra lépés esetén az Inventory az újonnan szemügyre vett ágens Inventory-ját fogja megjeleníteni a felhasználó számára.
-        \item Az Inventory-ban a következő típusú tárgyak találhatóak meg:
-        \item Armor (páncél): Páncélként hordható tárgy, 4 alapstatisztikát tartalmaz.
-        \item Helmet (sisak): Sisakként hordható tárgy, 4 alapstatisztikát tartalmaz.
-        \item Weapon (fegyver): Fegyverként hordható tárgy, 4 alapstatisztikát tartalmaz.
-        \item Key (kulcs): Ajtó kinyitásához szükséges tárgy.
-        \item Az Inventory-ban a WASD billentyűk lenyomásával választhatjuk ki, hogy mely Inventory helyet akarjuk megnézni.
-        \item A fehér üres négyzet jelöli azt a helyet az Inventory-ban, amelyet éppen szemügyre vesz a felhasználó.
-        \item Ha felszerelés típusú az adott tárgy, akkor a nevét és a 4 alapstatisztika értékét írja ki.
-        \item Ha nem felszerelés típusú az adott tárgy, akkor pedig a nevét írja ki.
-    \end{itemize}
-
-    \item Életcsík
-    
-    \begin{itemize}
-        \item Minden ágens fölött az aktuális életcsíkja jelenik meg automatikusan.
-    \end{itemize}
-
-
+    \item \textit{Statistics}: A \texttt{C} billentyű megnyomására megjelenik az első számú ágens Statistics ablaka (\ref{fig:Statistics}. ábra).
+    \item \textit{Inventory}: Az \texttt{I} billentyű megnyomására megjelenik az az adott ágens Inventory oldala (\ref{fig:Inventory}. ábra).
 \end{itemize}
+
+\noindent Statistics
+
+\begin{itemize}
+    \item Egy adott ágens adatának a kiolvasásának az eredményeit megjelenítő UI ablak. 
+    \item A szimulációban megállítástól függetlenül a \texttt{C} billentyű megnyomására jelenik meg és tűnik el.
+    \item Megnyitásakor mindig a még szimulációban létező ágensek közül az első számú ágens adait fogja visszaadni.
+    \item A vizsgálandó ágens elpusztulásakor a még létező ágensek közül az új első számú ágens adatait fogja visszaadni.
+    \item Ezen az ablakon a következő ágens adatokat írja ki:
+    \begin{itemize}
+    \item \textit{Sorszám}: Az ágens sorszámát adja vissza.
+    \item \textit{HP} (életerő): Az ágens aktuális életerejét adja vissza.
+    \item \textit{Erő} (str) Az ágens aktuális str értékét adja vissza.
+    \item \textit{Kitartás} (vit): Az ágens aktuális vit értékét adja vissza.
+    \item \textit{Kitérés} (eva): Az ágens aktuális eva értékét adja vissza.
+    \item \textit{Pontosság} (acc): Az ágens aktuális acc értékét adja vissza.
+    \end{itemize}
+    Ezek a számok változhatnak az alapján, hogy milyen felszerelést hord az adott ágens.
+    \item Új tárgy felvételénél, ha úgy ítéli, hogy jobb, mint az általa hordott azonos típusú tárgy, akkor lecseréli, és ennek megfelelően frissülnek a statisztikái.
+\end{itemize}
+
+\noindent Inventory
+
+\begin{itemize}
+    \item Nem nyitható meg, ha nincs még megnyitva egy tetszőleges ágens \textit{Statistics} ablaka (\ref{fig:Inventory}. ábra).
+    \item Megnyitásakor annak az ágensnek az \textit{Inventory}-ja lesz látható, amelyiknek a \textit{Statistics} oldala nyitva van.
+    \item A \textit{Statistics} oldalon az előre/hátra lépés esetén az \textit{Inventory} az újonnan szemügyre vett ágens \textit{Inventory}-ját fogja megjeleníteni a felhasználó számára.
+    \item Az \textit{Inventory}-ban a következő típusú tárgyak találhatóak meg:
+    \begin{itemize}
+    \item \textit{Armor} (páncél): Páncélként hordható tárgy, 4 alapstatisztikát tartalmaz.
+    \item \textit{Helmet} (sisak): Sisakként hordható tárgy, 4 alapstatisztikát tartalmaz.
+    \item \textit{Weapon} (fegyver): Fegyverként hordható tárgy, 4 alapstatisztikát tartalmaz.
+    \item \textit{Key} (kulcs): Ajtó kinyitásához szükséges tárgy.
+    \end{itemize}
+    \item Az \textit{Inventory}-ban a \texttt{WASD} billentyűk lenyomásával választhatjuk ki, hogy mely \textit{Inventory} helyet akarjuk megnézni.
+    \item A fehér üres négyzet jelöli azt a helyett az \textit{Inventory}-ban, amelyet éppen szemügyre vesz a felhasználó.
+    \item Ha felszerelés típusú az adott tárgy, akkor a nevét és a 4 alapstatisztika értékét írja ki.
+    \item Ha nem felszerelés típusú az adott tárgy, akkor pedig a nevét írja ki.
+\end{itemize}
+
+\noindent Életcsík
+
+\begin{itemize}
+    \item Minden ágens fölött az aktuális életcsíkja jelenik meg automatikusan.
+\end{itemize}
+
 
 \Section{Szimulációs környezet specifikálása}
 
+A következőkben a szimulációs környezet modelljének, elemeinek a specifikálására kerül sor.
+
 \subsection{Map}
 
-Szimuláció kezdetekor megtörténik a map beolvasása:
+A szimulációban az ágensek egy diszkrét négyzetrács felbontáson tudnak mozogni. Ennek a mérete rögzített, $50 \times 50$, és minden elemhez egy saját definiálású \texttt{block} típus tartozik.
 
+Egy \texttt{block}-nak van típusa, amely egy egész számként reprezentálható. Ez a következő értékeket veheti fel:
 \begin{itemize}
-    \item Az 50x50-es mátrixon minden cellának egy block típus beolvasása:
-    
-    \begin{itemize}
-        \item 0 típus: Üresség, a mapon nem elérhető területeket jelöli.
-        \item 1 típus: Fal, a bejárható területeket körbezáró fal, amelyen nem lehet átmenni.
-        \item 2 típus: Füves terület, az ágensek által bejárható területek.
-    \end{itemize}
-
-    \item Az 50x50-es mátrixon minden 2-es típusú blockra helyezhetünk el egy objektumot.
-    
-    \begin{itemize}
-        \item Brick: Egy mozgást korlátozó objektum. Nincs különösebb szerepe. \ref{tbl:Chests and Brick}
-        \item Chest: End screent előidéző tárgy, amely a szimuláció végét jelenti. \ref{tbl:Chests and Brick}
-        \item Key: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Key and Door}
-        \item Door: Egy mozgást korlátozó objektum. Kulccsal kinyitható az ágensek által. \ref{tbl:Key and Door}
-        \item EntityArmor01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
-        \item EntityWeapon01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
-        \item EntityHelmet01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
-        \item EntityArmor02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
-        \item EntityWeapon02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
-        \item EntityHelmet02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba.\ref{tbl:Equipable items}
-
-    \end{itemize}
-
-    \item Az 50x50-es mátrixon minden 2-es típusú blockra helyezhetünk el egy ágenst.
-    
-    \begin{itemize}
-        \item EntityFaction0: 0-es számú csapatban lévő ágens.
-        \item EntityFaction1: 1-es számú csapatban lévő ágens.
-    \end{itemize}
-    
-    \item A szimulációs környezet a következőkből épül fel:
-    
-    \begin{itemize}
-        \item 18 szoba, 
-        \item 25 ajtó,
-        \item 25 kulcs,
-        \item 4 ágens,
-        \item 10 felvehető tárgy,
-        \item 2 chest,
-        \item 12 brick.
-    \end{itemize}
-
+\item 0 típus: Üres, a \textit{map}-on nem elérhető területeket jelöli.
+\item 1 típus: Fal, a bejárható területeket körbezáró fal, amelyen nem lehet átmenni.
+\item 2 típus: Füves terület, az ágensek által bejárható területek.
 \end{itemize}
 
-\subsection{Szobák és folyosók}
-
-A szobákat több szomszédos cellák alkotják, ezeket a szobákat folyosók kötik össze, amelyeket pontosan kettő cellával szomszédos cellák alkotnak.
-Minden szomszédos szobát egy ajtó választ el egymástól.
-Celláin korlátozottan helyezkedhetnek el oszlopok \ref{brick}, amely a cellát nem bejárható cellává alakítja és korlátozza a látást.
-Minden szoba tartalmaz legalább 1 kulcsot, amely elősegíti a map bejárhatóságát az ágensek által.
-
-\subsection{Map}
-
-A map szobák és folyosók összesége, ahol a szobák alakjánál törekszünk a négyzet alakú szobák elkerülésére. A folyosók általában rövidek és egy szóbából akár több is nyílhat egy adott szobára.
-A map blockokból épül fel. Blockok típusát egy ]0,2[ nyílt intervallumon belüli számok jelölik.
-Ezek az adatok a szimuláció kezdetekor kerülnek beolvasásra a world01.txt-ből.
-
-A szobákban és a folyosókban bejárható terület egy mátrixhoz hasonló, ahol a celláit blokkoknak nevezzük.
-Minden blokkhoz tartoznak adatok.
-
-\noindent Ezek az adatok:
+Az $50 \times 50$-es mátrixon minden 2-es típusú blokkra helyezhetünk el egy objektumot. Az objektumok típusai az alábbiak lehetnek.
 
 \begin{itemize}
-    \item X koordináta (Integer),
-    \item Y koordináta (Integer),
-    \item Block típusa (Integer).
+\item \textit{Brick}: Egy mozgást korlátozó objektum. Nincs különösebb szerepe.
+\item \textit{Chest}: \textit{End screen}-t előidéző tárgy, amely a szimuláció végét jelenti.
+\item \textit{Door}: Egy mozgást korlátozó objektum. Kulccsal kinyitható az ágensek által.
+\end{itemize}
+
+Az objektumok egy részhalmaza olyan, hogy az ágensek fel tudják azokat venni az Inventory-jukba, amelyek nem korlátozzák a mozgást. Ezek az alábbiak:
+\begin{itemize}
+\item \textit{Key},
+\item \textit{Entity\_Armor\_01},
+\item \textit{Entity\_Weapon\_01},
+\item \textit{Entity\_Helmet\_01},
+\item \textit{Entity\_Armor\_02},
+\item \textit{Entity\_Weapon\_02},
+\item \textit{Entity\_Helmet\_02}.
+\end{itemize}
+
+Szimuláció kezdetekor megtörténik a \textit{map} beolvasása. Ezt követően minden 2-es típusú blockra helyezhetünk el egy ágenst.
+\begin{itemize}
+    \item \textit{EntityFaction0}: 0-es számú csapatban lévő ágens.
+    \item \textit{EntityFaction1}: 1-es számú csapatban lévő ágens.
+\end{itemize}
+
+A szimulációs környezetben adott számú elemet helyezünk le. Konkrétan az alábbi számú és típusú elemek kerülnek rá:
+\begin{itemize}
+    \item 18 szoba, 
+    \item 25 ajtó,
+    \item 25 kulcs,
+    \item 4 ágens,
+    \item 10 felvehető tárgy,
+    \item 2 chest,
+    \item 12 brick.
+\end{itemize}
+
+\SubSection{Szobák és folyosók}
+
+A \textit{map}-en szobák és folyosók alakíthatók ki, de nem tetszőleges módon. Az alábbi szabályrendszer írja le, hogy milyen feltételek szerint helyezheti le ezeket a program.
+\begin{itemize}
+\item A szobákat több szomszédos cellák alkotják.
+\item A szobákat folyosók kötik össze, amelyeket pontosan kettő cellával szomszédos cellák alkotnak.
+\item Minden szomszédos szobát egy ajtó választ el egymástól.
+\item A szobák celláin korlátozottan helyezkedhetnek el oszlopok, amely a cellát nem bejárható cellává alakítja át, és korlátozza a látást.
+\item Minden szoba tartalmaz legalább 1 kulcsot, amely elősegíti a \textit{map} bejárhatóságát az ágensek által.
+\end{itemize}
+
+\SubSection{További map-re vonatkozó szabályok}
+
+A \textit{map} szobák és folyosók összessége, ahol a szobák alakjánál törekszünk a négyzet alakú szobák elkerülésére. A folyosók általában rövidek és egy szobából akár több is nyílhat egy adott szobára.
+A \textit{map} blokkokból épül fel. Blokkok típusát egy $[0, 2]$ intervallumon belüli számok jelölik.
+Ezek az adatok a szimuláció kezdetekor kerülnek beolvasásra a \texttt{world01.txt}-ből.
+
+A szobákban és a folyosókban bejárható terület egy mátrixhoz hasonló, amely celláit blokkoknak nevezzük.
+
+Minden blokkhoz tartoznak további adatok, úgy mint:
+\begin{itemize}
+    \item $X$ koordináta (Integer),
+    \item $Y$ koordináta (Integer).
 \end{itemize}
 
 \noindent Fontosabb kizáró feltételek:
-
 \begin{itemize}
     \item Ajtó csak szoba és a folyosó, vagy szoba és a szoba között létezzen.
     \item Folyosóból ne nyíljon ajtó folyosóra.
-    \item Két különböző folyósó ne érjen össze.
-    \item Nem lehet olyan cellára mozgást kizáró objektumokot letenni, amely lehetetlenné teszi a map egy tetszőleges pontjáról a map egy másik tetszőleges pontjára való eljutását.
+    \item Két különböző folyosó ne érjen össze.
+    \item Nem lehet olyan cellára mozgást kizáró objektumokat letenni, amely lehetetlenné teszi a \textit{map} egy tetszőleges pontjáról a \textit{map} egy másik tetszőleges pontjára való eljutását.
 \end{itemize}
 
 \Section{Tárgyak}
 
 A tárgyakhoz a következő fontosabb adatok tartoznak:
 \begin{itemize}
-    \item name (String)
-    \item typeName (String)
-    \item type (Integer)
-    \item str (Integer)
-    \item vit (Integer)
-    \item eva (Integer)
-    \item acc (Integer)
+    \item \textit{name} (String),
+    \item \textit{typeName} (String),
+    \item \textit{type} (Integer),
+    \item \textit{str} (Integer),
+    \item \textit{vit} (Integer),
+    \item \textit{eva} (Integer),
+    \item \textit{acc} (Integer).
 \end{itemize}
 
-\subsection{name}
+\SubSection{name}
 
 Az adott tárgyat bemutató név.
 
@@ -234,7 +245,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
 
 \Section{Tárgy nevek}
 
-\subsection{Entity Helmet 01}
+\SubSection{Entity\_Helmet\_01}
 
 Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
@@ -245,7 +256,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
     \item Pontosság (acc): [1,3[
 \end{itemize}
 
-\subsection{Entity Helmet 02}
+\SubSection{Entity\_Helmet\_02}
 
 
 Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
@@ -257,7 +268,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
     \item Pontosság (acc): [0,4[
 \end{itemize}
 
-\subsection{Entity Armor 01}
+\SubSection{Entity\_Armor\_01}
 
 Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
@@ -268,7 +279,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
     \item Pontosság (acc): [1,3[
 \end{itemize}
 
-\subsection{Entity Armor 02}
+\SubSection{Entity Armor 02}
 
 
 Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
@@ -280,7 +291,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
     \item Pontosság (acc): [0,4[
 \end{itemize}
 
-\subsection{Entity Weapon 01}
+\SubSection{Entity Weapon 01}
 
 Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
@@ -291,7 +302,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
     \item Pontosság (acc): [1,3[
 \end{itemize}
 
-\subsection{Entity Weapon 02}
+\SubSection{Entity Weapon 02}
 
 Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
 
@@ -302,7 +313,7 @@ Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van val�
     \item Pontosság (acc): [0,4[
 \end{itemize}
 
-\subsection{Kulcs}
+\SubSection{Kulcs}
 
 Celláról szerezhetőek meg.
 Szerepük az ajtók kinyitása az ágens által.
