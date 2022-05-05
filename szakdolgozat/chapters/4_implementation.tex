@@ -17,43 +17,13 @@ Más, hasonló szerkesztő és szimulációs rendszerek esetében is népszerű 
 
 Ebben a szakaszban a ágens heurisztikus mozgását és akcióit végrehajtó biztosító függvények bemutatása történik meg röviden.
 
+\section{wantToAttack}
+
 \begin{java}
 if (wantToAttack) {
-    attackAction(gp.entityList,isEnemyCloseIndexList);
-} else if (wantToEquip) {			
-    equipBetterItem(
-        inventoryList.get(inventoryList.size() - 1));
-} else if(wantToPickUp) {
-    pickUpObject(curObjIndex);
-} else if(wantToDeleteAnItem) {
-    System.out.println("Deleted item: "
-        + inventoryList.get(deleteIndex).name);
-    inventoryList.remove(deleteIndex);
-} else if (wantToOpenDoor) {
-    openDoor(doorIndex);
-} else if (wantToMoveToItem) {
-    if(cannotMove == false) {
-        moveToItemBlock(gp.objectList,
-        isItemCloseIndexList);
-        entityMove();
-    } else System.out.println("Skipped Turn");
-} else if (wantToMove) {
-    if(cannotMove == false) {
-        ArrayList<Point> detectableBlocks =
-             detectArray(gp.entityList,gp.objectList);
-        if (!checkIfNewEnemy(detectableBlocks,
-        gp.entityList)) {
-            if (!checkIfNewItem(detectableBlocks,
-            gp.objectList)) {
-                possibleBlocks();
-            }
-        }
-        entityMove();
-    } else System.out.println("Skipped Turn");
-}
+    attackAction(gp.entityList, isEnemyCloseIndexList);
+}    
 \end{java}
-
-\section{wantToAttack}
 
 Boolean típusú változó, amely akkor igaz, ha közvetlen szomszédos blockokon létező
 ellenséges ágensek száma nagyobb, mint 0.
@@ -70,6 +40,13 @@ kivonja az adott sebzést az adott ágenstől, amelyik elszenvedte a támadást.
 
 \section{wantToEquip}
 
+\begin{java}
+else if (wantToEquip) {			
+    equipBetterItem(
+        inventoryList.get(inventoryList.size() - 1));
+}
+\end{java}
+
 Boolean típusú változó, amely akkor igaz, ha az adott ágens inventoryjában az utoljára felvett tárgy hordható
 típusú és összességében több statisztikát ad, mint az ágens által jelenleg hordott azonos típusú tárgy.
 
@@ -79,6 +56,12 @@ Statisztikák ablakon nyomon lehet követni ezt a változást.
 
 \section{wantToPickUp}
 
+\begin{java}
+else if (wantToPickUp) {
+    pickUpObject(curObjIndex);
+}
+\end{java}
+
 Boolean típusú változó, amely akkor igaz, ha létezik valamilyen tárgy az ágens jelenlegi blockján.
 
 Ha igaz értéket ad vissza, akkor meghívódik a pickUpObject() függvény, amelynek paramétere az adott blockon lévő tárgy
@@ -86,12 +69,25 @@ indexe a tárgyak listájában. Meghívásakor az adott tárgy bekerül az ágen
 
 \section{wantToDeleteAnItem}
 
+\begin{java}
+else if (wantToDeleteAnItem) {
+    System.out.println("Deleted item: "
+        + inventoryList.get(deleteIndex).name);
+    inventoryList.remove(deleteIndex);
+}
+\end{java}
+
 Boolean típusú változó, amely akkor igaz, ha létezik valamilyen nem viselt tárgy az ágens inventoryjában.
 
 Igaz érték esetén megtörténik a deletedIndex által tárolt elsőnek talált nem használt tárgy indexének a törlése az inventoryjából, 
 amely nem az ágens által hordott és nem kulcs.
 
 \section{wantToOpenDoor}
+\begin{java}
+else if (wantToOpenDoor) {
+    openDoor(doorIndex);
+}
+\end{java}
 
 Boolean típusú változó, amely akkor igaz, ha létezik ajtó az ágens szomszédos blockjában és van az ágens inventoryjában legalább 1 kulcs.
 
@@ -99,6 +95,17 @@ Az openDoor() függvénynek egy paramétere van, amely az ajtó indexe a tárgy 
 az ajtó objektum eltűnik, és eltávolítja a felhasznált kulcsot az ágens inventoryjából.
 
 \section{wantToMoveToItem}
+
+\begin{java}
+else if (wantToMoveToItem) {
+    if (cannotMove == false) {
+        moveToItemBlock(gp.objectList,
+        isItemCloseIndexList);
+        entityMove();
+    } else System.out.println("Skipped Turn");
+}
+\end{java}
+
 
 Boolean típusú változó, amely akkor igaz, ha a közeli blockokon lévő tárgyak listája nagyobb, mint 0 és az ágens inventoryja nincs tele.
 
@@ -110,6 +117,23 @@ Ez a függvény beállítja az ágens direction értéket.
 Majd meghívódik az entityMove() függvény, amely az ágens által választott irányba lép előre egyet és vagy felrakja a hashMap-re, vagy növeli az értékét.
 
 \section{wantToMove}
+
+\begin{java}
+else if (wantToMove) {
+    if (cannotMove == false) {
+        ArrayList<Point> detectableBlocks =
+            detectArray(gp.entityList, gp.objectList);
+        if (!checkIfNewEnemy(detectableBlocks,
+        gp.entityList)) {
+            if (!checkIfNewItem(detectableBlocks,
+            gp.objectList)) {
+                possibleBlocks();
+            }
+        }
+        entityMove();
+    } else System.out.println("Skipped Turn");
+}
+\end{java}
 
 Boolean típusú változó, amely mindig igaz, ha minden fentebb sorolt boolean változú hamis, ebben a pontban összefoglalt akció fog megtörténni.
 
@@ -136,4 +160,24 @@ véletlenszerűen választ egyet azok közül.
 Ha már minden lehetséges blockon járt legalább egyszer, akkor a lehetséges lépések közül a legkevesebbszer bejárt blockot választja. Ha 
 több ilyen block is van, amin ugyanannyiszor volt, akkor véletlenszerűen választ közülük egyet.
 
-% TODO: GUI alkalmazás fejlesztésről néhány dolog.
+\Section{Java Swing GUI fontosabb részeinek bemutatása}
+
+JFrame: ez az alapja a Swing alkalmazásoknak.
+
+\medskip
+
+\noindent Nehány fontosabb függvénye a JFrame-nek:
+\begin{itemize}
+    \item void add (c komponens): Hozzáad egy komponenst.
+    \item void setSize (int szélesség, int magasság): Egy komponens szélességének és magasságának a beállítása.
+    \item void setVisible (logikai érték a): Ha \textit{a} igaz, akkor a komponens megjelenik a képernyőn.
+    \item void setResizable(logikai érték a): Ha \textit{a} igaz, akkor az ablak nem újraméretezhető.
+    \item void pack(): úgy méretezi a keretet, hogy annak minden tartalma elérje vagy meghaladja a kívánt méretet.
+    \item void setDefaultCloseOperation(): a következő paraméterekkel a következő tevékenységek mennek végbe bezáráskor:
+    \begin{itemize}
+        \item[1.] JFrame.EXIT\_ON\_CLOSE: Bezárja az alkalmazást.
+        \item[2.] JFrame.HIDE\_ON\_CLOSE: Keret elrejtése, de az alkalmazás tovább fut.
+        \item[3.] JFrame.DISPOSE\_ON\_CLOSE: Keretobjektum eldobása, de az alkalmazás tovább fut.
+        \item[4.] JFrame.DO\_NOTHING\_ON\_CLOSE: Nem csinál semmit.
+    \end{itemize}
+\end{itemize}

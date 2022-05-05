@@ -9,33 +9,35 @@ amely a felhasználó számára jelzi, hogy melyik menü pont a jelenleg kivála
 A számunkra megfelelő menüpont kiválasztása utána az enter lenyomásával véglegesíthetjük döntésünket.
 Ekkor a menüpontnak megfelelő utasítás fog végrehajtódni.
 
-Ha a Start menüpontot választottuk, akkor elhagyjuk a main menüt és elkezdődik a szimuláció.
-Ha a Quit menüpontot választottuk, akkor az alkalmazás bezáródik.
+Ha a \textit{Start} menüpontot választottuk, akkor elhagyjuk a main menüt és elkezdődik a szimuláció.
+Ha a \textit{Quit} menüpontot választottuk, akkor az alkalmazás bezáródik.
 
 \Section{Szimuláció közben használható funkciók}
 
 \subsection{Pause}
-A szimuláció közben, a felhasználónak lehetősége van megállítani a szimulációt, hogyha megszeretne valami vizsgálni vagy csak
-megszeretné állítani ideiglenesen a szimulációt. Ezt a P gomb megnyomásával teheti meg.
+A szimuláció közben a felhasználónak lehetősége van megállítani a szimulációt, hogyha megszeretne valami vizsgálni vagy csak
+megszeretné állítani ideiglenesen a szimulációt. Ezt a \texttt{P} gomb megnyomásával teheti meg.
 
-Az alkalmazás a szimuláció megállását, a bal felső sarokban kiírt fehér Paused felirattal jelzi a felhasználó számára.
-Ha a szimuláció jelenleg meg lett állítva, akkor a P gomb még egyszer megnyomásával újra elindíthatjuk azt.
+Az alkalmazás a szimuláció megállását, a bal felső sarokban kiírt fehér \textit{Paused} felirattal jelzi a felhasználó számára.
+Ha a szimuláció jelenleg meg lett állítva, akkor a \texttt{P} gomb még egyszer megnyomásával újra elindíthatjuk azt.
 
-\subsection{Ágens ablak}
-A szimuláció szüneteltésétől függetlenül bármikor megnyithatjuk az ágensek oldalát (Statistics), ahol mindig az első ágens adait fogjuk látni először.
+\subsection{Statistics ablak}
+A szimuláció szüneteltésétől függetlenül bármikor megnyithatjuk egy ágens \textit{Statistics} oldalát, ahol mindig az első ágens adait fogjuk látni először.
+Megnyitása és bezárása a \texttt{C} billentyű lenyomásával lehetséges.
 Ez az ablak 6 darab sort tartalmaz, mindegyik az ágens egy adatát írja ki a felhasználó számára.
-Az ágensek között a Q és E gombok megnyomásával haladhatunk hátra és előre. Az alkalmazás ezek használatára az ágens ablak bal alsó és jobb alsó
-sarkában lévő PRESS Q és PRESS E kiírásokkal vonja fel a felhasználó figyelmét.
+Az ágensek között a \texttt{Q} és \texttt{E} gombok megnyomásával haladhatunk hátra és előre. Az alkalmazás ezek használatára az ágens ablak bal alsó és jobb alsó
+sarkában lévő \textit{PRESS Q} és \textit{PRESS E} kiírásokkal vonja fel a felhasználó figyelmét.
 
 \subsection{Inventory ablak}
-Az ágens ablakban megjelenített ágensnek sorszámától és a szimuláció szüneteltésétől függetlenül bármikor megnyithatjuk a hozzá tartozó inventory ablakot (Inventory).
+A \textit{Statistics} ablakban megjelenített ágensnek sorszámától és a szimuláció szüneteltésétől függetlenül bármikor megnyithatjuk a hozzá tartozó \textit{Inventory} ablakot.
+Ezt az ablakot az ágens ablakkal ellentétben nem lehet léptetni, mindig a \textit{Statistics} ablakban vizsgált ágens \textit{Inventory} adatait fogja kiírni.
+Ezt az ablakot önmagában nem lehet megnyitni, csak akkor ha már a \textit{Statistics} ablak meg van nyitva.
+Megnyitása és bezárása az \texttt{I} billentyű lenyomásával lehetséges.
 Ez az ablak tartalmaz 8 négyzetet és egy rövid tárgy leírást, amely lehet 1 vagy 6 sorú, a tárgy típúsától függően. Ha a tárgy hordható típusú, akkor első sorában a nevét, 
 a további 4 sorában a statisztikáit láthatjuk, majd végül az utolsó sorában azt hogy fel van-e szerelve az ágens által. Ha a tárgy nem hordható (kulcs), 
 akkor a tárgy leírásában csak az első sorát, a nevét fogjuk látni.
 Az ablak megnyitásakor mindig a bal felső négyzet van kijelölve, amelyet az alkalmazás úgy jelöl a felhasználó számára, hogy egy fehér négyzetet helyez rá.
 A négyzetekben tárgyak képeit láthatjuk, hogy ha a vizsgált ágens inventory listája tartalmaz valamilyen tárgyat.
-Ezt az ablakot az ágens ablakkal ellentétben nem lehet léptetni, mindig az ágens ablakban vizsgált ágens inventory adatait fogja kiírni.
-Ezt az ablakot önmagában nem lehet megnyitni, csak akkor ha már az ágens ablak meg van nyitva.
 
 \Section{Szimuláció vége}
 
