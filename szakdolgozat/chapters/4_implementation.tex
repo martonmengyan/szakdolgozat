@@ -1,48 +1,56 @@
 \Chapter{Megvalósítás}
 
-Ebben a fejezetben a ágens heurisztikus mozgását és akcióit végrehajtó biztosító függvények bemutatása történik meg röviden.
+\Section{Felhasznált technológiák}
+
+\SubSection{Java}
+
+A Java általános célú, objektumorientált programozási nyelv, amelyet a Sun Microsystems fejlesztett a 90-es évek elejétől kezdve egészen 2009-ig, amikor a céget felvásárolta az Oracle \cite{arnold2005java}.
+
+\SubSection{Java Swing}
+
+A Swing osztályok kiküszöbölik a Java legnagyobb gyengeségét, a viszonylag primitív felhasználói felület eszközkészletét. A Java Swing segít a Swing osztályok teljes előnyeinek kihasználásában,
+részletes leírást adva minden osztályról és felületről a kulcsfontosságú Swing csomagokban \cite{10.5555/291162}.
+
+Más, hasonló szerkesztő és szimulációs rendszerek esetében is népszerű választás. Ez köszönhető egyrészt a Java nyelv elterjedtségének, másrészt, hogy napjainkban is az egyik legegyszerűbben átvihető \textit{widget toolkit}-ról van szó.
+
+\Section{Az ágensek vezérlése}
+
+Ebben a szakaszban a ágens heurisztikus mozgását és akcióit végrehajtó biztosító függvények bemutatása történik meg röviden.
 
 \begin{java}
-    if(wantToAttack) {
-        attackAction(gp.entityList,isEnemyCloseIndexList);
-    }else if(wantToEquip) {			
-        equipBetterItem(inventoryList.get(inventoryList.size()
-        -1));
-    }else if(wantToPickUp) {
-        pickUpObject(curObjIndex);
-    }else if(wantToDeleteAnItem) {
-        System.out.println("Deleted item: "
-            + inventoryList.get(deleteIndex).name);
-        inventoryList.remove(deleteIndex);
-    }else if(wantToOpenDoor) {
-        openDoor(doorIndex);
-    }else if(wantToMoveToItem) {
-        if(cannotMove==false) {
-            moveToItemBlock(gp.objectList,
-            isItemCloseIndexList);
-            entityMove();
-        } else System.out.println("Skipped Turn");
-
-    }else if(wantToMove) {
-        if(cannotMove==false) {
-            
-            ArrayList<Point> detectableBlocks =
-                 detectArray(gp.entityList,gp.objectList);
-
-            if(!checkIfNewEnemy(detectableBlocks,
-            gp.entityList)) {
-                if(!checkIfNewItem(detectableBlocks,
-                gp.objectList)) {
-                    possibleBlocks();
-                }
-                
+if (wantToAttack) {
+    attackAction(gp.entityList,isEnemyCloseIndexList);
+} else if (wantToEquip) {			
+    equipBetterItem(
+        inventoryList.get(inventoryList.size() - 1));
+} else if(wantToPickUp) {
+    pickUpObject(curObjIndex);
+} else if(wantToDeleteAnItem) {
+    System.out.println("Deleted item: "
+        + inventoryList.get(deleteIndex).name);
+    inventoryList.remove(deleteIndex);
+} else if (wantToOpenDoor) {
+    openDoor(doorIndex);
+} else if (wantToMoveToItem) {
+    if(cannotMove == false) {
+        moveToItemBlock(gp.objectList,
+        isItemCloseIndexList);
+        entityMove();
+    } else System.out.println("Skipped Turn");
+} else if (wantToMove) {
+    if(cannotMove == false) {
+        ArrayList<Point> detectableBlocks =
+             detectArray(gp.entityList,gp.objectList);
+        if (!checkIfNewEnemy(detectableBlocks,
+        gp.entityList)) {
+            if (!checkIfNewItem(detectableBlocks,
+            gp.objectList)) {
+                possibleBlocks();
             }
-            
-            entityMove();
-        } else System.out.println("Skipped Turn");
-
-
-    }
+        }
+        entityMove();
+    } else System.out.println("Skipped Turn");
+}
 \end{java}
 
 \section{wantToAttack}
@@ -127,3 +135,5 @@ véletlenszerűen választ egyet azok közül.
 
 Ha már minden lehetséges blockon járt legalább egyszer, akkor a lehetséges lépések közül a legkevesebbszer bejárt blockot választja. Ha 
 több ilyen block is van, amin ugyanannyiszor volt, akkor véletlenszerűen választ közülük egyet.
+
+% TODO: GUI alkalmazás fejlesztésről néhány dolog.

@@ -4,9 +4,19 @@ A szakdolgozat egy szimulációs környezet létrehozásával fog kezdődni, ame
 Körökre osztott, az ágenseket egy fix sorrendbe rakjuk, amely meghatározza, mikor jön melyik ágens.
 A szimulációs környezet véges számú különböző szobákból és folyósókból épül fel. Két szobát egy folyosó köt össze, amelyet a folyosó mindkét végén egy ajtó zár le. 
 
-Az ágensek két nagyobb csoportra vannak osztva, amelyeket 'frakció'-knak nevezünk. Minden frakciónak van egy teljesítendő célja, amely teljesítésénél véget ér a szimuláció.
+A szobák és folyosók blokkokból épülnek fel. Ezeken a blokkokon helyezkedhetnek el a karakterek limitáltan, azaz egynél több karakter nem tartózkodhat rajta.
+
+Az ágensek két nagyobb csoportra vannak osztva, amelyeket \textit{frakció}-knak nevezünk. Minden \textit{frakciónak} van egy teljesítendő célja, amely teljesítésénél véget ér a szimuláció.
 Az ágensek miközben keresik a célukat, figyelembe veszik az útközben észrevett tárgyakat, kulcsokat, ajtókat és ellenséges ágenseket és ezek alapján tervezik meg következő lépésüket.
 
-A szobák és folyosók blokkokból épülnek fel. Ezeken a blokkokon helyezkedhetnek el a karakterek limitáltan, azaz egynél több karakter nem tartózkodhat rajta.
+Ha az ágensek \textit{Inventory} mérete nem telített, akkor az észrevett tárgyakat megközelítik és felveszik.
+
+Az \textit{Inventory}-ba bekerült hordható tárgyakat, ha nincs semmilyen más nagyobb prioritású elintézni valójuk, akkor megvizsgálják annak statisztikáit és összehasonlítják a vele azonos típusú \textit{typeName} változójú általuk hordott tárgy statisztikáival, ezáltal meghatározva, hogy jobb-e vagy sem.
+
+Mivel az \textit{Inventory} véges ezért valamilyen módon kezelniük kell a saját \textit{Inventory} helyeiket, hogy ne teljen meg értelmetlenül.
+
+Ha van ellenséges ágens vagy tárgy az észlelési zónájukban, akkor azokat megközelítik. Több ágens észlevételénél a legkevesebb életerővel  rendelkezőt fogja támadni.
+
+Ezen kívül megvalósításra kerül a legfontosabb része a szimulációnak, amely a \textit{map} herusztikus felfedezése.
 
 A program Java programozási nyelven \cite{arnold2005java} készül, a \textit{Java Swing} csomag \cite{10.5555/291162} használatával.

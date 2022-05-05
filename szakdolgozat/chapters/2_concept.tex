@@ -1,6 +1,14 @@
-\Chapter{Koncepció}
+\Chapter{A szimulációs környezet elemei és funkciói}
 
-\Section{A fejezet célja}
+\Section{Több ágenses szimulációs rendszerek}
+
+Szimulációs környezetekre különféle problémák megoldása során szükség van. Ezeknek egy speciális esetei az ágens alapú szimulátorok. A dolgozat azon belül egy szűkebb területtel, a több ágens alapú szimulációkkal (\textit{Multi Agent Based Simulation}) témakörével foglalkozik, ahhoz mutat be egy lehetséges környezetet.
+
+A szimulációs rendszerek között találkozhatunk például olyannal, amelyik a vészhelyzetben való menekülést igyekszik modellezni, a jellemző paramétereket becsülni, az elméleti eredményeket alátámasztani \cite{zoumpoulaki2010multi}.
+
+Alkalmazási területeket találhatunk még a vezeték nélküli hálózatok vizsgálata kapcsán is \cite{niazi2010novel}.
+
+\Section{Általános jellemzők}
 
 A szimulációs környezet inspirációt vesz már elkészített videójátékokból, mint például a \textit{Pixel Dungeon} \cite{pixeldungeon} és \textit{Darkest Dungeon} \cite{darkestdungeon} 
 nevű játékokból ismerhető szoba és folyosó kapcsolat. Ahol minden szobát egy folyosó köt össze egy másik tetszőleges szobával.
@@ -14,20 +22,27 @@ rendelkezve próbálják legyőzni egymást és az ellenséges ágenseket.
 
 Az alkalmazás a \textit{Pela} fantázia nevet kapta.
 
-\Section{Felhasznált technológiák}
-
-\subsection{Java}
-
-A Java általános célú, objektumorientált programozási nyelv, amelyet a Sun Microsystems fejlesztett a 90-es évek elejétől kezdve egészen 2009-ig, amikor a céget felvásárolta az Oracle \cite{arnold2005java}.
-
-\subsection{Java Swing}
-
-A Swing osztályok kiküszöbölik a Java legnagyobb gyengeségét, a viszonylag primitív felhasználói felület eszközkészletét. A Java Swing segít a Swing osztályok teljes előnyeinek kihasználásában,
-részletes leírást adva minden osztályról és felületről a kulcsfontosságú Swing csomagokban \cite{10.5555/291162}.
-
 \Section{Az ágens szimulációs felület elemei}
 
 Az ágensek és környezetük szimulációjához, a rajtuk elvégzendő mérésekhez célszerű összerakni egy grafikus felületet. A következő szakaszokban ezeknek a két fő elemét, a menüt és az UI-t mutatja be a dolgozat.
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tabular}{ cc }
+            \includegraphics[width=0.45\textwidth, height=40mm]{images/nonPaused.png}
+            & 
+            \includegraphics[width=0.45\textwidth, height=40mm]{images/Paused.png}    
+            \\
+            \includegraphics[width=0.45\textwidth, height=40mm]{images/Inventory.png}
+            &
+            \includegraphics[width=0.45\textwidth, height=40mm]{images/Statistics.png}
+            \\
+            \multicolumn{2}{c}{\includegraphics[width=0.45\textwidth, height=40mm]{images/MainMenu.png}}
+        \end{tabular}
+    \end{center}
+    \caption{UI and Menu képernyőtervek}
+    \label{tbl:tableofuiandmenu}
+\end{figure}
 
 \SubSection{Menü}
 
@@ -37,7 +52,7 @@ A szimulációs környezethez tartozik egy menü ablak. Ennek elemei az alábbia
 
 \noindent Szimuláció indítása előtt:
 \begin{itemize}
-    \item Középen felül a \textit{Main Menu} kiírását láhatjuk, alatta pedig 2 opcióból választhatunk (\ref{fig:MainMenu}. ábra):
+    \item Középen felül a \textit{Main Menu} kiírását láhatjuk, alatta pedig 2 opcióból választhatunk (\ref{tbl:tableofuiandmenu}. ábra):
     \begin{itemize}
     \item[(1)] \textit{Start}, a kiválasztása esetén elindul a szimuláció,
     \item[(2)] \textit{Quit}, a szimulációs ablak bezárása.
@@ -51,11 +66,11 @@ A szimulációs környezethez tartozik egy menü ablak. Ennek elemei az alábbia
 
 \begin{itemize}
     \item A szimulációban a \texttt{P} billentyű lenyomásával képes a felhasználó megállítani a szimuláció menetét.
-    \item A megállítást a bal felső sarokban kiírt fehér \textit{Paused} kiírás jelzi a felhasználó számára (\ref{fig:Paused}. ábra).
+    \item A megállítást a bal felső sarokban kiírt fehér \textit{Paused} kiírás jelzi a felhasználó számára (\ref{tbl:tableofuiandmenu}. ábra).
     \item Ilyenkor az ágensek nem kapnak lehetőséget a lépésre, de a felhasználó képes a kamera mozgatására a nyilak segítségével.
     \item A felhasználó szintén képes az ágensek \textit{Statistics} ablakát megnyitni/bezárni a \texttt{C} billentyű megnyomásával, és előre/hátra lapozni az ágensek között a \texttt{Q} (balra) és \texttt{E} (jobbra) billentyűk megnyomásával, ha több van a szimulációban, mint 1.
     \item Ugyanígy képes megnyitni/bezárni az adott ágenshez tartozó \textit{Inventory} ablakot az \texttt{I} billentyű megnyomásával, ha látszódik az ágens statisztikája ablak.
-    \item A \texttt{P} billentyű újonnan megnyomásával ott folytatódik a szimuláció, ahol abbamaradt (\ref{fig:nonPaused}. ábra).
+    \item A \texttt{P} billentyű újonnan megnyomásával ott folytatódik a szimuláció, ahol abbamaradt (\ref{tbl:tableofuiandmenu}. ábra).
 \end{itemize}
 
 \Section{UI}
@@ -68,11 +83,12 @@ A UI (\textit{User Interface}) foglalja magába az ágens szimulátor fő elemei
 \noindent A szimuláció figyelésére szolgáló UI ablakok, amelyek a szimuláció kezdete után a képernyőn jelennek meg, a következők:
 
 \begin{itemize}
-    \item \textit{Statistics}: A \texttt{C} billentyű megnyomására megjelenik az első számú ágens Statistics ablaka (\ref{fig:Statistics}. ábra).
-    \item \textit{Inventory}: Az \texttt{I} billentyű megnyomására megjelenik az az adott ágens Inventory oldala (\ref{fig:Inventory}. ábra).
+    \item \textit{Statistics}: A \texttt{C} billentyű megnyomására megjelenik az első számú ágens Statistics ablaka (\ref{tbl:tableofuiandmenu}. ábra).
+    \item \textit{Inventory}: Az \texttt{I} billentyű megnyomására megjelenik az az adott ágens \textit{Inventory} oldala (\ref{tbl:tableofuiandmenu}. ábra).
+    \item \textit{Health Point}: Az ágens életerejét jeleníti meg.
 \end{itemize}
 
-\noindent Statistics
+\SubSection{Statistics}
 
 \begin{itemize}
     \item Egy adott ágens adatának a kiolvasásának az eredményeit megjelenítő UI ablak. 
@@ -92,10 +108,10 @@ A UI (\textit{User Interface}) foglalja magába az ágens szimulátor fő elemei
     \item Új tárgy felvételénél, ha úgy ítéli, hogy jobb, mint az általa hordott azonos típusú tárgy, akkor lecseréli, és ennek megfelelően frissülnek a statisztikái.
 \end{itemize}
 
-\noindent Inventory
+\SubSection{Inventory}
 
 \begin{itemize}
-    \item Nem nyitható meg, ha nincs még megnyitva egy tetszőleges ágens \textit{Statistics} ablaka (\ref{fig:Inventory}. ábra).
+    \item Nem nyitható meg, ha nincs még megnyitva egy tetszőleges ágens \textit{Statistics} ablaka (\ref{tbl:tableofuiandmenu}. ábra).
     \item Megnyitásakor annak az ágensnek az \textit{Inventory}-ja lesz látható, amelyiknek a \textit{Statistics} oldala nyitva van.
     \item A \textit{Statistics} oldalon az előre/hátra lépés esetén az \textit{Inventory} az újonnan szemügyre vett ágens \textit{Inventory}-ját fogja megjeleníteni a felhasználó számára.
     \item Az \textit{Inventory}-ban a következő típusú tárgyak találhatóak meg:
@@ -111,12 +127,13 @@ A UI (\textit{User Interface}) foglalja magába az ágens szimulátor fő elemei
     \item Ha nem felszerelés típusú az adott tárgy, akkor pedig a nevét írja ki.
 \end{itemize}
 
-\noindent Életcsík
+\SubSection{Health Point}
 
 \begin{itemize}
-    \item Minden ágens fölött az aktuális életcsíkja jelenik meg automatikusan.
+    \item Minden ágens fölött az aktuális életcsíkja (\textit{HP, Health Point}) jelenik meg automatikusan.
 \end{itemize}
 
+\newpage
 
 \Section{Szimulációs környezet specifikálása}
 
@@ -133,6 +150,25 @@ Egy \texttt{block}-nak van típusa, amely egy egész számként reprezentálhat�
 \item 2 típus: Füves terület, az ágensek által bejárható területek.
 \end{itemize}
 
+Kinézeteiket \aref{tbl:Blocks} ábrán láthatjuk. 
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tabular}{ ccc}
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/block_brick.png}
+            & 
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/block_grass.png}    
+            & 
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/block_empty.png}
+            \\
+        \end{tabular}
+        \caption{Blokkok}
+        \label{tbl:Blocks}
+    \end{center}
+\end{figure}
+
+\medskip
+
 Az $50 \times 50$-es mátrixon minden 2-es típusú blokkra helyezhetünk el egy objektumot. Az objektumok típusai az alábbiak lehetnek.
 
 \begin{itemize}
@@ -141,7 +177,7 @@ Az $50 \times 50$-es mátrixon minden 2-es típusú blokkra helyezhetünk el egy
 \item \textit{Door}: Egy mozgást korlátozó objektum. Kulccsal kinyitható az ágensek által.
 \end{itemize}
 
-Az objektumok egy részhalmaza olyan, hogy az ágensek fel tudják azokat venni az Inventory-jukba, amelyek nem korlátozzák a mozgást. Ezek az alábbiak:
+Az objektumok egy részhalmaza olyan, hogy az ágensek fel tudják azokat venni az \textit{Inventory}-jukba, amelyek nem korlátozzák a mozgást. Ezek az alábbiak:
 \begin{itemize}
 \item \textit{Key},
 \item \textit{Entity\_Armor\_01},
@@ -151,6 +187,32 @@ Az objektumok egy részhalmaza olyan, hogy az ágensek fel tudják azokat venni 
 \item \textit{Entity\_Weapon\_02},
 \item \textit{Entity\_Helmet\_02}.
 \end{itemize}
+
+Kinézeteiket a \ref{tbl:Equipable items}. ábrán láthatjuk.
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tabular}{ | c | c | c | }
+            \hline
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Armor_01.png}
+            & 
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Helmet_01.png}    
+            & 
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Weapon_01.png}
+            \\
+            \hline
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Armor_02.png}
+            & 
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Helmet_02.png}    
+            & 
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Weapon_02.png}
+            \\
+            \hline
+        \end{tabular}
+        \caption{Item sets}
+        \label{tbl:Equipable items}
+    \end{center}
+\end{figure}
 
 Szimuláció kezdetekor megtörténik a \textit{map} beolvasása. Ezt követően minden 2-es típusú blockra helyezhetünk el egy ágenst.
 \begin{itemize}
@@ -165,8 +227,8 @@ A szimulációs környezetben adott számú elemet helyezünk le. Konkrétan az 
     \item 25 kulcs,
     \item 4 ágens,
     \item 10 felvehető tárgy,
-    \item 2 chest,
-    \item 12 brick.
+    \item 2 láda,
+    \item 12 oszlop.
 \end{itemize}
 
 \SubSection{Szobák és folyosók}
@@ -206,112 +268,52 @@ Minden blokkhoz tartoznak további adatok, úgy mint:
 
 A tárgyakhoz a következő fontosabb adatok tartoznak:
 \begin{itemize}
-    \item \textit{name} (String),
-    \item \textit{typeName} (String),
-    \item \textit{type} (Integer),
-    \item \textit{str} (Integer),
-    \item \textit{vit} (Integer),
-    \item \textit{eva} (Integer),
-    \item \textit{acc} (Integer).
+    \item \textit{name} (String): Az adott tárgyat bemutató név.
+    \item \textit{typeName} (String): A tárgyak tartalmaznak tárgy típus nevet, például: Armor, Helmet, Key... stb.
+    \item \textit{type} (Integer): A Key tárgy a 0 típusú, amíg minden hordható tárgy a 2 típus számot tartalmazza,
+    \item \textit{str} (Integer): a tárgy ereje (\textit{strength}),
+    \item \textit{vit} (Integer): a tárgy kitartása (\textit{vitality}),
+    \item \textit{eva} (Integer): a tárgy kitérés (\textit{evasion}),
+    \item \textit{acc} (Integer): a tárgy pontosság (\textit{accuracy}).
 \end{itemize}
-
-\SubSection{name}
-
-Az adott tárgyat bemutató név.
-
-\subsection{typeName}
-
-A tárgyak tartalmaznak tárgy típus nevet, például: Armor, Helmet, Key... stb.
-
-\subsection{type}
-
-A Key tárgy a "0" típusú, amíg minden hordható tárgy a "2" típus számot tartalmazza.
-
-\subsection{str}
-
-Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van valós str értéke.
-
-\subsection{vit}
-
-Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van valós vit értéke.
-
-\subsection{eva}
-
-Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van valós eva értéke.
-
-\subsection{acc}
-
-Ha az adott tárgy az ágensek által hordható tárgy, azaz nem kulcs, van valós acc értéke.
+Az ágens által hordható tárgyaknak van valós \textit{str}, \textit{vit}, \textit{eva} és \textit{acc} értéke.
 
 \Section{Tárgy nevek}
 
-\SubSection{Entity\_Helmet\_01}
+Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból. Ezek értékeit \aref{tab:stats}. táblázatban láthatjuk. A tárgyak kinézetét a szimulációban pedig \ref{tbl:Equipable items}. ábrán láthatjuk, ahol a felső sor a 01 tárgyakat, a második sor a 02 tárgyakat foglalja össze.
 
-Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő (str): [1,3[
-    \item Kitartás (vit): [1,3[
-    \item Kitérés (eva): [1,3[
-    \item Pontosság (acc): [1,3[
-\end{itemize}
-
-\SubSection{Entity\_Helmet\_02}
-
-
-Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő (str): [0,4[
-    \item Kitartás (vit): [0,4[
-    \item Kitérés (eva): [0,4[
-    \item Pontosság (acc): [0,4[
-\end{itemize}
-
-\SubSection{Entity\_Armor\_01}
-
-Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő (str): [1,3[
-    \item Kitartás (vit): [1,3[
-    \item Kitérés (eva): [1,3[
-    \item Pontosság (acc): [1,3[
-\end{itemize}
-
-\SubSection{Entity Armor 02}
-
-
-Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő (str): [0,4[
-    \item Kitartás (vit): [0,4[
-    \item Kitérés (eva): [0,4[
-    \item Pontosság (acc): [0,4[
-\end{itemize}
-
-\SubSection{Entity Weapon 01}
-
-Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő (str): [1,3[
-    \item Kitartás (vit): [1,3[
-    \item Kitérés (eva): [1,3[
-    \item Pontosság (acc): [1,3[
-\end{itemize}
-
-\SubSection{Entity Weapon 02}
-
-Ágens által használható felszerelési tárgy, amely statisztikát ad, amelyek hozzáadódnak, illetve kivonódnak az ágens jelenlegi statisztikáiból.
-
-\begin{itemize}
-    \item Erő (str): [0,4[
-    \item Kitartás (vit): [0,4[
-    \item Kitérés (eva): [0,4[
-    \item Pontosság (acc): [0,4[
-\end{itemize}
+\begin{table}[h!]
+\centering
+\caption{Tárgyak statisztikái}
+\label{tab:stats}
+\medskip
+\begin{tabular}{|l|cc|cc|cc|cc|}
+\textit{name} &
+\multicolumn{2}{c|}{\textit{str}} &
+\multicolumn{2}{c|}{\textit{vit}} &
+\multicolumn{2}{c|}{\textit{eva}} &
+\multicolumn{2}{c|}{\textit{acc}} \\
+&
+min & max &
+min & max &
+min & max &
+min & max \\
+\hline
+Entity\_Helmet\_01 &
+1 & 2 & 1 & 2 & 1 & 2 & 1 & 2 \\
+Entity\_Helmet\_02 &
+0 & 3 & 0 & 3 & 0 & 3 & 0 & 3 \\
+Entity\_Armor\_01 &
+1 & 2 & 1 & 2 & 1 & 2 & 1 & 2 \\
+Entity\_Armor\_02 &
+0 & 3 & 0 & 3 & 0 & 3 & 0 & 3 \\
+Entity\_Weapon\_01 &
+1 & 2 & 1 & 2 & 1 & 2 & 1 & 2 \\
+Entity\_Weapon\_02 &
+0 & 3 & 0 & 3 & 0 & 3 & 0 & 3 \\
+\hline
+\end{tabular}
+\end{table}
 
 \SubSection{Kulcs}
 
@@ -321,20 +323,19 @@ Kulcsot tartalmazó ágens, elpusztulásakor a legutolsó helyén hagyja a kulcs
 
 \Section{Ágensek}
 
-\subsection{Statisztika}
+A következő szakaszokban az ágensek tulajdonságai és a hozzájuk kapcsolódó számítási módok kerülnek részletezésre.
+
+\SubSection{Statisztika}
 \label{statisztika}
-\begin{itemize}
-    \item Ágensek 4 alap statisztikával rendelkeznek.
-    \item Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság.
-    \item Az ágensek kezdő statisztikája fix 1.
-\end{itemize}
 
-\noindent A következő tárgyakkal kezd a szimulációban:
+Az ágensek 4 alap statisztikával rendelkeznek.
+Ez a 4 statisztika a következők: Erő, Kitérés, Kitartás, Pontosság. Az ágensek kezdő statisztikája fix 1.
 
+Minden ágens a következő tárgyakkal kezd a szimulációban:
 \begin{itemize}
-    \item Entity Helm 01,
-    \item Entity Armor 01,
-    \item Entity Weapon 01.
+    \item Entity\_Helm\_01,
+    \item Entity\_Armor\_01,
+    \item Entity\_Weapon\_01.
 \end{itemize}
 
 \subsection{Sebzés számlálás}
@@ -344,135 +345,131 @@ Kulcsot tartalmazó ágens, elpusztulásakor a legutolsó helyén hagyja a kulcs
 A támadásnak két végkimenetele lehet:
 
 \begin{itemize}
-    \item Találat,
-    \item Eltévesztve.
+    \item \textit{Találat}: kiszámolódik a sebzés mértéke, és levonásra kerül a megfelelő ágens életerejéből.
+    \item \textit{Eltévesztve}: nem történik meg a sebzés.
 \end{itemize}
 
-\noindent Találat esetén, kiszámolódik a sebzés mértéke. 
+\SubSection{Statisztikák jelentősége}
 
-\noindent Eltévesztés esetén nem történik meg a sebzés. 
+Statisztikák jelentősége két különböző \textit{faction} változóval rendelkező ágens összetalálkozásánál látszódik meg.
+Két fontosabb esetben játszik szerepet, az ágens statisztikája a fent említett találkozásnál.
 
-\subsection{Statisztikák jelentőssége}
+Egy ágens egy másik ágensre mért csapásának sikeressége függ attól, hogy nagyobb-e a támadó ágens \textit{acc}, pontosság értéke, mint a támadást elszenvedő fél \textit{eva}, kitérés értéke.
+Ha nagyobb a támadó ágens \textit{acc}, pontosság értéke, mint a támadott \textit{eva}, kitérés értéke, akkor 100\%-osan betalál a sebzése, azaz támadás betalálása következik be.
+Ha nem nagyobb, akkor 20\% esélye van arra a támadott félnek, hogy ne kapjon semmilyen sebzést, azaz támadás eltévesztése következzen be.
 
-Statisztikák jelentőssége két különböző faction változóval rendelkező ágens összetalálkozásánál látszódik meg.
-Két fontosabb dologban játszik szerepet, az ágens statisztikája a fent említett találkozásnál.
-
-Egy ágens, egy másik ágensre mért csapásának sikeressége függ attól, hogy nagyobb-e a támadó ágens acc értéke, mint a támadást elszenvedő fél eva értéke.
-Ha nagyobb a támadó ágens acc értéke, mint a támadott eva értéke, akkor 100\%-osan betalál a sebzése, azaz támadás betalálása következik be.
-Ha nem nagyobb, akkor 20\% esélye van arra a támadott félnek, hogy ne kapjon semmilyen sebzést, azaz támadás eltévesztése következik be.
-
-Egy ágens, egy másik ágensre mért csapásának a sebzése függ attól, hogy nagyobb-e a támadó ágens str értéke, mint a támadást elszenvedő fél vit értéke.
-Ha nagyobb a támadó ágens str értéke, mint a támadott vit értéke, akkor 20\% esélye van arra a támadó félnek, hogy dupla sebzést mérjen be, ekkor a támadás nagysága nagy.
+Egy ágens egy másik ágensre mért csapásának a sebzése függ attól, hogy nagyobb-e a támadó ágens \textit{str}, erő értéke, mint a támadást elszenvedő fél \textit{vit}, kitartás értéke.
+Ha nagyobb a támadó ágens \textit{str}, erő értéke, mint a támadott \textit{vit}, kitartás értéke, akkor 20\% esélye van arra a támadó félnek, hogy dupla sebzést mérjen be, ekkor a támadás nagysága nagy.
 Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagysága normál.
 
-\Section{Ágens főbb tulajdonságai}
+\SubSection{Elsődleges tulajdonságai}
+
+Az ágens létrejöttekor kerül megadásra általunk.
 
 \begin{itemize}
-    
-    \item str (Integer)
-    
-    Az ágens létrejöttekor kerül megadásra általunk.
-    \item vit (Integer)
-    
-    Az ágens létrejöttekor kerül megadásra általunk.
-    \item eva (Integer)
-    
-    Az ágens létrejöttekor kerül megadásra általunk.
-    \item acc (Integer)
-    
-    Az ágens létrejöttekor kerül megadásra általunk.
-    \item maxLife (Integer)
-    
-    Az ágens létrejöttekor kerül megadásra általunk.
-    \item faction: (Integer)
-    
-    Lehet 0,1. Fontos változó a combat létrejöttéhez.
-    \item healTurn: (Integer)
-    
-    Változó, amely azt tárolja, hogy melyik kör végén lesz HP regeneráció.
+    \item str (Integer): az ágens ereje (\textit{strength}),
+    \item vit (Integer): az ágens kitartás (\textit{vitality}),
+    \item eva (Integer): az ágens kitérés (\textit{evasion}),
+    \item acc (Integer): az ágens pontosság (\textit{accuracy}),
+    \item maxLife (Integer): az ágens maximális életereje
+    \item faction: (Integer): Lehet 0,1. Fontos változó a combat létrejöttéhez.
+    \item healTurn: (Integer): Változó, amely azt tárolja, hogy melyik kör végén lesz HP regeneráció.
 \end{itemize}
 
-\subsection{Kinézetet befolyásoló tényező}
+\SubSection{Kinézetet befolyásoló tényező}
 
 \begin{itemize}
     \item Ágens állása. Látszódik, hogy milyen irányba néz.
-    \item Az ágens faction típusa.
+    \item Az ágens \textit{faction} típusa.
 \end{itemize}
 
-\subsection{Kommunikáció közöttük}
+\SubSection{Kommunikáció közöttük}
 
 Ágensek bemenete, információ szerzése:
 \begin{itemize}
-    \item A hozzájuk szomszédos blockokat vizsgálják, ha nem találnak semmit megvizsgálják az általuk érzékelhető blockokat.
-    \item A balra, jobbra, felfelé és lefelé irányban érzékelnek 2 blocknyi távolságra, ha nem gátolja meg valami az útjukat.
+    \item A hozzájuk szomszédos blokkokat vizsgálják, ha nem találnak semmit megvizsgálják az általuk érzékelhető blokkokat.
+    \item A balra, jobbra, felfelé és lefelé irányban érzékelnek 2 blokknyi távolságra, ha nem gátolja meg valami az útjukat.
 \end{itemize}
 
 \noindent Ágensek belső memóriája a következőket tartalmazza:
 \begin{itemize}
-    \item Inventory állapota.
+    \item \textit{Inventory} állapota.
     \item Karakter ablak állapota.
     \item Aktuális HP állapota.
-    \item A blockok hashMap értékei. (hányszor volt az adott blockokon, segít felderíteni a teljes mapot.)
-    \item Észlelt Objektumok helyzete, típusa.
-    \item Inventoryban tárolt itemek.
-    \item Észlelt ágens értékei. (ellenséges, vagy nem)
-    \item Észlelt ágens helyzete. (X,Y koordináta)
+    \item A blokkok \textit{hashMap} értékei (hogy hányszor volt az adott blokkokon, segít felderíteni a teljes térképet).
+    \item Észlelt objektumok helyzete, típusa.
+    \item \textit{Inventory}-ban tárolt tárgyak.
+    \item Észlelt ágens értékei. (észlelt ágensek \textit{faction} értéke)
+    \item Észlelt ágens helyzete ($X, Y$ koordináta).
 \end{itemize}
 
-\subsection{Megfigyelési akcióik}
+\SubSection{Megfigyelési akcióik}
 
-\noindent Információk feldolgozása:
+Információk feldolgozása:
 \begin{itemize}
-    \item Inventory mérete és kihasználtsága, ha elérte a max méretet, nem képes az általa kívánt Tárgyat felvenni.
+    \item Az \textit{Inventory} mérete és kihasználtsága. Ha elérte a maximum méretet nem képes az általa kívánt tárgyat felvenni.
     \item Karakter ablakban tárolt statisztikák számossága.
-    \item Aktuális HP mennyiség. 5 Körönként 1 HP visszatöltés.(Lásd: Idő)
-    \item Az adott körben lehetséges lépesek hashMap értékei vizsgálata, amelyek az adott block koordinátáit tárolják és azt, hogy az adott ágens hányszor lépett rá az adott blockra. (Szükséges azért, hogy idővel biztosan felfedezze az egész mapot)
-    \item Észlelt objektumok helyzete, típusa. Ezekből az információkból eldönti a prioritást és maghatározza, hogy mely irányba fog végül haladni.
-    \item A nem használt tárgyak törlése, ha nem jobb a jelenleg hordottnál, ezáltál biztosítva, hogy ne teljen meg az inventory.
+    \item Aktuális HP mennyiség. Adott Körönként fix HP visszatöltés történik meg (\ref{time}. szakasz).
+    \item Az adott körben lehetséges lépesek \textit{hashMap} értékei vizsgálata, amelyek az adott blokk koordinátáit tárolják, és azt, hogy az adott ágens hányszor lépett rá az adott blokkra. (Szükséges azért, hogy idővel biztosan felfedezze az egész térképet.)
+    \item Észlelt objektumok helyzete, típusa. Ezekből az információkból eldönti a prioritást, és ezáltal meghatározza, hogy mely irányba fog végül haladni.
+    \item A nem használt tárgyak törlése, ha nem jobb a jelenleg hordottnál, ezáltal biztosítva, hogy ne teljen meg az \textit{Inventory} mérete.
     \item Ágens értékeiből leszűrt információk számításba vétele. (ellenség-e)
-    \item Támadható ágensek közül a legkisebb HP-val rendelkező ágens támadását kezdeményezi.
+    \item Támadható ágensek közül a legkisebb életerővel rendelkező ágens támadását kezdeményezi.
 \end{itemize}
 
-\subsection{Ágens tevékenységeinek a köre}
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tabular}{ cc }
+            \includegraphics[width=0.70\textwidth, height=60mm]{images/endscreenblue.png}
+            \\ 
+            \includegraphics[width=0.70\textwidth, height=60mm]{images/endscreenred.png}  
+            \\
+        \end{tabular}
+        \caption{Záró képernyők (\textit{End screens})}
+        \label{tbl:tableofendscreens}
+    \end{center}
+\end{figure}
 
-\noindent Ezek bármelyik használata, felhasználja az ágens körét.
+\SubSection{Ágens tevékenységeinek a köre}
+
+Az alábbiak bármely tevékenység végrehajtása, felhasználja az ágens körét.
 
 \begin{itemize}
 
     \item Lépés. 
     
     \begin{itemize}
-        \item A lépés akkor lehetséges, hogyha az ágens közvetlen közelében, azaz vagy az X vagy az Y koordinátájával szomszédos cellán nem tartózkodik mozgást korlátozó ágens/térbeli objektum. Lásd itt: \nameref{object}
+        \item A lépés akkor lehetséges, hogyha az ágens közvetlen közelében, azaz vagy az $X$ vagy az $Y$ koordinátájával szomszédos cellán nem tartózkodik mozgást korlátozó ágens/térbeli objektum, lásd itt: \nameref{object} szakasz.
     \end{itemize}
 
     \item Ajtó nyitás. 
     
     \begin{itemize}
-        \item Szükséges az Inventory-ban egy Key nevű tárgy, amely a kulcs.
+        \item Szükséges az \textit{Inventory}-ban egy \textit{Key} nevű tárgy, amely a kulcs.
         \item Ha az ágens közvetlen közelében létezik ajtó, a nyitás akkor lehetséges.
-        \item Nyitása után eltűnik az ajtó, és a kulcs az Inventory-ból.
+        \item Nyitása után eltűnik az ajtó, és a kulcs az \textit{Inventory}-ból.
     \end{itemize}
 
-    \item Chest nyitás. 
+    \item Láda nyitás. 
     
     \begin{itemize}
-        \item Ha az ágens celláján létezik az ellenkező faction chest-je, akkor a nyitás lehetséges.
+        \item Ha az ágens celláján létezik az ellenkező \textit{faction chest}-je, akkor a nyitás lehetséges.
         \item Ha nincs támadható ágens, akkor kinyitja.
-        \item Megjelenő képernyő kinyitása esetén, ha piros: \ref{fig:RedEndScreen}, ha kék: \ref{fig:BlueEndScreen}
+        \item Megjelenő képernyő a kinyitása esetén vagy piros vagy kék (\ref{tbl:tableofendscreens}. ábra).
     \end{itemize}
 
     \item Felvétel. 
     
     \begin{itemize}
-        \item Ha az Inventory-ban van hely, akkor lehetséges.
-        \item Ha az ágens celláján létezik valamilyen tárgy, ekkor a tárgyat a felvétel akcióval eltünti a celláról és az Inventory-ba kerül.
+        \item Ha az \textit{Inventory}-ban van hely, akkor lehetséges.
+        \item Ha az ágens celláján létezik valamilyen tárgy, ekkor a tárgyat a felvétel akcióval eltünteti a celláról, és az \textit{Inventory}-ba kerül.
     \end{itemize}
 
     \item Törlés. 
     
     \begin{itemize}
-        \item Ha az Inventory-ban van olyan tárgy, amely nem kulcs és nem hordott az ágens által, akkor lehetséges.
-        \item Az ágens Inventory-jából kitörli az tárgyat.
+        \item Ha az \textit{Inventory}-ban van olyan tárgy, amely nem kulcs és nem hordott az ágens által, akkor lehetséges.
+        \item Az ágens \textit{Inventory}-jából kitörli a tárgyat.
     \end{itemize}
 
     \item Felszerelés. 
@@ -486,37 +483,42 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
     \item Támadás. 
     
     \begin{itemize}
-        \item A támadás akkor lehetséges, hogyha az ágens közvetlen közelében, azaz vagy az X vagy az Y koordinátájával szomszédos cellán tartózkodik egy ellenséges ágens.
-        \item Több ellenséges ágens esetén, a legkisebb HP-val rendelkező fogja támadni.
+        \item A támadás akkor lehetséges, hogyha az ágens közvetlen közelében, azaz vagy az $X$ vagy az $Y$ koordinátájával szomszédos cellán tartózkodik egy ellenséges ágens.
+        \item Több ellenséges ágens esetén, a legkisebb életerővel rendelkező fogja támadni.
     \end{itemize}
 
 \end{itemize}
 
-\subsection{Ágens fő céljai}
+\SubSection{Ágens fő céljai}
 
+Az ágensnek alapvetően két célja van:
 \begin{itemize}
-    \item Megtalálni az ellenséges chestet.
-    \item Elpusztítani az ellenséges ágenseket.
+    \item megtalálni az ellenséges \textit{chest}-et,
+    \item elpusztítani az ellenséges ágenseket.
 \end{itemize}
 
-\subsection{Ágens másodlagos céljai}
+\SubSection{Ágens másodlagos céljai}
 
+Az ágens szempontjából a következő tevékenységek végrehajtása szükségszerű, vagy előnyös lehet:
 \begin{itemize}
     \item Tárgy felvétel,
     \item Tárgy hordása adott esetekben,
     \item Ajtó kinyitás,
-    \item Inventory menedzsment,
-    \item Mindig a kevesebbszer bejárt blockokat választani mozgásakor.
+    \item \textit{Inventory} menedzsment,
+    \item Mindig a kevesebbszer bejárt blokkokat választani mozgáskor.
 \end{itemize}
 
-\subsection{Ágens függvény}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.6]{images/agentfunction.png}
+    \caption{\textit{Agent Action Priority} állapotgép modell}
+    \label{fig:Priority}
+\end{figure}
 
-A következő ábrán látható az ágens cselekvésének meghatározására szolgáló ciklus, amely a szimuláció kezdetétől működik. ~\ref{fig:Priority}
+\SubSection{Ágens függvény}
 
-A csomópontok fontossági sorrendben vannak felsorolva.
-
-\noindent A csomópontok kifejtése:
-
+\Aref{fig:Priority}. ábrán látható az ágens cselekvésének meghatározására szolgáló állapotgép gráfja, amely a szimuláció kezdetétől működik.
+A csomópontok fontossági sorrendben a következők.
 \begin{itemize}
     \item wantToAttack?
     
@@ -533,268 +535,191 @@ A csomópontok fontossági sorrendben vannak felsorolva.
     \item wantToPickUp?
     
     \begin{itemize}
-        \item Ha az ágenset tartalmazó block-on létezik valamilyen felvehető tárgy az ágens által, akkor felveszi.
+        \item Ha az ágenset tartalmazó blokk-on létezik valamilyen felvehető tárgy az ágens által, akkor felveszi.
     \end{itemize}
 
     \item wantToDeleteAnItem?
     
     \begin{itemize}
-        \item Ha az ágens Inventory-ja tartalmaz olyan hordható tárgyat, amely nem jobb mint az általa hordott tárgy, akkor eltávolítja az inventoryjából.
+        \item Ha az ágens \textit{Inventory}-ja tartalmaz olyan hordható tárgyat, amely nem jobb mint az általa hordott tárgy, akkor eltávolítja az\textit{Inventory}-jából.
     \end{itemize}
 
     \item wantToOpenDoor?
     
     \begin{itemize}
-        \item Ha van kulcs nála és a közvetlen közelében van egy ajtó, akkor az ajtó kinyitását választja.
+        \item Ha van kulcs nála, és a közvetlen közelében van egy ajtó, akkor az ajtó kinyitását választja.
     \end{itemize}
 
     \item wantToMoveToItem?
     
     \begin{itemize}
-        \item Ha van olyan közvetlen közeli block az ágens szomszédjában, amelyre lehetséges a lépés és tartalmaz valamilyen felvehető tárgyat,
-            akkor összeveti az ágens és a felvenni kívánt tárgy koordinátáit, és az alapján eldönti milyen irányba mozogjon az ágens. 
+        \item Ha van olyan közvetlen közeli blokk az ágens szomszédjában, amelyre lehetséges a lépés, és tartalmaz valamilyen felvehető tárgyat,
+        akkor összeveti az ágens és a felvenni kívánt tárgy koordinátáit, és az alapján eldönti milyen irányba mozogjon az ágens. 
     \end{itemize}
 
     \item newEnemy?
 
     \begin{itemize}
-        \item Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az ágens és lát a detectableBlocks-on belül olyan blockot,
-            amely egy ellenséges ágenst tartalmaz, ilyenkor a hozzá közeli blockot választja ki következő lépésének.
+        \item Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az ágens és lát a \textit{detectableBlocks}-on belül olyan blokkot,
+        amely egy ellenséges ágenst tartalmaz. Ilyenkor a hozzá közeli blokkot választja ki következő lépésének.
     \end{itemize}
+
+\newpage
 
     \item newItem?
 
     \begin{itemize}
-        \item Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az ágens és lát a detectableBlocks-on belül olyan blockot,
-        amely egy kívánt tárgyat tartalmaz, ilyenkor a hozzá közeli blockot választja ki következő lépésének.
+        \item Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az ágens, és lát a \textit{detectableBlocks}-on belül olyan blokkot,
+        amely egy kívánt tárgyat tartalmaz, ilyenkor a hozzá közeli blokkot választja ki következő lépésének.
     \end{itemize}
 
     \item wantToMove?
     
-    Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az Ágens.
+    Ez az eset akkor lép fel, ha semmilyen más cselekvést nem akart elvégezni az adott körben az ágens.
 
     \begin{itemize}
-        \item A lehetséges blockok közül kiválasztja azt a blockot a következő lépésének, amelyen még nem volt soha.
-        \item Ha több olyan lehetséges block van, amelyre léphet, akkor véletlenszerűen választ egyet a lehetőségek közül.
-        \item Ha nincs egy olyan block se, ahol ne lett volna már, akkor a legkevesebbszer bejárt blockot fogja választani.
-        \item Ha több legkevesebbszer bejárt block létezik a lehetséges blockok közül, akkor véletlenszerűen választ egyet a lehetőségek közül.
+        \item A lehetséges blokkok közül kiválasztja azt a blokkot a következő lépésének, amelyen még nem volt soha.
+        \item Ha több olyan lehetséges blokk van, amelyre léphet, akkor véletlenszerűen választ egyet a lehetőségek közül.
+        \item Ha nincs egy olyan blokk se, ahol ne lett volna már, akkor a legkevesebbszer bejárt blokkot fogja választani.
+        \item Ha több legkevesebbszer bejárt blokk létezik a lehetséges blokkok közül, akkor véletlenszerűen választ egyet a lehetőségek közül.
     \end{itemize}
 \end{itemize}
 
 \Section{Cél Tárgy}
 
-Map teljesítéséhez szükséges tárgy, amely egy chest. A kék faction-nek a piros chestet, a piros faction-nek a kék chestet kell elérnie.
-A mapon egy szobában helyezkedik el.
+Egy térkép teljesítéséhez szükséges tárgy, amely egy \textit{chest}, láda. A kék \textit{faction}-nek a piros ládát, a piros \textit{faction}-nek a kék ládát kell elérnie és interakcióba lépni vele. (Ezek megjelenítését \aref{tbl:Chests}. ábrán láthatjuk.)
+A térképen a ládák az ellenkező \textit{faction} típusú ágensek kezdő szobájában helyezkedik el.
 
-\Section{Combat}
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tabular}{ | c | c | }
+            \hline
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/chest_0.png}
+            & 
+            \includegraphics[width=0.3\textwidth, height=60mm]{images/chest_1.png}    
+            \\
+            \hline
+        \end{tabular}
+        \caption{Ládák (\textit{Chests})}
+        \label{tbl:Chests}
+    \end{center}
+\end{figure}
 
-A szimulációban 1-es faction változójú ágens és 2-es faction változójú ágens közötti HP elvétel lehetséges,
+\Section{Támadás}
 
-\begin{itemize}
-    \item szomszédos cellából támadás által,
-    \item a támadás lehet betalált, elvétett,
-    \item a támadás nagysága lehet normális vagy nagy.
-\end{itemize}
+A szimulációban 1-es \textit{faction} változójú ágens és 2-es \textit{faction} változójú ágens közötti életerő elvétel a szomszédos cellából lehetséges. A támadás lehet betalált vagy elvétett. A támadás nagysága lehet normális vagy nagy.
 
-\Section{Interface felület}
+\Section{Felhasználói felület}
+
+A felhasználói felületen az elvégezhető műveletek különféle előfeltételekhez (prekondíciókhoz) vannak kötve. A műveleteknek van általános működése, illetve bekövetkezhet valamilyen alternatív és kivételes eset is.
+
+A következő alpontokban a felhasználó által végrehajtható műveletek áttekintésére kerül sor, benne felsorolva azok prekondícióit, posztkondícióit, továbbá az eseteket.
 
 \subsection{Pause}
 
 \begin{itemize}
     \item prekondíció: A szimulációs ablakban vagyunk.
-    \item általános működés: Megnyomjuk a P gombot.
-    \item alternatív esetek: Rossz tevékenység történik be.
-    \item Postkondíció: Megjelent a Paused kiírás bal fent.
-    \item kivételes esetek: Nem ált meg a játékmenet.
+    \item általános működés: Megnyomjuk a \texttt{P} gombot.
+    \item alternatív esetek: Rossz tevékenység következik be.
+    \item posztkondíció: Megjelent a \textit{Paused} kiírás bal fent.
+    \item kivételes esetek: Nem állt meg a játékmenet.
 \end{itemize}
 
 \subsection{Inventory}
 
 \begin{itemize}
-    \item prekondíció: A szimulációs ablakban vagyunk és meg van már nyitva a karakter ablak.
-    \item általános működés: Megnyomjuk az I gombot.
+    \item prekondíció: A szimulációs ablakban vagyunk, és meg van már nyitva egy tetszőleges \textit{Statistics} ablak.
+    \item általános működés: Megnyomjuk az \texttt{I} gombot.
     \item alternatív esetek: Rossz ablak nyílik meg.
-    \item Postkondíció: Megnyílt az inventory ablak.
+    \item posztkondíció: Megnyílt az \textit{Inventory} ablak.
     \item kivételes esetek: Nem nyílt meg az ablak.
 \end{itemize}
 
-\subsection{Karakter}
+\subsection{Statistics}
 
 \begin{itemize}
     \item prekondíció: A szimulációs ablakban vagyunk.
-    \item általános működés: Megnyomjuk a C gombot.
+    \item általános működés: Megnyomjuk a \texttt{C} gombot.
     \item alternatív esetek: Rossz ablak nyílik meg.
-    \item Postkondíció: Megnyílt a Karakter ablak.
+    \item posztkondíció: Megnyílt a létező ágensek közül a legelső \textit{Statistics} ablak.
     \item kivételes esetek: Nem nyílt meg az ablak.
 \end{itemize}
 
-\Section{Mapon található mozgást kizáró objektumok}
-
+\Section{Akadályok}
 \label{object}
 
-\subsection{Brick}
+A következőkben a térképen található mozgást kizáró objektumok kerülnek bemutatásra.
 
+\SubSection{Brick}
 \label{brick}
 
-A Brick egy oszlop, amely a map beolvasása után kerülnek bizonyos cellákra.
-Oszlopoknak semmilyen különleges funkciója nincs azonkívül, hogy map komplexitását kívánja növelni azzal,
+A \textit{Brick} egy oszlop, amely a térkép beolvasása után kerül bizonyos cellákra. A kinézetéhez felhasznált kép \aref{tbl:Brick}. ábrán látható.
+
+Az oszlopoknak semmilyen különleges funkciója nincs azonkívül, hogy a térkép komplexitását kívánja növelni azzal,
 hogy mozgást és látást korlátozó szerepet lát el.
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tabular}{c}
+            \includegraphics[scale=10]{images/object_brick.png}
+        \end{tabular}
+        \caption{Brick}
+        \label{tbl:Brick}
+    \end{center}
+\end{figure}
 
 \subsection{Zárt ajtó}
 
-Az ajtók a map beolvasása után kerülnek bizonyos cellákra.
-Az ajtók mozgást korlátozó szerepet töltenek be, ha nincs az ágensnél kulcs. Ha van, akkor szomszédos blockból kinyithatja az ajtókat.
-Ahogyan az brickek, a zárt ajtók is map komplexitását kívánja növelni.
+Az ajtók a térkép beolvasása után kerülnek bizonyos cellákra.
+Az ajtók mozgást korlátozó szerepet töltenek be, ha nincs az ágensnél kulcs. Ha van, akkor a szomszédos blokkból kinyithatja az ajtókat.
+Ahogyan az \textit{brick}-ek, a zárt ajtók is a térkép komplexitását kívánja növelni. A kulcsról és az ajtóról láthatunk egy képet \aref{tbl:Key and Door}. ábrán.
+
+\begin{figure}[h!]
+    \begin{center}
+        \begin{tabular}{ | c | c | }
+            \hline
+            \includegraphics[scale=10]{images/key.png}
+            & 
+            \includegraphics[scale=10]{images/Door.png}    
+            \\
+            \hline
+        \end{tabular}
+        \caption{Key and Door}
+        \label{tbl:Key and Door}
+    \end{center}
+\end{figure}
+
 
 \Section{Idő}
+\label{time}
 
-Az idő a szimuláción belül minden ágens által végrehajtott akció által telik.
-Minden 5. kör után, 1 HP-t töltenek vissza az ágensek, ha kisebb az aktuális életerejük, mint a maximum.
+A szimuláció egy diszkrét idejű rendszert modellez. Minden ágens által végrehajtott művelet során egy-egy időegység telik el.
+
+Minden 5. kör után, 1 HP-t töltenek vissza az ágensek, ha kisebb az aktuális életerejük, mint a maximális.
 Ha egy ágens elvégez egy akciót, akkor az irányítás átkerül egy másik ágensre.
 
 \Section{Kamera}
 
-A kamera block-ról blockra képes haladni 3 koordináta meglépésével.
-A kamera képes mozogni, akkor is ha a jáétkmenet szünetel.(Paused)
+A szimulációban modellezett virtuális teret valahogyan láthatóvá kell tenni. Ezt egy felülnézetes kamera formájában képzelhetjük el. A kamera mozgására néhány egyszerű szabály vonatkozik.
+\begin{itemize}
+    \item A kamera blokkról blokkra képes haladni 3 koordináta meglépésével.
+    \item A kamera képes mozogni, akkor is ha a játékmenet szünetel (\textit{Paused}).
+\end{itemize}
 
 \Section{Irányítás}
 
-Szimulációban használható irányítás:
-
+A korábbiakban már érintőlegesen szó esett a szimulációs környezetben használt billentyűkről, az azokkal kiváltott eseményekről. A következő felsorolásban áttekintésképpen láthatjuk ezeket egy helyen.
 \begin{itemize}
-    \item Kamera mozgatása: WASD
-    \item Ágens Statistics ablak megnyitása/bezárása: C
-    \item Ágensek Statistics ablaka közötti lépegetés: Q(hátra), E(előre)
-    \item Adott ágens Statistics oldalhoz Inventory megnyitása/bezárása: I
+    \item Kamera mozgatása: \texttt{WASD},
+    \item Ágens \textit{Statistics} ablak megnyitása/bezárása: \texttt{C},
+    \item Ágensek \textit{Statistics} ablaka közötti lépegetés: \texttt{Q} (hátra), \texttt{E} (előre),
+    \item Adott ágens \textit{Statistics} oldalához tartozó \textit{Inventory} megnyitása/bezárása: \texttt{I}.
 \end{itemize}
 
-\Section{Látványterv képek, használt képek és diagramok}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.3]{images/nonPaused.png}
-	\caption{nonPaused}
-	\label{fig:nonPaused}
-\end{figure}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.3]{images/Paused.png}
-	\caption{Paused}
-	\label{fig:Paused}
-\end{figure}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.3]{images/Inventory.png}
-	\caption{Inventory}
-	\label{fig:Inventory}
-\end{figure}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.3]{images/Statistics.png}
-	\caption{Statistics}
-	\label{fig:Statistics}
-\end{figure}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.3]{images/MainMenu.png}
-	\caption{Main Menu}
-	\label{fig:MainMenu}
-\end{figure}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.3]{images/endscreenblue.png}
-	\caption{Blue End Screen}
-	\label{fig:BlueEndScreen}
-\end{figure}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.3]{images/endscreenred.png}
-	\caption{Red End Screen}
-	\label{fig:RedEndScreen}
-\end{figure}
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[scale=0.6]{images/agentfunction.png}
-	\caption{Agent Action Priority}
-	\label{fig:Priority}
-\end{figure}
-
-\begin{table}[h!]
-    \begin{center}
-    \begin{tabular}{ | c | c | c | }
-    \hline
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Armor_01.png}
-    & 
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Helmet_01.png}    
-    & 
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Weapon_01.png}
-    \\
-    \hline
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Armor_02.png}
-    & 
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Helmet_02.png}    
-    & 
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/Entity_Weapon_02.png}
-    \\
-    \hline
-    \end{tabular}
-    \caption{Item set 01}
-    \label{tbl:Equipable items}
-    \end{center}
-\end{table}
-
-\begin{table}[h!]
-    \begin{center}
-    \begin{tabular}{ | c | c | }
-    \hline
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/key.png}
-    & 
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/Door.png}    
-    \\
-    \hline
-    \end{tabular}
-    \caption{Key and Door}
-    \label{tbl:Key and Door}
-    \end{center}
-\end{table}
-
-\begin{table}[h!]
-    \begin{center}
-    \begin{tabular}{ | c | c | c | }
-    \hline
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/block_brick.png}
-    & 
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/block_grass.png}    
-    & 
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/block_empty.png}
-    \\
-    \hline
-    \end{tabular}
-    \caption{Blockok}
-    \label{tbl:Blocks}
-    \end{center}
-\end{table}
-
-\begin{table}[h!]
-    \begin{center}
-    \begin{tabular}{ | c | c | c | }
-    \hline
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/chest_0.png}
-    & 
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/chest_1.png}    
-    & 
-    \includegraphics[width=0.3\textwidth, height=60mm]{images/object_brick.png}
-    \\
-    \hline
-    \end{tabular}
-    \caption{Chests and Brick}
-    \label{tbl:Chests and Brick}
-    \end{center}
-\end{table}
