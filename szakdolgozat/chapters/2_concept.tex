@@ -30,7 +30,7 @@ részletes leírást adva minden osztályról és felületről a kulcsfontosság
 A szimuláció indítása előtti ablak:
 
 \begin{itemize}
-    \item Közép fent a Main Menu kiírását láhatjuk, allatta pedig 2 opcióból választhatunk:
+    \item Közép fent a Main Menu kiírását láhatjuk, allatta pedig 2 opcióból választhatunk: \ref{fig:MainMenu}
     \item (1) Start, a kiválasztása esetén elindul a szimuláció.
     \item (2) Quit, a szimulációs ablak bezárása.
     \item A fenn említet két menü pont között a W (fel) és S (le) billentyűk lenyomásával navigálhatunk.
@@ -41,12 +41,12 @@ A szimuláció indítása előtti ablak:
 \noindent A szimuláció megállítása esetén:
 
 \begin{itemize}
-    \item A szimulációban a P billentyű lenyomásával képes a felhasználó megállítani a szimuláció menetét.
-    \item A megállítást a bal felső sarokban kiírt fehér Paused kiírás jelzi a felhasználó számára.
+    \item A szimulációban a P billentyű lenyomásával képes a felhasználó megállítani a szimuláció menetét. 
+    \item A megállítást a bal felső sarokban kiírt fehér Paused kiírás jelzi a felhasználó számára. \ref{fig:Paused}
     \item Ilyenkor az ágensek nem kapnak lehetőséget a lépésre, de a felhasználó képes a kamera mozgatására a nyilak segítségével.
     \item A felhasználó szintén képes az ágensek Statistics ablakát megnyitni/bezárni a C billentyű megnyomásával, és előre/hátra lapozni az ágensek között a Q(balra) és E(jobbra) billentyűk megnyomásával, ha több van a szimulációban, mint 1.
     \item Ugyanígy képes megnyitni/bezárni az adott ágenshez tartozó Inventory ablakot az I billentyű megnyomásával, ha látszódik az ágens statisztikája ablak.
-    \item A P billentyű újonnan megnyomásával ott folytatódik a szimuláció, ahol abbamaradt.
+    \item A P billentyű újonnan megnyomásával ott folytatódik a szimuláció, ahol abbamaradt. \ref{fig:nonPaused}
 \end{itemize}
 
 \Section{UI}
@@ -58,14 +58,14 @@ A szimuláció indítása előtti ablak:
     
     \begin{itemize}
         \item A szimuláció kezdete után a képernyőn megjeleníthető ablakok a következők:
-        \item Statistics: A C billentyű megnyomására megjelenik az első számú ágens Statistics ablaka.
-        \item Inventory: Az I billentyű megnyomására megjelenik az az adott ágens Inventory oldala.
+        \item Statistics: A C billentyű megnyomására megjelenik az első számú ágens Statistics ablaka. \ref{fig:Statistics}
+        \item Inventory: Az I billentyű megnyomására megjelenik az az adott ágens Inventory oldala. \ref{fig:Inventory}
     \end{itemize}
 
     \item Statistics
     
     \begin{itemize}
-        \item Egy adott ágens adatának a kiolvasásának az eredményeit megjelenítő UI ablak.
+        \item Egy adott ágens adatának a kiolvasásának az eredményeit megjelenítő UI ablak. 
         \item A szimulációban megállítástól függetlenül a C billentyű megnyomására jelenik meg és tűnik el.
         \item Megnyitásakor mindig a még szimulációban létező ágensek közül az első számú ágens adait fogja visszaadni.
         \item A vizsgálandó ágens elpusztulásakor a még létező ágensek közül az új első számú ágens adatait fogja visszadni.
@@ -83,7 +83,7 @@ A szimuláció indítása előtti ablak:
     \item Inventory
     
     \begin{itemize}
-        \item Nem nyitható meg, ha nincs még megnyitva egy tetszőleges ágens Statistics ablaka.
+        \item Nem nyitható meg, ha nincs még megnyitva egy tetszőleges ágens Statistics ablaka. \ref{fig:Inventory}
         \item Megnyitásakor annak az ágensnek az Inventory-ja lesz látható, amelyiknek a Statistics oldala nyitva van.
         \item A Statistics oldalon az előre/hátra lépés esetén az Inventory az újonnan szemügyre vett ágens Inventory-ját fogja megjeleníteni a felhasználó számára.
         \item Az Inventory-ban a következő típusú tárgyak találhatóak meg:
@@ -124,16 +124,17 @@ Szimuláció kezdetekor megtörténik a map beolvasása:
     \item Az 50x50-es mátrixon minden 2-es típusú blockra helyezhetünk el egy objektumot.
     
     \begin{itemize}
-        \item Brick: Egy mozgást korlátozó objektum. Nincs különösebb szerepe.
-        \item Key: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba.
-        \item EntityArmor01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba.
-        \item EntityWeapon01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba.
-        \item EntityHelmet01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba.
-        \item EntityArmor02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba.
-        \item EntityWeapon02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba.
-        \item EntityHelmet02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba.
-        \item Chest: End screent előidéző tárgy, amely a szimuláció végét jelenti.
-        \item Door: Egy mozgást korlátozó objektum. Kulccsal kinyitható az ágensek által.
+        \item Brick: Egy mozgást korlátozó objektum. Nincs különösebb szerepe. \ref{tbl:Chests and Brick}
+        \item Chest: End screent előidéző tárgy, amely a szimuláció végét jelenti. \ref{tbl:Chests and Brick}
+        \item Key: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Key and Door}
+        \item Door: Egy mozgást korlátozó objektum. Kulccsal kinyitható az ágensek által. \ref{tbl:Key and Door}
+        \item EntityArmor01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
+        \item EntityWeapon01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
+        \item EntityHelmet01: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
+        \item EntityArmor02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
+        \item EntityWeapon02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba. \ref{tbl:Equipable items}
+        \item EntityHelmet02: Mozgást nem korlátozó tárgy, amelyet az ágensek képesek felvenni az Inventory-jukba.\ref{tbl:Equipable items}
+
     \end{itemize}
 
     \item Az 50x50-es mátrixon minden 2-es típusú blockra helyezhetünk el egy ágenst.
@@ -446,6 +447,7 @@ Ha nem nagyobb, akkor fixen 1 sebzést okoz a támadása, ekkor a támadás nagy
     \begin{itemize}
         \item Ha az ágens celláján létezik az ellenkező faction chest-je, akkor a nyitás lehetséges.
         \item Ha nincs támadható ágens, akkor kinyitja.
+        \item Megjelenő képernyő kinyitása esetén, ha piros: \ref{fig:RedEndScreen}, ha kék: \ref{fig:BlueEndScreen}
     \end{itemize}
 
     \item Felvétel. 
