@@ -27,8 +27,6 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public int HPturn = 0;
-    
-
 	
 	public Map<Point,Integer> hashMap = new HashMap<Point,Integer>();
 	public ArrayList<Point> worldPos;
@@ -38,8 +36,6 @@ public class Entity {
     public boolean isEquipped = false;
     
     public int faction;
-    
-
 
     public int maxLife;
     public int life;

@@ -73,8 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	@Override
 	public void run() {
-		
-		
+			
 		double nextDrawTime = System.nanoTime() + drawInterval;
 		
 		while(gameThread != null) {
@@ -178,11 +177,8 @@ public class GamePanel extends JPanel implements Runnable {
 					entityList.get(i).draw(g2,this);
 				}
 				for(int j=0; j<entityList.size(); j++) {
-					//entityList.get(j).maxLife = entityList.get(j).vit*3;
 					entityList.get(j).drawEntityHP(g2);
 				}
-		
-				//player for test
 		
 				camera.draw(g2, this);
 		
